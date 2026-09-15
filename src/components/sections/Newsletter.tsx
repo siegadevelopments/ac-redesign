@@ -14,6 +14,7 @@ type Status = "idle" | "loading" | "success" | "error";
 export function Newsletter() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
+  const [formLinked, setFormLinked] = useState(true);
   const emailId = useId();
 
   async function handleSubmit(event: React.FormEvent) {
@@ -28,6 +29,8 @@ export function Newsletter() {
       });
 
       if (!response.ok) throw new Error("subscribe failed");
+      const data = await response.json();
+      setFormLinked(data.formLinked !== false);
       setStatus("success");
       trackEvent("contact_form_submitted", { form: "newsletter" });
     } catch {
@@ -71,7 +74,7 @@ export function Newsletter() {
 
           {status === "success" ? (
             <p className="text-body text-soft-white" role="status">
-              {NEWSLETTER_COPY.successMessage}
+              {formLinked ? NEWSLETTER_COPY.successMessage : NEWSLETTER_COPY.delayedMessage}
             </p>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>

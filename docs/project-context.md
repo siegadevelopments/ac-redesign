@@ -169,26 +169,39 @@ remains a one-file change in `constants.ts`, same as before this revision.
 
 `/discovery-call` (`src/app/discovery-call/page.tsx`) hosts the intake form
 (`src/components/sections/AssessmentForm.tsx`, a client component) described in
-`docs/conversion-strategy.md`. It posts to `src/app/api/assessment/route.ts`, which forwards the
-submission to Kit's v4 API — the same account as the newsletter integration, but a **separate**
-form so Kit's own automation can notify differently for an assessment lead vs. a newsletter
-subscriber:
+`docs/conversion-strategy.md`. It posts to `src/app/api/assessment/route.ts`, which makes **two**
+calls to Kit's v4 API — verified against `developers.kit.com`'s own docs 2026-09, since
+`POST /v4/forms/{id}/subscribers` only accepts `email_address`/`referrer` and silently ignores
+anything else (an earlier version of this route sent `first_name`/`fields` to that call directly,
+which Kit's API doesn't support):
 
-`POST https://api.kit.com/v4/forms/{KIT_ASSESSMENT_FORM_ID}/subscribers`
-
-Body: `{ email_address, first_name, fields: { business, website, industry, team_size,
-biggest_challenge, current_tools, automate_wish } }`.
+1. `POST https://api.kit.com/v4/subscribers` — upserts the subscriber and sets `first_name` +
+   custom `fields`: `{ email_address, first_name, fields: { business, website, industry,
+   team_size, biggest_challenge, current_tools, automate_wish } }`.
+2. `POST https://api.kit.com/v4/forms/{KIT_ASSESSMENT_FORM_ID}/subscribers` — links that
+   subscriber to the assessment form (`{ email_address }` only) so Kit's form automation fires.
+   A **separate** form from the newsletter's, so Kit can notify differently for an assessment
+   lead vs. a newsletter subscriber.
 
 Requires, in addition to the existing `KIT_API_KEY`:
 
 - `KIT_ASSESSMENT_FORM_ID` — a Kit form distinct from `KIT_FORM_ID`.
 - Six custom fields must be created in the Kit dashboard first, with exactly these keys:
   `business`, `website`, `industry`, `team_size`, `biggest_challenge`, `current_tools`,
-  `automate_wish`. Kit's v4 API rejects `fields` keys that don't already exist as custom fields
-  on the account — this route does not create them for you.
+  `automate_wish`.
 
 Same failure behavior as the newsletter route: a 503 with a generic error message if the env
 vars are unset, rather than a silent failure.
+
+**TEMPORARY as of 2026-09**: same Kit-side bug as the newsletter route (see "Newsletter / Lead
+Magnet" above) — call 2 (linking to the form) 404s for this account. Unlike the newsletter, this
+funnel was always built around a human reviewing submissions rather than an automated email, so
+call 2's failure is treated as non-fatal here: if call 1 (creating the subscriber with all their
+answers) succeeds, the visitor sees the normal success message and `formLinked: false` is only
+logged server-side, not surfaced in the UI. The practical effect until Kit's fix lands: new
+assessment leads land in Kit as subscribers with all their fields, but aren't tagged/linked to
+the assessment form — check Kit's subscriber list directly rather than relying on a form-based
+view or any form-triggered notification in the meantime.
 
 ## Analytics
 
@@ -209,20 +222,32 @@ actual GTM container ID or GA4 property is a follow-up — see Open Questions.
 alternative to booking a call, and frames the same signup as an ongoing newsletter. Copy lives in
 `src/lib/content/leadMagnet.ts`.
 
-The form posts to `src/app/api/subscribe/route.ts`, a server-side Route Handler that forwards the
-email to Kit (formerly ConvertKit)'s v4 API: `POST https://api.kit.com/v4/forms/{KIT_FORM_ID}/subscribers`
-with an `X-Kit-Api-Key` header. This keeps the API key server-side only and needs no client-side
-script, so it doesn't touch the CSP's `connect-src` (see Security Headers below).
+The form posts to `src/app/api/subscribe/route.ts`, a server-side Route Handler that makes two
+calls to Kit (formerly ConvertKit)'s v4 API (same two-step shape as the Assessment Funnel below):
+`POST /v4/subscribers` (captures the email), then `POST /v4/forms/{KIT_FORM_ID}/subscribers`
+(links them to the form, which is what triggers Kit's incentive-email automation that actually
+sends the checklist). Both use an `X-Kit-Api-Key` header, keeping the key server-side only and
+needing no client-side script — doesn't touch the CSP's `connect-src` (see Security Headers
+below).
 
 Requires two env vars (see `.env.example`), unset in this repo:
 
 - `KIT_API_KEY`
 - `KIT_FORM_ID` — must point to a Kit form with the checklist configured as its **incentive
   email** in the Kit dashboard. This repo does not send or host the checklist PDF itself — Kit's
-  automation delivers it once someone subscribes to that form.
+  automation delivers it once someone is linked to that form.
 
 Until both are set, the route returns a 503 and the form shows its generic error message rather
 than failing silently.
+
+**TEMPORARY as of 2026-09**: Kit confirmed `POST /v4/forms/{id}/subscribers` 404s for this
+account — a bug on their end, escalated to a product specialist, not something fixable in this
+codebase. Until it's resolved, the route still succeeds if the first call (capturing the
+subscriber) works, and returns `{ ok: true, formLinked: false }` — `Newsletter.tsx` then shows
+`NEWSLETTER_COPY.delayedMessage` ("we've got your email — the checklist is on its way shortly")
+instead of claiming it's already sent, since the incentive email genuinely won't fire until Kit's
+fix lands. Once `formLinked` is reliably `true` again, no code change is needed — the honest-delay
+message simply stops appearing on its own.
 
 ## Assets
 
