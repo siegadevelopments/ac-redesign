@@ -1,18 +1,28 @@
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { FAQ_ITEMS } from "@/lib/content/faq";
+import { FAQ_ITEMS, type FaqItem } from "@/lib/content/faq";
 
-export function Faq() {
+export function Faq({
+  id = "faq",
+  eyebrow = "Questions",
+  title = "Common questions.",
+  items = FAQ_ITEMS,
+}: {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  items?: FaqItem[];
+}) {
   return (
-    <Section id="faq" tone="light">
+    <Section id={id} tone="light">
       <Container className="flex flex-col gap-12">
-        <SectionHeading eyebrow="Questions" title="Common questions." />
+        <SectionHeading eyebrow={eyebrow} title={title} />
 
-        {/* Answers stay visible rather than collapsed — direct answers are the
+        {/* Answers stay visible (not collapsed) — direct answers are the
             point of the AEO guidance in docs/seo.md §21. */}
         <dl className="grid max-w-4xl gap-8 md:grid-cols-2">
-          {FAQ_ITEMS.map((item) => (
+          {items.map((item) => (
             <div key={item.question} className="flex flex-col gap-2">
               <dt className="text-h4 font-bold text-charcoal">{item.question}</dt>
               <dd className="text-body text-charcoal-muted text-pretty">{item.answer}</dd>

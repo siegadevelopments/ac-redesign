@@ -28,12 +28,12 @@ export function buildOrganizationJsonLd() {
       name: "Australia",
     },
     knowsAbout: [
-      "Custom software development",
-      "AI integration",
       "Business automation",
+      "Custom business systems",
+      "AI implementation",
       "Workflow automation",
       "API and systems integration",
-      "Managed application support",
+      "Business systems care and support",
     ],
   };
 }

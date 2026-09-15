@@ -2,10 +2,13 @@
 
 ## Overview
 
-This repo is the marketing website for Apprising Creatives — currently a single-page (`/`) Next.js
-site. It was built from scratch (no prior app code existed) following the brief in
-`master-prompt.md` and the brand/landing-page specs in this `docs/` folder. There is no backend,
-CMS, or database — all copy lives in typed content files under `src/lib/content/`.
+This repo is the marketing website for Apprising Creatives — a Next.js site originally built as a
+single page (`/`) following the brief in `master-prompt.md`, expanded in 2026-09 into a small
+multi-page site (`/`, `/portfolio`, `/for-agencies`, `/discovery-call`, `/about`) as part of an
+SME-first repositioning — see `docs/brand.md`'s repositioning note for why. There is still no
+CMS or database; copy lives in typed content files under `src/lib/content/`, and the one dynamic
+piece of state (form submissions) goes straight to Kit rather than a local database — see
+"Newsletter / Lead Magnet" and "Assessment Funnel" below.
 
 ## Tech Stack
 
@@ -38,7 +41,8 @@ src/
   lib/
     constants.ts  # site name/url, CTA hrefs + labels
     seo.ts        # Organization / WebSite / FAQPage JSON-LD builders
-    content/      # typed content arrays (nav, capabilities, process, solutions, techStack, agencyComparison, faq, leadMagnet)
+    content/      # typed content arrays (nav, capabilities, process, solutions, techStack,
+                  # agencyComparison, faq, agencyFaq, leadMagnet, industries, assessment)
 ```
 
 ## Content Model
@@ -53,8 +57,9 @@ copy, edit the content file — not the component JSX**, unless the change is st
 The palette, type scale, section rhythm and component rules come from `docs/design-system.md`,
 which is the visual source of truth. Implementation notes:
 
-- Dark-first: Deep Navy (`#0B1220`) hero, nav, capabilities, solutions, agency, final CTA and
-  footer; light sections (Warm White `#F7F8FA` / white) alternate between them per §20.
+- Dark-first: Deep Navy (`#0B1220`) hero, nav, capabilities, "what we can build," newsletter,
+  final CTA and footer (plus the featured agency card on `/for-agencies`); light sections (Warm
+  White `#F7F8FA` / white) alternate between them per `docs/landing-page.md`'s Section Order.
 - Primary accent is Electric Blue `#3B82F6` (hover Bright Blue `#60A5FA`). An earlier teal accent
   was replaced when the design system was adopted.
 - `components/ui/Section.tsx` applies the `dark` / `light` / `raised` tone plus the section
@@ -64,22 +69,28 @@ which is the visual source of truth. Implementation notes:
 
 ## Routing
 
-Two routes: `/` (the landing page) and `/portfolio`. Most nav items (`src/lib/content/nav.ts`)
-are in-page anchors on the homepage, written as absolute paths (`/#what-we-do`, not `#what-we-do`)
-so they resolve correctly from `/portfolio` too — Navbar/MobileNav/Footer render on every route
-and use `next/link`. Section anchors: `/#what-we-do`, `/#solutions`, `/#how-we-work`,
-`/#for-agencies`, `/#about` (the "Why Apprising" section — there is no separate About section;
-see Open Questions), `/#faq`, and `/#final-cta` (used by the footer's "Contact" link).
+Five routes: `/` (the landing page), `/portfolio`, `/for-agencies`, `/discovery-call`, `/about`.
+Nav items (`src/lib/content/nav.ts`) mix in-page anchors on the homepage (written as absolute
+paths, `/#what-we-do` not `#what-we-do`, so they resolve correctly from other routes too) with
+real routes — Navbar/MobileNav/Footer render on every route and use `next/link` throughout, so
+`Button.tsx`'s anchor-vs-route branching (`href.startsWith("#")`/`"mailto:"`) already handles
+both without changes. Homepage section anchors: `/#what-we-do`, `/#solutions`, `/#how-we-work`,
+`/#faq`, and `/#final-cta` (used by the footer's "Contact" link). `/#about` and `/#for-agencies`
+no longer exist — both are now real pages (see Open Questions' former "About section" entry,
+now resolved).
 
-Section order on `/` matches `docs/design-system.md` §20: Hero → Problem → Capabilities →
-Process → Solutions → For Agencies → Engineering Capabilities → Why Apprising → Newsletter →
-FAQ → Final CTA.
+Section order on `/` matches `docs/landing-page.md`'s "Section Order" (revised 2026-09): Hero →
+Problem (expanded) → Capabilities (3 pillars) → What We Can Build → Process → Industries →
+Engineering Capabilities → Why Apprising → Newsletter → FAQ → Final CTA.
 
 ### `/portfolio`
 
-Lists real, shipped work — distinct from the homepage's "Solutions" section, which shows
-fictional concepts. Content lives in `src/lib/content/portfolio.ts`, each entry labeled `client`
-or `internal` (rendered via `Badge`) per CLAUDE.md's "Do not invent... clearly labeled" rule:
+Lists real, shipped work — distinct from the homepage's "What We Can Build" section, which shows
+fictional concepts. Nav-labeled **"Case Studies"** as of 2026-09 (`docs/case-studies.md`) — the
+URL stays `/portfolio` since it's already live/indexed and only one real case study exists, so a
+separate `/case-studies` index would just duplicate this page. Content lives in
+`src/lib/content/portfolio.ts`, each entry labeled `client` or `internal` (rendered via `Badge`)
+per CLAUDE.md's "Do not invent... clearly labeled" rule:
 
 - **Lifestyle Medicine Gateway** (client project, full platform build) — an independent domain,
   described using only what's published on the live site.
@@ -89,35 +100,107 @@ or `internal` (rendered via `Badge`) per CLAUDE.md's "Do not invent... clearly l
 
 Reuses `FinalCta` rather than duplicating it.
 
+### `/for-agencies`
+
+The former homepage "For Agencies" section, moved to its own page in the 2026-09 repositioning
+(`docs/brand.md`, `docs/conversion-strategy.md`) rather than removed — the relationship is real
+and ongoing, it just no longer leads the homepage. Reuses `ForAgencies.tsx` (the featured
+comparison card) and `TechCapabilities.tsx` (still relevant proof of technical capability for an
+agency evaluator), adds an agency-specific FAQ (`src/lib/content/agencyFaq.ts`) and a `FinalCta`
+variant with "Partner With Us" as the primary CTA instead of the Assessment.
+
+### `/discovery-call`
+
+Consolidates what the original brief described as two separate things — a "Free Business
+Automation Assessment" funnel and a "Discovery Call" explainer page — into one page. Two
+near-identical pages (one explaining the call, one collecting the same lead) would fragment a
+single small-business funnel for no benefit; see `docs/conversion-strategy.md`'s Funnel section.
+Contains the 5-step explanation of what the call covers, an explicit statement that the call can
+conclude no build is justified, and the assessment intake form. See "Assessment Funnel" below
+for the form's technical implementation.
+
+### `/about`
+
+New page: founder-led narrative, honest small-team description (founder/BD, technical
+co-founder, graphics designer, junior developer — see `docs/trust-and-claims.md`), the
+Philippines/international delivery disclosure (`docs/australian-market.md`), and the security
+engineering-practice paragraph (not a compliance claim). The homepage's "Why Apprising" section
+stays as a compact trust beat and links out here rather than duplicating this content.
+
 ## SEO
 
 Implemented from `docs/seo.md`:
 
-- Title `AI Software & Business Automation | Apprising Creatives` (§10) and the meta description
-  from §11, both centralised in `src/lib/constants.ts` / `src/app/layout.tsx`.
-- Canonical URL via `alternates.canonical`; `lang="en-AU"`.
-- Structured data (§18–20): `Organization` (with `legalName: Apprising Corporation` per §23 and
-  `areaServed: Australia`), `WebSite`, and `FAQPage` mirroring the visible FAQ section. No
-  reviews, ratings, awards, locations, employee counts or certifications are declared (§19), and
-  no Australian address/office is claimed (§17).
-- Australian market focus appears in the hero eyebrow and agency section copy only — market
-  focus, not a location claim.
-- Descriptive internal anchor text on capability cards (§28), e.g. "Explore AI integration"
-  rather than "Learn more".
+- Title `Business Automation & Custom Software | Apprising Creatives` and the meta description
+  from `src/lib/constants.ts` (`SITE_DESCRIPTION`, revised 2026-09 to match the positioning
+  statement in `docs/brand.md`), both centralised in `constants.ts` / `src/app/layout.tsx`.
+- Canonical URL via `alternates.canonical` on every route; `lang="en-AU"`.
+- Structured data: `Organization` (with `legalName: Apprising Corporation` and
+  `areaServed: Australia`), `WebSite`, and `FAQPage` mirroring the homepage's visible FAQ section
+  (agency FAQ items are not in the sitewide `FAQPage` schema, since they're scoped to
+  `/for-agencies` — see `docs/seo.md` §48). No reviews, ratings, awards, locations, employee
+  counts or certifications are declared (§19), and no Australian address/office is claimed (§17)
+  — see `docs/trust-and-claims.md` for the live register.
+- Geographic transparency: the Philippines/international-delivery line now appears in the footer
+  and `/about` (previously only documented internally in `docs/seo.md` §17, never shown on the
+  site) — see `docs/australian-market.md`.
+- `sitemap.ts` lists all five routes (`/`, `/portfolio`, `/for-agencies`, `/discovery-call`,
+  `/about`) — previously only listed `/`, missing even the pre-existing `/portfolio`; fixed as
+  part of this pass (`docs/seo.md` §47).
+- Descriptive internal anchor text on capability cards, e.g. "Explore AI integration" rather than
+  "Learn more".
 
 ## CTA / Contact Handling
 
-No booking tool exists yet. `src/lib/constants.ts` centralizes CTA destinations as `mailto:`
-links to `info@apprisingcreatives.com` (`CONTACT_EMAIL`). Every email CTA — Book a Discovery
-Call, Partner With Us, Start a Conversation — derives from that one constant, so swapping in a
-real scheduling tool (Calendly/Cal.com) or a `/contact` route is a one-file change (`CTA_HREFS`
-in `constants.ts`).
+`src/lib/constants.ts`'s `CTA_HREFS`/`CTA_LABELS` centralize every CTA — see
+`docs/conversion-strategy.md` for the full hierarchy table. As of 2026-09:
 
-Two copy conflicts between `master-prompt.md` and this repo's maintained docs
-(`CLAUDE.md`/`docs/landing-page.md`) were resolved in favor of the latter:
+- **Book a Free Automation Assessment** (primary) now routes to the real `/discovery-call` page
+  instead of a `mailto:` link — the first CTA in the site that isn't just an email draft.
+- **Partner With Us** (agency) and the **Email Us Directly** fallback remain `mailto:` links to
+  `info@apprisingcreatives.com` (`CONTACT_EMAIL`) — no scheduling tool exists yet for either.
+- **See What We Can Automate** (secondary) and **View Case Studies** (tertiary) are unchanged in
+  mechanism — an in-page anchor and a route link respectively.
 
-- Agency CTA label: **"Partner With Us"** (not "Explore a Partnership").
-- Hero secondary CTA: **"Explore What We Build"** (not "See What We Build").
+Swapping the mailto CTAs for a real scheduling tool (Calendly/Cal.com) or a `/contact` route
+remains a one-file change in `constants.ts`, same as before this revision.
+
+## Assessment Funnel
+
+`/discovery-call` (`src/app/discovery-call/page.tsx`) hosts the intake form
+(`src/components/sections/AssessmentForm.tsx`, a client component) described in
+`docs/conversion-strategy.md`. It posts to `src/app/api/assessment/route.ts`, which forwards the
+submission to Kit's v4 API — the same account as the newsletter integration, but a **separate**
+form so Kit's own automation can notify differently for an assessment lead vs. a newsletter
+subscriber:
+
+`POST https://api.kit.com/v4/forms/{KIT_ASSESSMENT_FORM_ID}/subscribers`
+
+Body: `{ email_address, first_name, fields: { business, website, industry, team_size,
+biggest_challenge, current_tools, automate_wish } }`.
+
+Requires, in addition to the existing `KIT_API_KEY`:
+
+- `KIT_ASSESSMENT_FORM_ID` — a Kit form distinct from `KIT_FORM_ID`.
+- Six custom fields must be created in the Kit dashboard first, with exactly these keys:
+  `business`, `website`, `industry`, `team_size`, `biggest_challenge`, `current_tools`,
+  `automate_wish`. Kit's v4 API rejects `fields` keys that don't already exist as custom fields
+  on the account — this route does not create them for you.
+
+Same failure behavior as the newsletter route: a 503 with a generic error message if the env
+vars are unset, rather than a silent failure.
+
+## Analytics
+
+No analytics vendor is wired in — see `docs/conversion-strategy.md`'s Analytics Events section
+for the full event list and why. `src/lib/analytics.ts` exports one small helper,
+`trackEvent(name, data?)`, that pushes `{ event: name, ...data }` to `window.dataLayer` if it
+exists and no-ops otherwise (SSR-safe, zero dependency, GTM/GA4-compatible without committing to
+either specifically). Call sites: the assessment form (`assessment_started` on first field
+interaction, `assessment_completed` on success), the newsletter form (`contact_form_submitted`
+with `form: "newsletter"`), every primary CTA (`discovery_call_clicked`), `/portfolio`'s page
+view (`case_study_viewed`), and the agency mailto CTA (`partner_with_us_clicked`). Wiring an
+actual GTM container ID or GA4 property is a follow-up — see Open Questions.
 
 ## Newsletter / Lead Magnet
 
@@ -166,8 +249,10 @@ The favicon (`src/app/icon.tsx`) and Open Graph image (`src/app/opengraph-image.
 
 The CSP is static (no per-request nonce). Next's nonce-based CSP pattern requires generating the
 nonce in Proxy/middleware on every request, which forces **dynamic rendering on every page** —
-incompatible with this site being fully static (no forms, no user-generated content, no
-third-party scripts). `script-src`/`style-src` therefore use `'unsafe-inline'`, which only covers
+a cost this site still avoids for its marketing pages even though it now has two forms
+(newsletter, assessment): both post via client-side `fetch` to same-origin API routes rather than
+a native form submission or third-party script, so `connect-src 'self'` already covers them
+without a nonce. `script-src`/`style-src` therefore use `'unsafe-inline'`, which only covers
 Next's own inline hydration/flight-data scripts and the scroll-reveal diagrams' inline CSS custom
 properties — there is no user input for that to expose. If a booking tool or third-party script is
 ever added (see Open Questions below), extend the CSP's allowlisted origins rather than loosening
@@ -178,15 +263,23 @@ it further.
 
 ## Open Questions / Assumptions
 
-- **Real domain** — `SITE_URL` in `constants.ts` is a placeholder
-  (`https://www.apprisingcreatives.com`). Update before launch; it feeds `metadataBase`, OG/
-  canonical URLs, `sitemap.ts`, and the JSON-LD `url`.
-- **Booking tool** — no scheduling tool is wired up; CTAs use `mailto:`.
-- **About section** — the nav's "About" item anchors into "Why Apprising" (`#about`) rather than
-  a dedicated section, to stay within the master prompt's specified 11 sections.
-- **Kit form/checklist not created yet** — `KIT_API_KEY`/`KIT_FORM_ID` are unset (see "Newsletter
-  / Lead Magnet" above), and the checklist PDF content itself still needs to be written and
-  uploaded as that form's incentive in the Kit dashboard.
+- **Booking tool** — the Assessment funnel is a form + human follow-up, not real-time scheduling;
+  no Calendly/Cal.com-style booking tool is wired up. CTAs that used to be `mailto:` fallbacks
+  still are (Partner With Us, Email Us Directly).
+- **Kit forms/checklist not fully configured yet** — `KIT_API_KEY`, `KIT_FORM_ID`, and
+  `KIT_ASSESSMENT_FORM_ID` are all unset in this repo (see "Newsletter / Lead Magnet" and
+  "Assessment Funnel" above). The checklist PDF content, the six assessment custom fields, and
+  both forms' Kit-side automations still need to be created in the Kit dashboard.
+- **Analytics vendor** — `src/lib/analytics.ts` pushes to `window.dataLayer` but no GTM
+  container / GA4 property is actually installed on the page yet, so events currently no-op in
+  production. Wire an actual container once one is chosen.
+- **Lifestyle Medicine Gateway case-study approval** — the case study on `/portfolio` currently
+  uses only facts already published on the client's own site (no new claims added in this pass).
+  Expanding it to the full Challenge/What We Built/Outcome/Testimonial structure in
+  `docs/case-studies.md` still needs the client's explicit written approval first.
+- **Design/visual QA on the new pages** — `/for-agencies`, `/discovery-call`, and `/about` reuse
+  existing components and tokens throughout, but haven't had a human design pass the way the
+  original homepage did; treat them as a first implementation pass, not a final polish.
 
 ## Build & Run
 
@@ -198,5 +291,8 @@ npm run build   # production build (includes TypeScript check)
 npm start       # serve the production build
 ```
 
-`KIT_API_KEY` and `KIT_FORM_ID` (see `.env.example`) are required only for the newsletter
-signup's Kit integration to work; the rest of the site needs no environment variables.
+`KIT_API_KEY`, `KIT_FORM_ID`, and `KIT_ASSESSMENT_FORM_ID` (see `.env.example`) are required only
+for the newsletter and assessment forms' Kit integration to work; the rest of the site needs no
+environment variables. `SITE_URL` in `constants.ts` is the real, live domain
+(`https://www.apprisingcreatives.com`) — it previously carried a stale "placeholder" comment from
+before the domain went live; that comment is fixed as part of this pass.

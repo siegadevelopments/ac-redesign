@@ -4,52 +4,75 @@ export type SolutionExample = {
   features: string[];
 };
 
+// Industry-neutral use-case concepts — supports testing multiple verticals
+// rather than committing to one (see docs/target-audience.md). Still
+// explicitly "Concept," not client work — see SolutionExamples.tsx's
+// disclaimer and docs/case-studies.md for where real client work lives.
 export const SOLUTION_EXAMPLES: SolutionExample[] = [
   {
-    title: "AI-Enabled Clinic Platform",
+    title: "Automated Quotation System",
     description:
-      "A concept for how healthcare providers could manage appointments and patient workflows with AI-assisted intake.",
+      "A concept for turning a manual, back-and-forth quoting process into a fast digital workflow.",
     features: [
-      "Appointment management",
-      "Patient workflows",
-      "AI-assisted intake",
-      "Operational dashboards",
+      "Guided quote builder",
+      "Automatic pricing rules",
+      "Instant PDF generation",
+      "Follow-up notifications",
     ],
   },
   {
-    title: "Intelligent Booking System",
+    title: "Booking & Scheduling System",
     description:
-      "A concept for a booking platform that handles availability, payments, and notifications without manual coordination.",
+      "A concept for centralizing bookings, availability, customer information, and notifications in one place.",
     features: [
       "Online bookings",
-      "Payments",
-      "Availability management",
-      "Integrations",
+      "Real-time availability",
       "Automated notifications",
+      "Payment integration",
     ],
   },
   {
-    title: "Business Operations Platform",
+    title: "Internal Business Dashboard",
     description:
-      "A concept for a central system that replaces scattered spreadsheets with one operational view.",
+      "A concept for giving owners and managers a single, real-time view of how the business is actually operating.",
     features: [
-      "Centralized workflows",
-      "Dashboards",
+      "Centralized reporting",
       "Role-based access",
-      "Reporting",
-      "System integrations",
+      "Live data instead of static spreadsheets",
+      "Custom views per team",
     ],
   },
   {
-    title: "AI Document Workflow",
+    title: "Workflow Automation",
     description:
-      "A concept for turning incoming documents into structured, validated data with a human in the loop.",
+      "A concept for connecting the tools a business already uses so information moves between them without manual re-entry.",
     features: [
-      "Document ingestion",
-      "Data extraction",
-      "Validation",
-      "Human review",
-      "Automated routing",
+      "System-to-system data sync",
+      "Automated notifications",
+      "Conditional workflows",
+      "Reduced manual handling",
+    ],
+  },
+  {
+    title: "AI Business Assistant",
+    description:
+      "A concept for an AI assistant that helps a team retrieve information, process documents, or triage incoming enquiries.",
+    features: [
+      "Document intelligence",
+      "Enquiry triage",
+      "Knowledge retrieval",
+      "Human review built in",
+    ],
+  },
+  {
+    title: "Custom Business Platform",
+    description:
+      "A concept for the system a business needs when off-the-shelf software doesn't fit how it actually operates.",
+    features: [
+      "Built around your workflow",
+      "Custom access levels",
+      "API integrations",
+      "Room to grow with the business",
     ],
   },
 ];

@@ -55,7 +55,11 @@ export function ForAgencies() {
                 Work with us as an extension of your delivery team.
               </p>
               <div>
-                <Button href={CTA_HREFS.partnerWithUs} variant="primary">
+                <Button
+                  href={CTA_HREFS.partnerWithUs}
+                  variant="primary"
+                  analyticsEvent="partner_with_us_clicked"
+                >
                   {CTA_LABELS.partnerWithUs}
                 </Button>
               </div>

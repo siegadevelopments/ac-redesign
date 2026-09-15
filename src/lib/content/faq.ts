@@ -3,8 +3,9 @@ export type FaqItem = {
   answer: string;
 };
 
-// Answers 1–3 are taken from docs/seo.md §20. Answers 4–5 address the agency
-// objections documented in docs/target-audience.md §5.
+// Homepage FAQ — SME/automation intent only as of 2026-09. The two purely
+// agency-specific questions moved to agencyFaq.ts (docs/seo.md §48), since a
+// homepage FAQPage schema mixing SME and agency intent dilutes both.
 export const FAQ_ITEMS: FaqItem[] = [
   {
     question: "Do I need custom software?",
@@ -17,18 +18,23 @@ export const FAQ_ITEMS: FaqItem[] = [
       "Yes. AI can often be introduced into an existing workflow rather than requiring an entirely new platform.",
   },
   {
-    question: "Do you work with agencies?",
+    question: "What business processes can be automated?",
     answer:
-      "Yes. Apprising can provide engineering capacity behind agencies delivering software, AI, automation and integration projects.",
+      "Anything repetitive and rule-based — quoting, booking, reporting, data entry between systems, customer notifications, and document handling are the most common starting points. The Free Automation Assessment identifies which ones apply to your business specifically.",
   },
   {
-    question: "Will you work directly with our clients?",
+    question: "How much does business automation cost in Australia?",
     answer:
-      "Only in the way you decide. We support your client relationship rather than competing for it — you keep strategy, account management and commercial ownership, and we provide the engineering behind it.",
+      "It depends on scope. Implementation projects typically range from AUD $5,000–$15,000+ depending on complexity, with ongoing support available afterward. We only give a specific figure after understanding the actual workflow — not before.",
   },
   {
-    question: "How do you handle communication and quality?",
+    question: "Should my business build custom software or use SaaS?",
     answer:
-      "With defined responsibilities, clear technical communication and written documentation. Testing, maintainability and handover quality are part of delivery, not an afterthought.",
+      "Often SaaS is the right answer, and we'll tell you that directly. Custom software makes sense when your workflow doesn't fit existing tools, when you're paying for multiple disconnected subscriptions, or when integration between systems becomes the real cost.",
+  },
+  {
+    question: "How do you handle security?",
+    answer:
+      "Every system we build uses secure authentication, access control, and secure API design as standard practice, not an add-on. We don't hold formal compliance certifications, and we're direct about that rather than implying otherwise.",
   },
 ];

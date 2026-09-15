@@ -10,9 +10,9 @@ export function SolutionExamples() {
   return (
     <Section id="solutions" tone="dark">
       <Container className="flex flex-col gap-12">
-        <SectionHeading eyebrow="Solutions" title="What we can help you build." onDark />
+        <SectionHeading eyebrow="What We Can Build" title="What we can build." onDark />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {SOLUTION_EXAMPLES.map((solution) => (
             <Card key={solution.title} onDark className="flex flex-col gap-4">
               <div className="flex items-start justify-between gap-4">

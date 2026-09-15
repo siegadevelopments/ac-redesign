@@ -1,7 +1,8 @@
-import { Target, Layers, TrendingUp, Handshake } from "lucide-react";
+import { Target, Layers, TrendingUp, Handshake, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import Link from "next/link";
 
 const REASONS = [
   {
@@ -54,6 +55,14 @@ export function WhyApprising() {
             );
           })}
         </div>
+
+        <Link
+          href="/about"
+          className="inline-flex w-fit items-center gap-1.5 text-small font-semibold text-teal hover:text-teal-light"
+        >
+          Learn more about us
+          <ArrowRight size={15} aria-hidden="true" />
+        </Link>
       </Container>
     </Section>
   );

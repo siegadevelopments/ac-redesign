@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { trackEvent, type AnalyticsEvent } from "@/lib/analytics";
 
 type Variant = "primary" | "secondary";
 
@@ -18,12 +21,15 @@ export function Button({
   href,
   variant = "primary",
   onDark = false,
+  analyticsEvent,
   children,
   className = "",
 }: {
   href: string;
   variant?: Variant;
   onDark?: boolean;
+  /** Fires a docs/conversion-strategy.md analytics event on click — see src/lib/analytics.ts. */
+  analyticsEvent?: AnalyticsEvent;
   children: ReactNode;
   className?: string;
 }) {
@@ -34,17 +40,18 @@ export function Button({
 
   const classes = `${BASE_CLASSES} ${variantClasses} ${className}`;
   const isExternalOrAnchor = href.startsWith("#") || href.startsWith("mailto:");
+  const handleClick = analyticsEvent ? () => trackEvent(analyticsEvent) : undefined;
 
   if (isExternalOrAnchor) {
     return (
-      <a href={href} className={classes}>
+      <a href={href} className={classes} onClick={handleClick}>
         {children}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={classes}>
+    <Link href={href} className={classes} onClick={handleClick}>
       {children}
     </Link>
   );

@@ -12,7 +12,10 @@ export function Footer() {
         <div className="flex flex-col gap-3">
           <Logo />
           <p className="max-w-xs text-small text-cool-gray">
-            We build the systems behind better businesses.
+            Your business runs on systems. We make them work smarter.
+          </p>
+          <p className="max-w-xs text-small text-cool-gray/80">
+            Built in the Philippines. Serving businesses internationally, including Australia.
           </p>
         </div>
 

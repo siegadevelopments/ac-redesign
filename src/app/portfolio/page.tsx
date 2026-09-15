@@ -6,29 +6,35 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { PORTFOLIO_ITEMS } from "@/lib/content/portfolio";
 
+// Nav-labeled "Case Studies" as of 2026-09 — URL stays /portfolio since it's
+// already live/indexed and only one real case study exists. See
+// docs/case-studies.md.
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Case Studies & Portfolio",
   description:
-    "A look at what Apprising Creatives has built — client engagements and internal products, clearly labeled.",
+    "A look at what Apprising Creatives has built — real client work and internal products, clearly labeled and never fabricated.",
   alternates: { canonical: "/portfolio" },
 };
 
 export default function PortfolioPage() {
   return (
     <>
+      <PageViewTracker event="case_study_viewed" />
+
       <Section tone="dark">
         <Container className="flex flex-col gap-6">
           <span className="text-label font-semibold uppercase tracking-[0.12em] text-teal-light">
-            Portfolio
+            Case Studies
           </span>
           <h1 className="max-w-3xl text-display font-extrabold text-soft-white text-balance">
             What we&apos;ve built.
           </h1>
           <p className="max-w-2xl text-body-lg text-cool-gray text-pretty">
-            A mix of client engagements and internal products. Each is labeled clearly below — we
-            never present a demo or internal build as client work.
+            A mix of real client engagements and internal products. Each is labeled clearly below
+            — we never present a demo or internal build as client work.
           </p>
         </Container>
       </Section>

@@ -10,20 +10,24 @@ export function Hero() {
       <Container className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
         <div className="flex flex-col gap-6">
           <span className="text-label font-semibold uppercase tracking-[0.12em] text-teal-light">
-            Engineering partner for Australian businesses and agencies
+            Automation &amp; custom systems for Australian businesses
           </span>
 
           <h1 className="text-display font-extrabold text-soft-white text-balance">
-            Build the systems behind a better business.
+            Your business runs on systems. We make them work smarter.
           </h1>
 
           <p className="max-w-lg text-body-lg text-cool-gray text-pretty">
-            We design and build custom software, AI integrations, and automated workflows that
-            help growing businesses operate with less friction and more intelligence.
+            We help Australian businesses eliminate repetitive work, replace manual processes,
+            and build custom systems using automation, AI, and modern software.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Button href={CTA_HREFS.bookDiscoveryCall} variant="primary">
+            <Button
+              href={CTA_HREFS.bookDiscoveryCall}
+              variant="primary"
+              analyticsEvent="discovery_call_clicked"
+            >
               {CTA_LABELS.bookDiscoveryCall}
             </Button>
             <Button href={CTA_HREFS.exploreWhatWeBuild} variant="secondary" onDark>
@@ -32,7 +36,7 @@ export function Hero() {
           </div>
 
           <p className="pt-2 text-small text-cool-gray">
-            Custom software. AI integration. Automation. Long-term technical support.
+            Business automation. Custom business systems. AI implementation.
           </p>
         </div>
 

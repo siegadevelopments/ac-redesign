@@ -44,7 +44,34 @@ The design should make a potential client think:
 
 # 3. Target Audience
 
-Primary audience:
+> **2026-09 repositioning override.** The original brief made agencies primary. The homepage was
+> restructured to lead with SMEs instead — see `docs/target-audience.md` for the full,
+> current ICP and the reasoning. Agencies remain a real secondary profile, served by their own
+> page (`/for-agencies`) rather than the homepage. The lists below are kept for reference but
+> read "primary"/"secondary" as reversed from how they're written.
+
+Primary audience (homepage):
+
+### Growing Australian SMEs
+
+Typical decision makers:
+
+* Founder
+* Owner
+* CEO
+* Managing Director
+* Operations leader
+
+They need:
+
+* Automation
+* Internal systems
+* Custom software
+* AI integration
+* Workflow improvements
+* System integration
+
+Secondary audience (`/for-agencies`):
 
 ### Australian digital, AI, automation, and software agencies
 
@@ -66,28 +93,6 @@ They need:
 * Automation engineering
 * Backend/frontend development
 * Technical delivery support
-
-Secondary audience:
-
-### Growing businesses and SMEs
-
-Typical decision makers:
-
-* Founder
-* Owner
-* CEO
-* Operations Manager
-* Practice Manager
-* General Manager
-
-They need:
-
-* Automation
-* Internal systems
-* Custom software
-* AI integration
-* Workflow improvements
-* System integration
 
 The design must therefore prioritize **B2B credibility over visual novelty**.
 
@@ -1534,3 +1539,13 @@ if the design system later defines them explicitly.
   `border-line-dark`, `text-soft-white`, `placeholder:text-cool-gray/70`, `--radius-btn` corners
   — i.e. the dark secondary-button treatment inverted into a filled field. Reuse this for any
   future form field rather than inventing a new one.
+* **Assessment form (`/discovery-call`)** — reuses the Newsletter section's input pattern above
+  for every field, laid out as a single-column stack inside a light-tone `Card` (the page is a
+  light section, unlike the dark Newsletter card, so inputs use the light equivalent: `bg-white`
+  fill, `border-line-light`, `text-charcoal`, `placeholder:text-charcoal-muted/70`). `<select>`
+  and `<textarea>` (industry, biggest challenge) share the same classes as `<input>` — no
+  separate select/textarea style was introduced.
+* **Industry cards (`Industries.tsx`)** — same `Card` + icon + title + short description shape as
+  `WhyApprising.tsx`'s reason grid, not a new card variant. Kept deliberately plain (no imagery)
+  per §33/§34 — an icon and one sentence, nothing implying deep vertical specialization that
+  isn't real yet.

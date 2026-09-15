@@ -4,15 +4,18 @@ export type ProcessStep = {
   description: string;
 };
 
+// Steps renamed 2026-09 (Discover/Diagnose/Design/Build/Optimise) to match
+// docs/landing-page.md — same five-step shape and philosophy as before,
+// see PROCESS_TRUST_NOTES below.
 export const PROCESS_STEPS: ProcessStep[] = [
   {
     number: "01",
-    title: "Understand",
+    title: "Discover",
     description: "We learn how your business currently works.",
   },
   {
     number: "02",
-    title: "Identify",
+    title: "Diagnose",
     description:
       "We identify bottlenecks, repetitive work, disconnected systems, and opportunities.",
   },
@@ -28,7 +31,7 @@ export const PROCESS_STEPS: ProcessStep[] = [
   },
   {
     number: "05",
-    title: "Improve",
+    title: "Optimise",
     description: "We continue improving it as your business evolves.",
   },
 ];

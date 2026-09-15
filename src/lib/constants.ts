@@ -1,32 +1,38 @@
 export const SITE_NAME = "Apprising Creatives";
 // Legal entity name, per docs/seo.md §23 (entity consistency).
 export const SITE_LEGAL_NAME = "Apprising Corporation";
-export const SITE_TAGLINE = "We build the systems behind better businesses.";
+export const SITE_TAGLINE = "Your business runs on systems. We make them work smarter.";
 export const SITE_DESCRIPTION =
-  "Apprising Creatives builds custom software, AI integrations and business automation systems for growing businesses and technology agencies.";
+  "Apprising Creatives helps Australian businesses eliminate repetitive work and modernise operations with automation, AI, and custom business systems.";
 
-// PLACEHOLDER — no real domain has been assigned yet. Update before launch.
+// The real, live domain (apprisingcreatives.com) — this comment previously
+// called it a placeholder from before the domain went live; fixed 2026-09.
 export const SITE_URL = "https://www.apprisingcreatives.com";
 
-// Every email CTA derives from this, so changing it updates them all.
-// No booking tool is wired up yet — swap CTA_HREFS for a scheduling link
-// (Calendly/Cal.com) or a /contact route when one is chosen.
+// mailto CTAs (Partner With Us, the "email us directly" fallback) derive
+// from this. The primary Assessment CTA no longer uses mailto — see
+// CTA_HREFS.bookDiscoveryCall below and docs/project-context.md's
+// "Assessment Funnel" section.
 export const CONTACT_EMAIL = "info@apprisingcreatives.com";
 
 function mailto(subject: string) {
   return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
 }
 
+// CTA hierarchy fixed sitewide per docs/conversion-strategy.md — avoid
+// introducing new CTA wording elsewhere; add a variant there first.
 export const CTA_HREFS = {
-  bookDiscoveryCall: mailto("Discovery Call"),
-  exploreWhatWeBuild: "#what-we-do",
+  bookDiscoveryCall: "/discovery-call",
+  exploreWhatWeBuild: "#solutions",
+  viewCaseStudies: "/portfolio",
   partnerWithUs: mailto("Agency Partnership"),
   startConversation: mailto("Getting Started"),
 };
 
 export const CTA_LABELS = {
-  bookDiscoveryCall: "Book a Discovery Call",
-  exploreWhatWeBuild: "Explore What We Build",
+  bookDiscoveryCall: "Book a Free Automation Assessment",
+  exploreWhatWeBuild: "See What We Can Automate",
+  viewCaseStudies: "View Case Studies",
   partnerWithUs: "Partner With Us",
-  startConversation: "Start a Conversation",
+  startConversation: "Email Us Directly",
 };

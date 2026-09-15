@@ -7,6 +7,7 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { LEAD_MAGNET, NEWSLETTER_COPY } from "@/lib/content/leadMagnet";
+import { trackEvent } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -28,6 +29,7 @@ export function Newsletter() {
 
       if (!response.ok) throw new Error("subscribe failed");
       setStatus("success");
+      trackEvent("contact_form_submitted", { form: "newsletter" });
     } catch {
       setStatus("error");
     }

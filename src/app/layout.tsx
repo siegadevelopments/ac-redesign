@@ -3,7 +3,7 @@ import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { buildFaqJsonLd, buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo";
+import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 const inter = Inter({
@@ -20,7 +20,7 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const TITLE = "AI Software & Business Automation | Apprising Creatives";
+const TITLE = "Business Automation & Custom Software | Apprising Creatives";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -33,12 +33,13 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   keywords: [
-    "custom software development",
-    "AI integration",
-    "business automation",
-    "workflow automation",
-    "API integration",
-    "application support",
+    "business automation Australia",
+    "AI automation for small business Australia",
+    "custom business software Australia",
+    "business process automation Australia",
+    "custom internal software Australia",
+    "AI implementation Australia",
+    "workflow automation Australia",
     "software development partner",
     "agency development partner",
   ],
@@ -57,7 +58,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  const jsonLd = [buildOrganizationJsonLd(), buildWebSiteJsonLd(), buildFaqJsonLd()];
+  // Organization/WebSite are true sitewide facts, so they belong here.
+  // FAQPage previously lived here too and was injected on every route,
+  // including ones with no visible FAQ content (e.g. /about, /portfolio) —
+  // a schema/content mismatch. It's now added by the homepage itself
+  // (src/app/page.tsx) instead, where the matching FAQ is actually visible.
+  const jsonLd = [buildOrganizationJsonLd(), buildWebSiteJsonLd()];
 
   return (
     <html lang="en-AU" className={`${inter.variable} ${manrope.variable} h-full antialiased`}>

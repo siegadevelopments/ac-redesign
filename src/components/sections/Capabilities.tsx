@@ -15,7 +15,7 @@ export function Capabilities() {
           onDark
         />
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {CAPABILITIES.map((capability) => {
             const Icon = capability.icon;
             return (

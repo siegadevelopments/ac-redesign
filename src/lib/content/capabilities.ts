@@ -1,4 +1,4 @@
-import { Blocks, BrainCircuit, Workflow, LifeBuoy, type LucideIcon } from "lucide-react";
+import { Workflow, Blocks, BrainCircuit, type LucideIcon } from "lucide-react";
 
 export type Capability = {
   icon: LucideIcon;
@@ -9,37 +9,11 @@ export type Capability = {
   linkLabel: string;
 };
 
+// Three pillars, not four — the former fourth card ("Managed Application
+// Support") is now the Business Systems Care Plan, a recurring offer
+// documented in docs/offers.md rather than a homepage capability card.
+// See docs/brand.md's repositioning note.
 export const CAPABILITIES: Capability[] = [
-  {
-    icon: Blocks,
-    title: "Custom Software",
-    pitch: "Build the software your business actually needs.",
-    examples: [
-      "Internal platforms",
-      "Client portals",
-      "Booking systems",
-      "Dashboards",
-      "Operational systems",
-      "SaaS products",
-    ],
-    anchor: "#solutions",
-    linkLabel: "Explore custom software",
-  },
-  {
-    icon: BrainCircuit,
-    title: "AI Integration",
-    pitch: "Put AI inside real business workflows.",
-    examples: [
-      "AI assistants",
-      "Document processing",
-      "Knowledge systems",
-      "AI-powered workflows",
-      "Intelligent search",
-      "AI agents",
-    ],
-    anchor: "#solutions",
-    linkLabel: "Explore AI integration",
-  },
   {
     icon: Workflow,
     title: "Business Automation",
@@ -56,18 +30,33 @@ export const CAPABILITIES: Capability[] = [
     linkLabel: "Explore business automation",
   },
   {
-    icon: LifeBuoy,
-    title: "Managed Application Support",
-    pitch: "Keep your systems reliable as your business grows.",
+    icon: Blocks,
+    title: "Custom Business Systems",
+    pitch: "Replace spreadsheets and disconnected processes with software designed around your business.",
     examples: [
-      "Maintenance",
-      "Monitoring",
-      "Bug fixes",
-      "Performance improvements",
-      "New features",
-      "Technical support",
+      "Automated quotation systems",
+      "Booking systems",
+      "Internal dashboards",
+      "Customer portals",
+      "Business management systems",
+      "API integrations",
     ],
-    anchor: "#how-we-work",
-    linkLabel: "Explore managed support",
+    anchor: "#solutions",
+    linkLabel: "Explore custom business systems",
+  },
+  {
+    icon: BrainCircuit,
+    title: "AI Implementation",
+    pitch: "Put AI into real workflows where it can improve productivity, service, or decision-making.",
+    examples: [
+      "AI assistants",
+      "Document processing",
+      "Enquiry handling",
+      "Lead qualification",
+      "Knowledge assistants",
+      "AI-powered internal tools",
+    ],
+    anchor: "#solutions",
+    linkLabel: "Explore AI implementation",
   },
 ];

@@ -4,33 +4,38 @@
 
 ## Project Purpose
 
-Apprising Creatives is a software and AI engineering company.
-The website must position the company as a technical partner that helps businesses and agencies design, build, integrate, and maintain intelligent business systems.
+> **2026-09 repositioning.** The site now leads with direct Australian SME client acquisition
+> rather than agencies — see `docs/brand.md`'s repositioning note for the full reasoning. This
+> section reflects the current positioning; treat it as current, not the original brief.
+
+Apprising Creatives helps Australian businesses eliminate repetitive work and modernise
+operations with automation, AI, and custom business systems. The website must position the
+company as a practical technical partner for growing SMEs first, and for agencies needing
+delivery capacity second (`/for-agencies`).
 This is not a generic web design agency website.
 The company focuses on:
 
-- Custom software
-- AI integration
 - Business automation
+- Custom business systems
+- AI implementation
 - API and systems integration
-- Managed application support
-- Technical delivery partnerships
+- Technical delivery partnerships (agencies)
 
 ## Primary Business Positioning
 
 Core statement:
 
-We build the systems behind better businesses.
+Your business runs on systems. We make them work smarter.
 
 Supporting statement:
 
-Apprising Creatives designs and builds custom software, AI integrations, and automated workflows that help growing businesses operate with less friction and more intelligence.
+We help Australian businesses eliminate repetitive work, replace manual processes, and build custom systems using automation, AI, and modern software. The customer buys the business outcome — AI and software are the mechanism, not the pitch.
 
 ## Target Audiences
 
-### Businesses
+### Businesses (primary — the homepage)
 
-Growing companies that have:
+Growing Australian SMEs, 10–100 employees, that have:
 
 - Manual workflows
 - Spreadsheet-heavy operations
@@ -40,7 +45,9 @@ Growing companies that have:
 - A need for custom internal systems
 - A need to integrate existing tools
 
-### Agencies and Consultancies
+See `docs/target-audience.md` for the full ICP, buying triggers, and objections.
+
+### Agencies and Consultancies (secondary — `/for-agencies`, not the homepage)
 
 Agencies that:
 
@@ -103,19 +110,27 @@ Do not invent:
 - Revenue figures
 - ROI
 - Case studies
+- Compliance certifications (SOC 2, HIPAA, etc.)
+- Client ratings, client counts, or awards
 
-Demos and internal products must be clearly labeled.
+Demos and internal products must be clearly labeled. See `docs/trust-and-claims.md` for the live
+verification register — every factual trust claim must have a row there before it ships.
 
 ## Primary Conversion Goal
 
 Primary CTA:
-Book a Discovery Call
+Book a Free Automation Assessment
 
 Secondary CTA:
-Explore What We Build
+See What We Can Automate
 
-Agency CTA:
+Tertiary CTA:
+View Case Studies
+
+Agency CTA (separate funnel, `/for-agencies` only):
 Partner With Us
+
+See `docs/conversion-strategy.md` for the full CTA hierarchy and funnel.
 
 ## Development Principles
 
@@ -159,8 +174,13 @@ Keep the following files updated when relevant:
 - docs/landing-page.md — section-by-section landing page spec.
 - docs/design-system.md — color/type/spacing tokens, motion guidelines, component patterns.
 - docs/development-guidelines.md — general engineering principles for this repo.
-- docs/target-audience.md — ideal customer profiles (agencies first, then SMEs), buyer psychology, objections, messaging hierarchy.
+- docs/target-audience.md — ideal customer profiles (SMEs first, then agencies), buyer psychology, objections, messaging hierarchy.
 - docs/seo.md — SEO/AEO strategy, geographic focus, keyword clusters, structured data, content architecture.
+- docs/offers.md — the productized sales ladder (Assessment → Implementation → Care Plan) and indicative pricing rules.
+- docs/case-studies.md — where case studies live, proof/approval requirements before publishing one.
+- docs/conversion-strategy.md — CTA hierarchy, funnel, assessment intake fields, analytics events.
+- docs/trust-and-claims.md — the verification register; every factual trust claim needs a row here before it ships.
+- docs/australian-market.md — geographic transparency, spelling, industries being tested, security messaging, things never to claim.
 
 Do not allow implementation decisions to silently contradict the documentation.
 

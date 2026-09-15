@@ -3,23 +3,34 @@ import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { CTA_HREFS, CTA_LABELS } from "@/lib/constants";
 
-export function FinalCta() {
+export function FinalCta({
+  heading = "Let's find the work your business shouldn't be doing manually.",
+  body = "Tell us how your business works today. We'll help identify where software, automation, or AI can make a meaningful difference.",
+  primaryHref = CTA_HREFS.bookDiscoveryCall,
+  primaryLabel = CTA_LABELS.bookDiscoveryCall,
+  primaryAnalyticsEvent = "discovery_call_clicked" as const,
+  secondaryHref = CTA_HREFS.viewCaseStudies,
+  secondaryLabel = CTA_LABELS.viewCaseStudies,
+}: {
+  heading?: string;
+  body?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  primaryAnalyticsEvent?: "discovery_call_clicked" | "partner_with_us_clicked";
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}) {
   return (
     <Section id="final-cta" tone="dark">
       <Container className="flex flex-col items-center gap-6 text-center">
-        <h2 className="max-w-3xl text-h2 font-bold text-soft-white text-balance">
-          Let&apos;s figure out what your business should automate next.
-        </h2>
-        <p className="max-w-xl text-body-lg text-cool-gray text-pretty">
-          Tell us how your business works today. We&apos;ll help identify where software,
-          automation, or AI can make a meaningful difference.
-        </p>
+        <h2 className="max-w-3xl text-h2 font-bold text-soft-white text-balance">{heading}</h2>
+        <p className="max-w-xl text-body-lg text-cool-gray text-pretty">{body}</p>
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <Button href={CTA_HREFS.bookDiscoveryCall} variant="primary">
-            {CTA_LABELS.bookDiscoveryCall}
+          <Button href={primaryHref} variant="primary" analyticsEvent={primaryAnalyticsEvent}>
+            {primaryLabel}
           </Button>
-          <Button href={CTA_HREFS.startConversation} variant="secondary" onDark>
-            {CTA_LABELS.startConversation}
+          <Button href={secondaryHref} variant="secondary" onDark>
+            {secondaryLabel}
           </Button>
         </div>
       </Container>

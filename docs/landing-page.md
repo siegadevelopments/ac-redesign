@@ -1,8 +1,14 @@
 # Landing Page Specification
 
+> **2026-09 repositioning note.** This is a substantial revision, not a from-scratch rewrite —
+> most sections below are the same components with updated copy/content, not new components. See
+> `docs/brand.md` and `docs/target-audience.md` for why the homepage now leads with SMEs instead
+> of agencies. The "For Agencies" section (formerly §7) moved to its own page, `/for-agencies` —
+> see `docs/conversion-strategy.md`.
+
 ## Primary Objective
 
-Generate qualified discovery calls.
+Generate qualified Business Automation Assessment bookings from Australian SME visitors.
 
 The visitor should understand within the first few seconds:
 
@@ -11,13 +17,13 @@ The visitor should understand within the first few seconds:
 3. What problem it solves
 4. What to do next
 
-## Primary CTA
+## CTA Hierarchy
 
-Book a Discovery Call
+See `docs/conversion-strategy.md` for the full table. Summary:
 
-## Secondary CTA
-
-Explore What We Build
+- Primary: **Book a Free Automation Assessment** → `/discovery-call`
+- Secondary: **See What We Can Automate** → `#solutions`
+- Tertiary: **View Case Studies** → `/portfolio`
 
 ## Landing Page Sections
 
@@ -25,215 +31,180 @@ Explore What We Build
 
 * Logo
 * What We Do
-* Solutions
+* What We Can Build
 * How We Work
+* Case Studies
 * For Agencies
 * About
-* Book a Discovery Call
+* Book a Free Automation Assessment
 
 ### 2. Hero
 
 Headline:
 
-> Build the systems behind a better business.
+> Your business runs on systems. We make them work smarter.
 
 Supporting copy:
 
-> We design and build custom software, AI integrations, and automated workflows that help growing businesses operate with less friction and more intelligence.
+> We help Australian businesses eliminate repetitive work, replace manual processes, and build
+> custom systems using automation, AI, and modern software.
 
 CTA:
 
-Book a Discovery Call
+Book a Free Automation Assessment
 
 Secondary CTA:
 
-Explore What We Build
+See What We Can Automate
 
-Visual direction:
+Visual direction: unchanged — `HeroSystemVisual`, a system/workflow visualization, no robots or
+generic AI imagery (`docs/design-system.md` §18/§34).
 
-A system or workflow visualization showing disconnected business processes becoming an integrated system.
+### 3. Problem (expanded — absorbs what would otherwise be a separate "Transformation" section)
 
-Avoid robots and generic AI imagery.
-
-### 3. Problem
-
-Headline:
+Headline (unchanged, still strong):
 
 > Your business has grown. Your systems haven't.
 
-Communicate how businesses often operate through disconnected tools and manual processes.
+Keeps the existing two paragraphs, then adds a **"Does this sound familiar?"** recognition
+checklist:
 
-Show the transition:
+* Your team copies information between systems.
+* Quotes take hours or days to prepare.
+* Bookings are spread across email, phone, spreadsheets and forms.
+* Managers wait for reports instead of seeing information in real time.
+* Employees spend valuable time doing work software should handle.
 
-Disconnected tools
-→ Manual work
-→ Bottlenecks
+Closes with an explicit before/after line next to the existing `ProblemConnectVisual` (which
+already visualizes scattered tools converging into one connected system — no new visual needed):
 
-Then:
+> Manual, disconnected tools → one connected system that does the repetitive work for you.
 
-Connected systems
-→ Automation
-→ Better visibility
+Contains the one contextual use of **"Find Out What You Could Automate"** as inline link text
+into `/discovery-call` — see `docs/conversion-strategy.md`.
 
-### 4. Capabilities
+### 4. Capabilities — reframed to three pillars
 
-Headline:
+Headline (unchanged):
 
 > From business problems to working systems.
 
-Four services:
+Three services, not four (the former fourth card, "Managed Application Support," is now the
+**Business Systems Care Plan** — a recurring offer documented in `docs/offers.md`, not a
+homepage capability card):
 
-* Custom Software
-* AI Integration
 * Business Automation
-* Managed Application Support
+* Custom Business Systems
+* AI Implementation
 
-### 5. Process
+### 5. What We Can Build (formerly "Solutions" — same component/section, renamed and re-scoped)
 
 Headline:
+
+> What we can build.
+
+Six use-case concepts, industry-neutral (supports multi-vertical testing per
+`docs/target-audience.md`):
+
+* Automated Quotation System
+* Booking & Scheduling System
+* Internal Business Dashboard
+* Workflow Automation
+* AI Business Assistant
+* Custom Business Platform
+
+Still explicitly labeled "Concept," still carries the existing disclaimer that these are not
+client case studies (`docs/case-studies.md` covers where the real one lives).
+
+### 6. Process — steps renamed, philosophy unchanged
+
+Headline (unchanged):
 
 > We don't start with technology.
 
-Steps:
+Steps (renamed to match the original brief; same five-step shape and philosophy as before):
 
-1. Understand
-2. Identify
+1. Discover
+2. Diagnose
 3. Design
 4. Build
-5. Improve
+5. Optimise
 
-Include:
+Unchanged trust notes:
 
 > Not every problem needs AI.
-
+>
 > Not every workflow needs custom software.
-
+>
 > We recommend the simplest solution that solves the problem.
 
-### 6. Solution Examples
+Any timeline shown elsewhere (e.g. on `/discovery-call`) must be labeled indicative — no fixed
+delivery promises.
 
-Examples should be clearly labeled as:
-
-* Capabilities
-* Solution concepts
-* Internal products
-* Client case studies
-
-Never misrepresent demos as client work.
-
-### 7. Agency Partnership
+### 7. Industries (new)
 
 Headline:
 
-> Sell the solution. We'll help build it.
+> Industries we're working with.
 
-Clearly explain the division of responsibilities.
+Five verticals being tested (`docs/target-audience.md`, `docs/australian-market.md`):
+Healthcare & Wellness, Logistics, Tourism & Hospitality, Education, Professional Services. Kept
+deliberately light — one sentence each, no claimed deep specialization. Healthcare copy avoids
+any compliance/privacy claim not actually true (`docs/australian-market.md`).
 
-Agency:
+### 8. Engineering Capability (unchanged)
 
-* Client relationship
-* Strategy
-* Discovery
-* Account management
+Organized by Backend / Frontend / AI / Integration / Infrastructure, per
+`docs/design-system.md` §25. Still industry-neutral proof of technical capability, still avoids
+a meaningless logo wall.
 
-Apprising:
+### 9. Why Apprising (trimmed, links out to `/about`)
 
-* Architecture
-* Engineering
-* Backend
-* APIs
-* AI
-* Integrations
-* Deployment
-
-CTA:
-
-Partner With Us
-
-### 8. Engineering Capability
-
-Organize technologies by:
-
-* Backend
-* Frontend
-* AI
-* Integrations
-* Infrastructure
-
-Avoid meaningless technology logo walls.
-
-### 9. Why Apprising
-
-Headline:
+Headline (unchanged):
 
 > Technical capability without the complexity of building an internal team.
 
-Focus on:
+Keeps the existing four-reason grid as a compact mid-page trust beat, but no longer duplicates
+the fuller founder-led/security/international story — that now lives on the dedicated `/about`
+page, linked from here ("Learn more about us").
 
-* Business-first engineering
-* End-to-end delivery
-* Systems designed to evolve
-* Long-term technical partnership
+### 10. Newsletter / Lead Magnet (unchanged from the prior addition)
 
-### 10. Newsletter / Lead Magnet
-
-Headline:
-
-> The Business Systems Audit Checklist
-
-A lower-commitment alternative to booking a call: visitors trade an email for a short,
-practical checklist ("where data gets copied by hand," "which reports take longer to build than
-they should," etc.) drawn directly from the Problem section's framing — not an invented
-case-study asset.
-
-Also frames the same signup as an ongoing newsletter ("occasional notes on business systems and
-automation — no spam, unsubscribe anytime"), so one form serves both the lead magnet and the
-newsletter opt-in.
-
-Placed after Why Apprising (once the visitor understands the value) and before FAQ (which
-handles objections for visitors still undecided about the primary CTA).
+"The Business Systems Audit Checklist" — a lower-commitment alternative to the Assessment, for
+visitors not ready to book a call. See `docs/project-context.md`'s "Newsletter / Lead Magnet"
+section.
 
 ### 11. FAQ
 
-Headline:
+Headline (unchanged):
 
 > Common questions.
 
-Answers real questions from `docs/seo.md` §20 plus the agency objections in
-`docs/target-audience.md` §5. Answers stay visible (not collapsed) so they can be read directly
-and support `FAQPage` structured data.
+Content updated per `docs/seo.md` §48 — SME/automation questions only; the two purely
+agency-specific questions moved to a `/for-agencies`-scoped FAQ list. Answers stay visible (not
+collapsed) to support `FAQPage` structured data.
 
 ### 12. Final CTA
 
 Headline:
 
-> Let's figure out what your business should automate next.
+> Let's find the work your business shouldn't be doing manually.
 
 CTA:
 
-Book a Discovery Call
+Book a Free Automation Assessment
+
+Secondary: View Case Studies.
 
 ## Section Order
 
-Implemented order follows `docs/design-system.md` §20 (dark/light rhythm):
+Hero (dark) → Problem (light, expanded) → Capabilities (dark, 3 pillars) → What We Can Build
+(dark) → Process (light) → Industries (dark) → Engineering Capability (light) → Why Apprising
+(white) → Newsletter (dark) → FAQ (light) → Final CTA (dark) → Footer (dark).
 
-Hero (dark) → Problem (light) → Capabilities (dark) → Process (light) → Solutions (dark) →
-For Agencies (dark, featured) → Engineering Capability (light) → Why Apprising (white) →
-Newsletter / Lead Magnet (dark) → FAQ (light) → Final CTA (dark) → Footer (dark).
+"For Agencies" is no longer in the homepage rhythm — it's the entire content of `/for-agencies`.
 
 ## SEO Intent
 
-Primary themes:
-
-* Custom software development
-* AI integration
-* Business automation
-* Workflow automation
-* AI systems
-* API integration
-* Application support
-* Software development partner
-
-Do not keyword stuff.
-
-Write naturally for humans first.
+See `docs/seo.md` §8 (existing clusters) and §46 (new SME-intent themes). Do not keyword stuff;
+write naturally for humans first.

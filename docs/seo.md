@@ -17,6 +17,13 @@ The goal is to make Apprising Creatives:
 
 SEO decisions must support the company's business positioning and conversion goals.
 
+> **2026-09 repositioning note.** The homepage now leads with direct Australian SME acquisition
+> (`docs/brand.md`, `docs/target-audience.md`) rather than agencies. Sections below that were
+> written agency-first (§8's "Agency Partnerships" cluster, §16 "Agency Landing Page") still
+> apply, but describe `/for-agencies` — a dedicated page, not the homepage. New SME-intent
+> keyword themes and page mappings are added at §46–§47 rather than rewriting every section
+> above, to avoid contradicting content that's still accurate.
+
 ---
 
 # 2. Primary SEO Objective
@@ -1217,3 +1224,57 @@ The ultimate metric is not:
 It is:
 
 > Did the right businesses find Apprising and start a conversation?
+
+---
+
+# 46. SME-Intent Keyword Themes (2026-09 addition)
+
+Added alongside the clusters in §8, not replacing them. Primary commercial-intent themes for the
+new SME-first homepage:
+
+- business automation Australia
+- AI automation for small business Australia
+- custom business software Australia
+- business process automation Australia
+- custom internal software Australia
+- AI implementation Australia
+- workflow automation Australia
+
+Same rule as §7: do not keyword-stuff. These inform heading and body copy naturally; they are
+not a checklist to force into every paragraph.
+
+---
+
+# 47. New Page Mapping (2026-09 addition)
+
+| Route | Purpose | Primary intent |
+|---|---|---|
+| `/discovery-call` | Assessment explanation + intake form | Transactional — "book a free automation assessment" |
+| `/for-agencies` | Agency partnership (moved off homepage) | Commercial investigation — "engineering partner for agencies" |
+| `/about` | Founder-led story, team, security posture, international delivery | Trust/E-E-A-T — supports §38, not a search-intent page itself |
+| `/portfolio` | Case studies (nav-labeled "Case Studies"; URL unchanged — see `docs/case-studies.md`) | Commercial investigation — "apprising creatives case studies / portfolio" |
+
+`sitemap.ts` must list all four alongside the homepage (previously only the homepage was
+listed — `/portfolio` had already shipped but was missing from the sitemap; fixed as part of
+this pass, see `docs/project-context.md`).
+
+---
+
+# 48. New AEO Questions (2026-09 addition)
+
+Added to the homepage FAQ (`src/lib/content/faq.ts`) alongside the existing entries — none of
+the existing ones were removed, only the two purely agency-specific ones moved to a
+`/for-agencies`-scoped FAQ list (`src/lib/content/agencyFaq.ts`), since a homepage FAQPage schema
+mixing SME and agency intent dilutes both. Per §21, answers stay visible (not collapsed).
+
+New questions answered, matching the original brief's target questions:
+
+- What business processes can be automated?
+- How much does business automation cost in Australia?
+- Should my business build custom software or use SaaS?
+- How do you handle security?
+
+"Can AI automate administrative work?" and "How do I automate quotation processes?" are answered
+implicitly by the Services and "What We Can Build" sections rather than as separate FAQ entries
+— adding near-duplicate FAQ questions that restate section content would violate §27's content
+quality rules more than it would help AEO.
