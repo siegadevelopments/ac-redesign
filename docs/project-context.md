@@ -38,7 +38,7 @@ src/
   lib/
     constants.ts  # site name/url, CTA hrefs + labels
     seo.ts        # Organization / WebSite / FAQPage JSON-LD builders
-    content/      # typed content arrays (nav, capabilities, process, solutions, techStack, agencyComparison, faq)
+    content/      # typed content arrays (nav, capabilities, process, solutions, techStack, agencyComparison, faq, leadMagnet)
 ```
 
 ## Content Model
@@ -72,7 +72,8 @@ and use `next/link`. Section anchors: `/#what-we-do`, `/#solutions`, `/#how-we-w
 see Open Questions), `/#faq`, and `/#final-cta` (used by the footer's "Contact" link).
 
 Section order on `/` matches `docs/design-system.md` §20: Hero → Problem → Capabilities →
-Process → Solutions → For Agencies → Engineering Capabilities → Why Apprising → FAQ → Final CTA.
+Process → Solutions → For Agencies → Engineering Capabilities → Why Apprising → Newsletter →
+FAQ → Final CTA.
 
 ### `/portfolio`
 
@@ -118,6 +119,28 @@ Two copy conflicts between `master-prompt.md` and this repo's maintained docs
 - Agency CTA label: **"Partner With Us"** (not "Explore a Partnership").
 - Hero secondary CTA: **"Explore What We Build"** (not "See What We Build").
 
+## Newsletter / Lead Magnet
+
+`src/components/sections/Newsletter.tsx` (rendered between Why Apprising and FAQ, per
+`docs/landing-page.md` §10) offers "The Business Systems Audit Checklist" as a lower-commitment
+alternative to booking a call, and frames the same signup as an ongoing newsletter. Copy lives in
+`src/lib/content/leadMagnet.ts`.
+
+The form posts to `src/app/api/subscribe/route.ts`, a server-side Route Handler that forwards the
+email to Kit (formerly ConvertKit)'s v4 API: `POST https://api.kit.com/v4/forms/{KIT_FORM_ID}/subscribers`
+with an `X-Kit-Api-Key` header. This keeps the API key server-side only and needs no client-side
+script, so it doesn't touch the CSP's `connect-src` (see Security Headers below).
+
+Requires two env vars (see `.env.example`), unset in this repo:
+
+- `KIT_API_KEY`
+- `KIT_FORM_ID` — must point to a Kit form with the checklist configured as its **incentive
+  email** in the Kit dashboard. This repo does not send or host the checklist PDF itself — Kit's
+  automation delivers it once someone subscribes to that form.
+
+Until both are set, the route returns a 503 and the form shows its generic error message rather
+than failing silently.
+
 ## Assets
 
 No photography exists; diagrams are inline SVG/CSS (`src/components/visuals/`).
@@ -161,6 +184,9 @@ it further.
 - **Booking tool** — no scheduling tool is wired up; CTAs use `mailto:`.
 - **About section** — the nav's "About" item anchors into "Why Apprising" (`#about`) rather than
   a dedicated section, to stay within the master prompt's specified 11 sections.
+- **Kit form/checklist not created yet** — `KIT_API_KEY`/`KIT_FORM_ID` are unset (see "Newsletter
+  / Lead Magnet" above), and the checklist PDF content itself still needs to be written and
+  uploaded as that form's incentive in the Kit dashboard.
 
 ## Build & Run
 
@@ -172,4 +198,5 @@ npm run build   # production build (includes TypeScript check)
 npm start       # serve the production build
 ```
 
-No environment variables are required for the current v1 (no backend/API keys).
+`KIT_API_KEY` and `KIT_FORM_ID` (see `.env.example`) are required only for the newsletter
+signup's Kit integration to work; the rest of the site needs no environment variables.

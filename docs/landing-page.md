@@ -175,7 +175,25 @@ Focus on:
 * Systems designed to evolve
 * Long-term technical partnership
 
-### 10. FAQ
+### 10. Newsletter / Lead Magnet
+
+Headline:
+
+> The Business Systems Audit Checklist
+
+A lower-commitment alternative to booking a call: visitors trade an email for a short,
+practical checklist ("where data gets copied by hand," "which reports take longer to build than
+they should," etc.) drawn directly from the Problem section's framing — not an invented
+case-study asset.
+
+Also frames the same signup as an ongoing newsletter ("occasional notes on business systems and
+automation — no spam, unsubscribe anytime"), so one form serves both the lead magnet and the
+newsletter opt-in.
+
+Placed after Why Apprising (once the visitor understands the value) and before FAQ (which
+handles objections for visitors still undecided about the primary CTA).
+
+### 11. FAQ
 
 Headline:
 
@@ -185,7 +203,7 @@ Answers real questions from `docs/seo.md` §20 plus the agency objections in
 `docs/target-audience.md` §5. Answers stay visible (not collapsed) so they can be read directly
 and support `FAQPage` structured data.
 
-### 11. Final CTA
+### 12. Final CTA
 
 Headline:
 
@@ -201,7 +219,7 @@ Implemented order follows `docs/design-system.md` §20 (dark/light rhythm):
 
 Hero (dark) → Problem (light) → Capabilities (dark) → Process (light) → Solutions (dark) →
 For Agencies (dark, featured) → Engineering Capability (light) → Why Apprising (white) →
-FAQ (light) → Final CTA (dark) → Footer (dark).
+Newsletter / Lead Magnet (dark) → FAQ (light) → Final CTA (dark) → Footer (dark).
 
 ## SEO Intent
 

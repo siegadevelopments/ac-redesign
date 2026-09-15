@@ -2,13 +2,16 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
-// No nonce here: this site has no forms, no user-generated content, and no
-// third-party scripts, so a nonce-based CSP (which requires Proxy + forces
-// every page to render dynamically, per Next's CSP guide) would trade away
-// static generation for a marginal security gain. 'unsafe-inline' below only
-// covers Next's own inline hydration/flight-data scripts and Tailwind's
-// runtime style attributes (e.g. the scroll-reveal diagrams' CSS custom
-// properties) — there is no user input for an attacker to inject through it.
+// No nonce here: the newsletter form (src/components/sections/Newsletter.tsx)
+// posts via client-side fetch to our own same-origin /api/subscribe route
+// handler rather than a native form submission or third-party script, so it
+// doesn't need one — a nonce-based CSP (which requires Proxy + forces every
+// page to render dynamically, per Next's CSP guide) would trade away static
+// generation for the marketing pages for a marginal security gain.
+// 'unsafe-inline' below only covers Next's own inline hydration/flight-data
+// scripts and Tailwind's runtime style attributes (e.g. the scroll-reveal
+// diagrams' inline CSS custom properties) — there is no user input for an
+// attacker to inject through it.
 const cspHeader = `
   default-src 'self';
   script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""};

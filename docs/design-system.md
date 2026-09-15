@@ -1529,3 +1529,8 @@ if the design system later defines them explicitly.
   `light` (Warm White) and `raised` (white). `raised` gives two consecutive light sections
   (Engineering Capabilities, Why Apprising) a subtle separation per §20's "avoid making every
   section visually identical".
+* **Text input (Newsletter section)** — no form field pattern existed before
+  `Newsletter.tsx` (§10 of `docs/landing-page.md`). On dark sections: `bg-deep-navy` fill,
+  `border-line-dark`, `text-soft-white`, `placeholder:text-cool-gray/70`, `--radius-btn` corners
+  — i.e. the dark secondary-button treatment inverted into a filled field. Reuse this for any
+  future form field rather than inventing a new one.

@@ -6,6 +6,7 @@ import { SolutionExamples } from "@/components/sections/SolutionExamples";
 import { ForAgencies } from "@/components/sections/ForAgencies";
 import { TechCapabilities } from "@/components/sections/TechCapabilities";
 import { WhyApprising } from "@/components/sections/WhyApprising";
+import { Newsletter } from "@/components/sections/Newsletter";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <ForAgencies />
       <TechCapabilities />
       <WhyApprising />
+      <Newsletter />
       <Faq />
       <FinalCta />
     </>
