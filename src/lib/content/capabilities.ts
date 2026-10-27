@@ -26,7 +26,7 @@ export const CAPABILITIES: Capability[] = [
       "Automated reporting",
       "Notifications",
     ],
-    anchor: "#solutions",
+    anchor: "/what-we-can-build#solutions",
     linkLabel: "Explore business automation",
   },
   {
@@ -41,7 +41,7 @@ export const CAPABILITIES: Capability[] = [
       "Business management systems",
       "API integrations",
     ],
-    anchor: "#solutions",
+    anchor: "/what-we-can-build#solutions",
     linkLabel: "Explore custom business systems",
   },
   {
@@ -56,7 +56,7 @@ export const CAPABILITIES: Capability[] = [
       "Knowledge assistants",
       "AI-powered internal tools",
     ],
-    anchor: "#solutions",
+    anchor: "/what-we-can-build#solutions",
     linkLabel: "Explore AI implementation",
   },
 ];
