@@ -22,7 +22,7 @@ export function Navbar() {
   return (
     <header
       id="top"
-      className="sticky top-0 z-50 border-b border-line-dark bg-deep-navy/95 backdrop-blur"
+      className="sticky top-0 z-50 border-b border-line-inverse bg-surface-inverse/95 backdrop-blur [--focus-ring:var(--color-accent-inverse)]"
     >
       <div className="mx-auto flex w-full max-w-(--container-page) items-center justify-between px-6 py-4 md:px-8 lg:px-10">
         <Logo />
@@ -32,7 +32,7 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-small font-medium text-cool-gray transition-colors hover:text-soft-white"
+              className="text-small font-medium text-ink-inverse-muted transition-colors hover:text-ink-inverse"
             >
               {link.label}
             </Link>
@@ -47,7 +47,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-(--radius-btn) border border-line-dark p-2 text-soft-white lg:hidden"
+          className="inline-flex items-center justify-center rounded-(--radius-btn) border border-line-inverse p-2 text-ink-inverse lg:hidden"
           aria-expanded={isOpen}
           aria-controls="mobile-nav"
           aria-label={isOpen ? "Close menu" : "Open menu"}

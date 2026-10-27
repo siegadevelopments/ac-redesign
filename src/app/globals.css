@@ -1,41 +1,55 @@
 @import "tailwindcss";
 
-/* Tokens follow docs/design-system.md, which is the visual source of truth,
-   except --color-teal/--color-teal-light: the doc specifies Electric Blue
-   #3B82F6/Bright Blue #60A5FA, overridden here to match the actual logo's
-   teal (sampled from public/logo-mark.png — the purest pixel is #12BAB9,
-   essentially identical to --color-teal-light below). See design-system.md
-   §41 for the full rationale. */
+/* Colour tokens are named by role, not by colour (plan KTD5), so a palette
+   change never needs a codebase-wide rename again. Values start from the
+   chosen homepage prototype (warm paper, ink, the logo's blue-green) and were
+   tuned only where needed to meet WCAG AA. Every text/background pair in use
+   was contrast-checked; ratios are in the comments below.
+   These supersede the colour list in docs/design-system.md until that doc is
+   updated with the redesign. */
 @theme {
-  /* Dark surfaces */
-  --color-deep-navy: #0b1220;
-  --color-navy-slate: #111b2e;
-
   /* Light surfaces */
-  --color-warm-white: #f7f8fa;
+  --color-surface: #f4f0e8; /* warm paper — default page/section surface */
+  --color-surface-alt: #ebe5d9; /* a step darker, for alternating bands */
+  --color-surface-raised: #fffdf9; /* cards, inputs, raised sections */
 
-  /* Text */
-  --color-soft-white: #f8fafc;
-  --color-cool-gray: #a8b3c7;
-  --color-charcoal: #172033;
-  /* Derived: secondary body text on light surfaces (not in the doc's list). */
-  --color-charcoal-muted: #55607a;
+  /* Ink on light surfaces */
+  --color-ink: #15212f; /* 14.3:1 surface, 13.0 alt, 16.0 raised */
+  --color-ink-muted: #4a5463; /* 6.7:1 surface, 6.1 alt, 7.6 raised */
 
-  /* Lines */
-  --color-line-dark: #26344d;
-  /* Derived: the light-surface equivalent of Slate (not in the doc's list). */
-  --color-line-light: #e3e7ee;
+  /* Lines on light surfaces. --color-line is decorative (dividers, card
+     edges); --color-line-strong is for form-field borders, which must reach
+     3:1 against their surroundings (WCAG 1.4.11). */
+  --color-line: #d9d1c1;
+  --color-line-strong: #7d7463; /* 4.5:1 raised, 3.7 alt */
 
-  /* Accent — teal, matching the logo. Base is a slightly darker shade in the
-     same hue for usable text/button contrast; light is ~the exact logo pixel. */
-  --color-teal: #0c9488;
-  --color-teal-light: #14b8a6;
+  /* Accent — the logo's blue-green, deepened for text and button contrast.
+     Text on light: 5.2:1 surface, 4.7 alt, 5.8 raised. Also the focus-ring
+     colour on light surfaces. */
+  --color-accent: #0a7168;
+  /* Hover/pressed state of accent fills and accent text on light. */
+  --color-accent-strong: #085e57;
+  /* Text on an accent fill (5.8:1 on accent, 7.5 on accent-strong). */
+  --color-ink-on-accent: #fffdf9;
 
-  /* Status only — never a major brand color. */
-  --color-success-green: #34d399;
+  /* Inverse (dark) surfaces, built from ink */
+  --color-surface-inverse: #15212f;
+  --color-surface-inverse-raised: #1d2b3c;
+  --color-ink-inverse: #f4f0e8; /* 14.3:1 inverse, 12.6 inverse-raised */
+  --color-ink-inverse-muted: #b5b0a6; /* 7.5:1 inverse, 6.7 inverse-raised */
+  --color-line-inverse: #2f3d4f; /* decorative only */
+  /* Accent on dark — essentially the logo's own blue-green pixel. Text/icons and
+     the focus ring on inverse surfaces: 6.5:1 inverse, 5.8 inverse-raised. */
+  --color-accent-inverse: #14b8a6;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Supporting prototype colours, reserved for specific roles. */
+  --color-surface-deep: #0a2a43; /* deep blue band; ink-inverse 13.0:1 */
+  --color-signal: #9c5417; /* warm highlight; text 5.0:1 surface, 4.5 alt */
+
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-bricolage-grotesque), var(--font-instrument-sans), ui-sans-serif, system-ui,
+    sans-serif;
 
   /* Fluid scale spanning the doc's mobile → desktop ranges (§9). */
   --text-display: clamp(2.625rem, 1.9rem + 3.1vw, 4.5rem);
@@ -64,11 +78,7 @@
 
 @layer base {
   * {
-    border-color: var(--color-line-light);
-  }
-
-  html {
-    scroll-behavior: smooth;
+    border-color: var(--color-line);
   }
 
   /* Anchor-link targets must clear the sticky navbar, or its top few pixels
@@ -78,8 +88,8 @@
   }
 
   body {
-    background: var(--color-deep-navy);
-    color: var(--color-charcoal);
+    background: var(--color-surface-inverse);
+    color: var(--color-ink);
     font-family: var(--font-sans);
   }
 
@@ -91,15 +101,11 @@
   }
 
   ::selection {
-    background: var(--color-teal);
-    color: var(--color-soft-white);
+    background: var(--color-accent);
+    color: var(--color-ink-on-accent);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
     *,
     *::before,
     *::after {
@@ -223,10 +229,13 @@
   }
 }
 
-/* Deliberately unlayered so it always wins over Tailwind's layered base
+/* The ring colour follows the surface: accent on light, accent-inverse on
+   dark (accent alone is under 3:1 on ink). Dark surfaces set --focus-ring via
+   the Section/Card tone classes and the site chrome.
+   Deliberately unlayered so it always wins over Tailwind's layered base
    styles (e.g. the UA outline reset), regardless of layer merge order. */
 :focus-visible {
-  outline: 2px solid var(--color-teal-light);
+  outline: 2px solid var(--focus-ring, var(--color-accent));
   outline-offset: 2px;
   border-radius: 2px;
 }

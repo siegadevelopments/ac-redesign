@@ -20,15 +20,15 @@ export function ProcessVisual() {
               <span
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-label font-semibold transition-colors ${
                   isOpen
-                    ? "border-teal bg-teal text-white"
-                    : "border-line-light bg-white text-charcoal-muted"
+                    ? "border-accent bg-accent text-ink-on-accent"
+                    : "border-line bg-surface-raised text-ink-muted"
                 }`}
                 aria-hidden="true"
               >
                 {step.number}
               </span>
               {!isLast ? (
-                <span className="w-px flex-1 bg-line-light" aria-hidden="true" />
+                <span className="w-px flex-1 bg-line" aria-hidden="true" />
               ) : null}
             </div>
 
@@ -40,11 +40,11 @@ export function ProcessVisual() {
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   onClick={() => setActiveIndex(isOpen ? -1 : i)}
-                  className="flex w-full items-center justify-between gap-4 py-2 text-left text-h4 font-bold text-charcoal"
+                  className="flex w-full items-center justify-between gap-4 py-2 text-left text-h4 font-bold text-ink"
                 >
                   {step.title}
                   <span
-                    className={`shrink-0 text-charcoal-muted transition-transform motion-safe:duration-300 ${
+                    className={`shrink-0 text-ink-muted transition-transform motion-safe:duration-300 ${
                       isOpen ? "rotate-45" : ""
                     }`}
                     aria-hidden="true"
@@ -61,7 +61,7 @@ export function ProcessVisual() {
                 data-open={isOpen}
               >
                 <div>
-                  <p className="max-w-lg pb-2 text-body text-charcoal-muted">{step.description}</p>
+                  <p className="max-w-lg pb-2 text-body text-ink-muted">{step.description}</p>
                 </div>
               </div>
             </div>

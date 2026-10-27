@@ -10,8 +10,8 @@ export function Card({
   className?: string;
 }) {
   const toneClasses = onDark
-    ? "bg-navy-slate border-line-dark"
-    : "bg-white border-line-light";
+    ? "bg-surface-inverse-raised border-line-inverse [--focus-ring:var(--color-accent-inverse)]"
+    : "bg-surface-raised border-line [--focus-ring:var(--color-accent)]";
 
   return (
     <div className={`rounded-(--radius-card) border p-6 md:p-8 ${toneClasses} ${className}`}>

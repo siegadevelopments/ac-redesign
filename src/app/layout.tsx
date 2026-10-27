@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
 
-const inter = Inter({
-  variable: "--font-inter",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const bricolageGrotesque = Bricolage_Grotesque({
+  variable: "--font-bricolage-grotesque",
   subsets: ["latin"],
   weight: ["700", "800"],
   display: "swap",
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   const jsonLd = [buildOrganizationJsonLd(), buildWebSiteJsonLd()];
 
   return (
-    <html lang="en-AU" className={`${inter.variable} ${manrope.variable} h-full antialiased`}>
+    <html lang="en-AU" className={`${instrumentSans.variable} ${bricolageGrotesque.variable} h-full antialiased`}>
       {/* Browser extensions (ColorZilla, Grammarly, etc.) add attributes to
           <body> before React hydrates, which reports as a mismatch. This is
           shallow — it only covers this element's own attributes, so real

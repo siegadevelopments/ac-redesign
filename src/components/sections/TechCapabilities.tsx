@@ -15,17 +15,17 @@ export function TechCapabilities() {
             return (
               <div key={tech.category} className="flex flex-col gap-4">
                 <Icon
-                  className="text-teal"
+                  className="text-accent"
                   size={24}
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
-                <h3 className="text-label font-semibold uppercase tracking-[0.12em] text-charcoal">
+                <h3 className="text-label font-semibold uppercase tracking-[0.12em] text-ink">
                   {tech.category}
                 </h3>
                 <ul className="flex flex-col gap-1.5">
                   {tech.items.map((item) => (
-                    <li key={item} className="text-small text-charcoal-muted">
+                    <li key={item} className="text-small text-ink-muted">
                       {item}
                     </li>
                   ))}

@@ -30,7 +30,7 @@ export function HeroSystemVisual() {
           y1={START_Y}
           x2={LINE_X}
           y2={LAST_Y}
-          stroke="var(--color-line-dark)"
+          stroke="var(--color-line-inverse)"
           strokeWidth={2}
         />
         <line
@@ -40,14 +40,14 @@ export function HeroSystemVisual() {
           y1={START_Y}
           x2={LINE_X}
           y2={LAST_Y}
-          stroke="var(--color-teal)"
+          stroke="var(--color-accent)"
           strokeWidth={2}
           strokeLinecap="round"
         />
         <circle
           className="flow-dot"
           r={4}
-          fill="var(--color-teal-light)"
+          fill="var(--color-accent-inverse)"
           style={{ offsetPath: `path("M${LINE_X} ${START_Y} L${LINE_X} ${LAST_Y}")` }}
         />
         {NODES.map((label, i) => {
@@ -63,8 +63,8 @@ export function HeroSystemVisual() {
                 cx={LINE_X}
                 cy={y}
                 r={isLast ? 7 : 6}
-                fill={isLast ? "var(--color-teal)" : "var(--color-soft-white)"}
-                stroke="var(--color-deep-navy)"
+                fill={isLast ? "var(--color-accent-inverse)" : "var(--color-ink-inverse)"}
+                stroke="var(--color-surface-inverse)"
                 strokeWidth={3}
               />
               <text
@@ -74,7 +74,7 @@ export function HeroSystemVisual() {
                 fontSize={14}
                 fontFamily="var(--font-sans)"
                 fontWeight={isLast ? 600 : 500}
-                fill={isLast ? "var(--color-teal-light)" : "var(--color-cool-gray)"}
+                fill={isLast ? "var(--color-accent-inverse)" : "var(--color-ink-inverse-muted)"}
               >
                 {label}
               </text>

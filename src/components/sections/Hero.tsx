@@ -9,15 +9,15 @@ export function Hero() {
     <Section tone="dark">
       <Container className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
         <div className="flex flex-col gap-6">
-          <span className="text-label font-semibold uppercase tracking-[0.12em] text-teal-light">
+          <span className="text-label font-semibold uppercase tracking-[0.12em] text-accent-inverse">
             Automation &amp; custom systems for Australian businesses
           </span>
 
-          <h1 className="text-display font-extrabold text-soft-white text-balance">
+          <h1 className="text-display font-extrabold text-ink-inverse text-balance">
             Your business runs on systems. We make them work smarter.
           </h1>
 
-          <p className="max-w-lg text-body-lg text-cool-gray text-pretty">
+          <p className="max-w-lg text-body-lg text-ink-inverse-muted text-pretty">
             We help Australian businesses eliminate repetitive work, replace manual processes,
             and build custom systems using automation, AI, and modern software.
           </p>
@@ -35,7 +35,7 @@ export function Hero() {
             </Button>
           </div>
 
-          <p className="pt-2 text-small text-cool-gray">
+          <p className="pt-2 text-small text-ink-inverse-muted">
             Business automation. Custom business systems. AI implementation.
           </p>
         </div>

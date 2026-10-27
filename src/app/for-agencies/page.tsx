@@ -20,13 +20,13 @@ export default function ForAgenciesPage() {
     <>
       <Section tone="dark">
         <Container className="flex flex-col gap-6">
-          <span className="text-label font-semibold uppercase tracking-[0.12em] text-teal-light">
+          <span className="text-label font-semibold uppercase tracking-[0.12em] text-accent-inverse">
             For Agencies
           </span>
-          <h1 className="max-w-3xl text-display font-extrabold text-soft-white text-balance">
+          <h1 className="max-w-3xl text-display font-extrabold text-ink-inverse text-balance">
             Engineering capacity for Australian agencies.
           </h1>
-          <p className="max-w-2xl text-body-lg text-cool-gray text-pretty">
+          <p className="max-w-2xl text-body-lg text-ink-inverse-muted text-pretty">
             Apprising Creatives works behind the scenes as an engineering partner for agencies
             and consultancies that need additional technical delivery capacity — custom
             software, AI integrations, and complex automation.

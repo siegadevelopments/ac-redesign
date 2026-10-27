@@ -10,12 +10,15 @@ const BASE_CLASSES =
   "inline-flex items-center justify-center gap-2 rounded-(--radius-btn) px-4 py-3 text-small font-semibold transition-colors";
 
 const PRIMARY_CLASSES =
-  "bg-teal text-white border border-teal hover:bg-teal-light hover:border-teal-light";
+  "bg-accent text-ink-on-accent border border-accent hover:bg-accent-strong hover:border-accent-strong";
 
 const SECONDARY_CLASSES = {
-  light: "bg-white text-charcoal border border-line-light hover:border-charcoal",
-  dark: "bg-transparent text-soft-white border border-line-dark hover:border-cool-gray",
+  light: "bg-surface-raised text-ink border border-line-strong hover:border-ink",
+  dark: "bg-transparent text-ink-inverse border border-ink-inverse-muted hover:border-ink-inverse",
 };
+
+/** Primary-button look for a native `<button type="submit">` in a form, which `Button` (a link) can't be. */
+export const SUBMIT_BUTTON_CLASSES = `${BASE_CLASSES} ${PRIMARY_CLASSES} disabled:cursor-not-allowed disabled:opacity-70`;
 
 export function Button({
   href,

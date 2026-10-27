@@ -34,7 +34,7 @@ export function ProblemConnectVisual() {
             y1={CENTER.y}
             x2={tool.x}
             y2={tool.y}
-            stroke="var(--color-line-light)"
+            stroke="var(--color-line)"
             strokeWidth={2}
           />
         ))}
@@ -56,12 +56,12 @@ export function ProblemConnectVisual() {
                 cx={tool.x}
                 cy={tool.y}
                 r={22}
-                fill="#ffffff"
-                stroke="var(--color-line-light)"
+                fill="var(--color-surface-raised)"
+                stroke="var(--color-line)"
                 strokeWidth={1.5}
               />
               <g transform={`translate(${tool.x - 10} ${tool.y - 10})`}>
-                <Icon size={20} color="var(--color-charcoal)" strokeWidth={1.75} />
+                <Icon size={20} color="var(--color-ink)" strokeWidth={1.75} />
               </g>
               <text
                 x={tool.x}
@@ -69,7 +69,7 @@ export function ProblemConnectVisual() {
                 textAnchor="middle"
                 fontSize={11}
                 fontFamily="var(--font-sans)"
-                fill="var(--color-charcoal-muted)"
+                fill="var(--color-ink-muted)"
               >
                 {tool.label}
               </text>
@@ -82,12 +82,12 @@ export function ProblemConnectVisual() {
             cx={CENTER.x}
             cy={CENTER.y}
             r={30}
-            fill="var(--color-teal)"
-            stroke="var(--color-warm-white)"
+            fill="var(--color-accent)"
+            stroke="var(--color-surface)"
             strokeWidth={4}
           />
           <g transform={`translate(${CENTER.x - 11} ${CENTER.y - 11})`}>
-            <Network size={22} color="var(--color-soft-white)" strokeWidth={1.75} />
+            <Network size={22} color="var(--color-ink-on-accent)" strokeWidth={1.75} />
           </g>
         </g>
       </svg>

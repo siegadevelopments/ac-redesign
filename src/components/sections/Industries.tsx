@@ -19,9 +19,9 @@ export function Industries() {
             const Icon = industry.icon;
             return (
               <div key={industry.title} className="flex flex-col gap-3">
-                <Icon className="text-teal-light" size={24} strokeWidth={1.5} aria-hidden="true" />
-                <h3 className="text-h4 font-bold text-soft-white">{industry.title}</h3>
-                <p className="text-small text-cool-gray">{industry.description}</p>
+                <Icon className="text-accent-inverse" size={24} strokeWidth={1.5} aria-hidden="true" />
+                <h3 className="text-h4 font-bold text-ink-inverse">{industry.title}</h3>
+                <p className="text-small text-ink-inverse-muted">{industry.description}</p>
               </div>
             );
           })}

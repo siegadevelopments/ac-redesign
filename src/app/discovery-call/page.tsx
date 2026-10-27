@@ -20,13 +20,13 @@ export default function DiscoveryCallPage() {
     <>
       <Section tone="dark">
         <Container className="flex flex-col gap-6">
-          <span className="text-label font-semibold uppercase tracking-[0.12em] text-teal-light">
+          <span className="text-label font-semibold uppercase tracking-[0.12em] text-accent-inverse">
             {DISCOVERY_CALL_COPY.eyebrow}
           </span>
-          <h1 className="max-w-3xl text-display font-extrabold text-soft-white text-balance">
+          <h1 className="max-w-3xl text-display font-extrabold text-ink-inverse text-balance">
             {DISCOVERY_CALL_COPY.title}
           </h1>
-          <p className="max-w-2xl text-body-lg text-cool-gray text-pretty">
+          <p className="max-w-2xl text-body-lg text-ink-inverse-muted text-pretty">
             {DISCOVERY_CALL_COPY.subhead}
           </p>
         </Container>
@@ -39,28 +39,28 @@ export default function DiscoveryCallPage() {
               {ASSESSMENT_STEPS.map((step) => (
                 <li key={step.number} className="flex gap-4">
                   <span
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-teal bg-white text-label font-semibold text-teal"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent bg-surface-raised text-label font-semibold text-accent"
                     aria-hidden="true"
                   >
                     {step.number}
                   </span>
                   <div className="flex flex-col gap-1 pt-1.5">
-                    <h3 className="text-h4 font-bold text-charcoal">{step.title}</h3>
-                    <p className="text-body text-charcoal-muted">{step.description}</p>
+                    <h3 className="text-h4 font-bold text-ink">{step.title}</h3>
+                    <p className="text-body text-ink-muted">{step.description}</p>
                   </div>
                 </li>
               ))}
             </ol>
 
-            <div className="rounded-(--radius-card) border border-line-light bg-white p-6">
-              <p className="text-body text-charcoal-muted text-pretty">{ASSESSMENT_HONESTY_NOTE}</p>
+            <div className="rounded-(--radius-card) border border-line bg-surface-raised p-6">
+              <p className="text-body text-ink-muted text-pretty">{ASSESSMENT_HONESTY_NOTE}</p>
             </div>
 
-            <div className="flex flex-col gap-2 border-t border-line-light pt-6">
-              <h3 className="text-small font-semibold uppercase tracking-[0.12em] text-charcoal-muted">
+            <div className="flex flex-col gap-2 border-t border-line pt-6">
+              <h3 className="text-small font-semibold uppercase tracking-[0.12em] text-ink-muted">
                 If a build is justified
               </h3>
-              <p className="text-body text-charcoal-muted text-pretty">
+              <p className="text-body text-ink-muted text-pretty">
                 Implementation projects typically range from AUD $5,000–$15,000+ depending on
                 scope — always confirmed after the assessment, never quoted sight-unseen.
                 Ongoing systems can move onto a Business Systems Care Plan once live.

@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
+import { SUBMIT_BUTTON_CLASSES } from "@/components/ui/Button";
 import { LEAD_MAGNET, NEWSLETTER_COPY } from "@/lib/content/leadMagnet";
 import { trackEvent } from "@/lib/analytics";
 
@@ -53,12 +54,12 @@ export function Newsletter() {
             {LEAD_MAGNET.checklistItems.map((item) => (
               <li key={item} className="flex items-start gap-3">
                 <CheckCircle2
-                  className="mt-0.5 shrink-0 text-teal-light"
+                  className="mt-0.5 shrink-0 text-accent-inverse"
                   size={18}
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
-                <span className="text-body text-cool-gray">{item}</span>
+                <span className="text-body text-ink-inverse-muted">{item}</span>
               </li>
             ))}
           </ul>
@@ -66,20 +67,20 @@ export function Newsletter() {
 
         <Card onDark className="flex flex-col gap-5">
           <div className="flex items-center gap-3">
-            <Mail className="text-teal-light" size={22} strokeWidth={1.5} aria-hidden="true" />
-            <span className="text-label font-semibold uppercase tracking-[0.12em] text-cool-gray">
+            <Mail className="text-accent-inverse" size={22} strokeWidth={1.5} aria-hidden="true" />
+            <span className="text-label font-semibold uppercase tracking-[0.12em] text-ink-inverse-muted">
               Get the checklist
             </span>
           </div>
 
           {status === "success" ? (
-            <p className="text-body text-soft-white" role="status">
+            <p className="text-body text-ink-inverse" role="status">
               {formLinked ? NEWSLETTER_COPY.successMessage : NEWSLETTER_COPY.delayedMessage}
             </p>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
               <div className="flex flex-col gap-2">
-                <label htmlFor={emailId} className="text-small font-medium text-soft-white">
+                <label htmlFor={emailId} className="text-small font-medium text-ink-inverse">
                   {NEWSLETTER_COPY.formLabel}
                 </label>
                 <input
@@ -91,24 +92,24 @@ export function Newsletter() {
                   placeholder={NEWSLETTER_COPY.placeholder}
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  className="rounded-(--radius-btn) border border-line-dark bg-deep-navy px-4 py-3 text-body text-soft-white placeholder:text-cool-gray/70"
+                  className="rounded-(--radius-btn) border border-ink-inverse-muted bg-surface-inverse px-4 py-3 text-body text-ink-inverse placeholder:text-ink-inverse-muted"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="inline-flex items-center justify-center gap-2 rounded-(--radius-btn) border border-teal bg-teal px-4 py-3 text-small font-semibold text-white transition-colors hover:bg-teal-light hover:border-teal-light disabled:cursor-not-allowed disabled:opacity-70"
+                className={SUBMIT_BUTTON_CLASSES}
               >
                 {status === "loading" ? "Sending…" : NEWSLETTER_COPY.submitLabel}
               </button>
 
               {status === "error" ? (
-                <p className="text-small text-cool-gray" role="alert">
+                <p className="text-small text-ink-inverse-muted" role="alert">
                   {NEWSLETTER_COPY.errorMessage}
                 </p>
               ) : (
-                <p className="text-small text-cool-gray">{NEWSLETTER_COPY.supporting}</p>
+                <p className="text-small text-ink-inverse-muted">{NEWSLETTER_COPY.supporting}</p>
               )}
             </form>
           )}

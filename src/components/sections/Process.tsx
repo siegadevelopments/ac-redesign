@@ -12,8 +12,8 @@ export function Process() {
           <SectionHeading eyebrow="How We Think" title="We don't start with technology." />
           <ul className="flex flex-col gap-3">
             {PROCESS_TRUST_NOTES.map((note) => (
-              <li key={note} className="flex gap-3 text-body-lg text-charcoal">
-                <span className="text-teal" aria-hidden="true">
+              <li key={note} className="flex gap-3 text-body-lg text-ink">
+                <span className="text-accent" aria-hidden="true">
                   —
                 </span>
                 {note}

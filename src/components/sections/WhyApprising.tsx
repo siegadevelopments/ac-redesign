@@ -42,14 +42,14 @@ export function WhyApprising() {
             return (
               <div key={reason.title} className="flex gap-4">
                 <Icon
-                  className="mt-1 shrink-0 text-teal"
+                  className="mt-1 shrink-0 text-accent"
                   size={22}
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
                 <div className="flex flex-col gap-1">
-                  <h3 className="text-h4 font-bold text-charcoal">{reason.title}</h3>
-                  <p className="text-body text-charcoal-muted">{reason.description}</p>
+                  <h3 className="text-h4 font-bold text-ink">{reason.title}</h3>
+                  <p className="text-body text-ink-muted">{reason.description}</p>
                 </div>
               </div>
             );
@@ -58,7 +58,7 @@ export function WhyApprising() {
 
         <Link
           href="/about"
-          className="inline-flex w-fit items-center gap-1.5 text-small font-semibold text-teal hover:text-teal-light"
+          className="inline-flex w-fit items-center gap-1.5 text-small font-semibold text-accent hover:text-accent-strong"
         >
           Learn more about us
           <ArrowRight size={15} aria-hidden="true" />

@@ -24,8 +24,8 @@ export function Faq({
         <dl className="grid max-w-4xl gap-8 md:grid-cols-2">
           {items.map((item) => (
             <div key={item.question} className="flex flex-col gap-2">
-              <dt className="text-h4 font-bold text-charcoal">{item.question}</dt>
-              <dd className="text-body text-charcoal-muted text-pretty">{item.answer}</dd>
+              <dt className="text-h4 font-bold text-ink">{item.question}</dt>
+              <dd className="text-body text-ink-muted text-pretty">{item.answer}</dd>
             </div>
           ))}
         </dl>
