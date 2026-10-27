@@ -18,8 +18,11 @@ export function Logo({ className = "" }: { className?: string }) {
         priority
         className="h-8 w-auto"
       />
-      <span className="font-display text-body font-bold tracking-tight text-soft-white">
-        Apprising <span className="text-teal">Creatives</span>
+      {/* Wordmark colours are fixed literals, not palette tokens, so the
+          logo stays unchanged when the palette moves (plan R16). Logotypes
+          are exempt from WCAG contrast minimums (1.4.3). */}
+      <span className="font-display text-body font-bold tracking-tight text-[#f8fafc]">
+        Apprising <span className="text-[#0c9488]">Creatives</span>
       </span>
     </Link>
   );

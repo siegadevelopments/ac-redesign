@@ -1,24 +1,32 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/constants";
 
-const inter = Inter({
-  variable: "--font-inter",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const bricolageGrotesque = Bricolage_Grotesque({
+  variable: "--font-bricolage-grotesque",
   subsets: ["latin"],
   weight: ["700", "800"],
   display: "swap",
 });
+
+// Adds the motion class before first paint so the opening chapter's start
+// state never flashes. If the story script hasn't arrived within 5s (slow or
+// failed chunk), drop the class so the finished, readable state shows instead
+// of a hidden headline. Pages without the story lose nothing: only the
+// opening chapter's CSS reads the class.
+const MOTION_FLAG_SCRIPT =
+  'try{if(matchMedia("(prefers-reduced-motion: no-preference)").matches){var d=document.documentElement;d.classList.add("motion");setTimeout(function(){if(!window.__storyReady)d.classList.remove("motion")},5000)}}catch(e){}';
 
 const TITLE = "Business Automation & Custom Software | Apprising Creatives";
 
@@ -66,7 +74,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   const jsonLd = [buildOrganizationJsonLd(), buildWebSiteJsonLd()];
 
   return (
-    <html lang="en-AU" className={`${inter.variable} ${manrope.variable} h-full antialiased`}>
+    // suppressHydrationWarning: the pre-paint script below adds `motion` to
+    // this element's class before React hydrates. Shallow, like on <body>.
+    <html
+      lang="en-AU"
+      className={`${instrumentSans.variable} ${bricolageGrotesque.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Pre-paint motion flag (plan KTD1). Runs before first paint so the
+            homepage story's start state and track height are in place from
+            the first frame, with nothing jumping at hydration. No-JS and
+            reduced-motion visitors never get the class, so they see the
+            finished, static page. Allowed by the CSP's 'unsafe-inline'. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_FLAG_SCRIPT }} />
+      </head>
       {/* Browser extensions (ColorZilla, Grammarly, etc.) add attributes to
           <body> before React hydrates, which reports as a mismatch. This is
           shallow — it only covers this element's own attributes, so real

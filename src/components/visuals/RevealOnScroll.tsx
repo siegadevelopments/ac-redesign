@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
- * Sets data-visible="true" on first intersection so children can hang
- * motion-safe:data-[visible=true]:... styling off it. Base styles (no JS,
- * reduced motion) must always render the complete/correct end state —
- * motion only adds a starting transform under motion-safe.
+ * Scroll reveal. The server renders no data-visible attribute, so no-JS and
+ * pre-hydration visitors see the finished state (KTD1, R19). Once mounted,
+ * content already in view is marked "true" without ever hiding it; content
+ * below the fold is armed ("false", hidden start state) and flips to "true"
+ * on first intersection. CSS only hides under prefers-reduced-motion:
+ * no-preference, so reduced motion always shows the end state.
  */
 export function RevealOnScroll({
   children,
@@ -18,16 +20,24 @@ export function RevealOnScroll({
   as?: "div" | "ul" | "ol";
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [visible, setVisible] = useState(false);
+  const [state, setState] = useState<"idle" | "false" | "true">("idle");
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
 
+    // Already on screen at mount: never hide it, just mark it revealed.
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.8 && rect.bottom > 0) {
+      setState("true");
+      return;
+    }
+    setState("false");
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
+          setState("true");
           observer.disconnect();
         }
       },
@@ -41,7 +51,7 @@ export function RevealOnScroll({
   const Component = Tag as "div";
 
   return (
-    <Component ref={ref} data-visible={visible} className={`reveal-group ${className}`}>
+    <Component ref={ref} data-visible={state === "idle" ? undefined : state} className={`reveal-group ${className}`}>
       {children}
     </Component>
   );

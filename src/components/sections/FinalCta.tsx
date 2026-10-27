@@ -23,8 +23,8 @@ export function FinalCta({
   return (
     <Section id="final-cta" tone="dark">
       <Container className="flex flex-col items-center gap-6 text-center">
-        <h2 className="max-w-3xl text-h2 font-bold text-soft-white text-balance">{heading}</h2>
-        <p className="max-w-xl text-body-lg text-cool-gray text-pretty">{body}</p>
+        <h2 className="max-w-3xl text-h2 font-bold text-ink-inverse text-balance">{heading}</h2>
+        <p className="max-w-xl text-body-lg text-ink-inverse-muted text-pretty">{body}</p>
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
           <Button href={primaryHref} variant="primary" analyticsEvent={primaryAnalyticsEvent}>
             {primaryLabel}

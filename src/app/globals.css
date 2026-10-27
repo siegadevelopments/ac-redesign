@@ -1,41 +1,54 @@
 @import "tailwindcss";
 
-/* Tokens follow docs/design-system.md, which is the visual source of truth,
-   except --color-teal/--color-teal-light: the doc specifies Electric Blue
-   #3B82F6/Bright Blue #60A5FA, overridden here to match the actual logo's
-   teal (sampled from public/logo-mark.png — the purest pixel is #12BAB9,
-   essentially identical to --color-teal-light below). See design-system.md
-   §41 for the full rationale. */
+/* Colour tokens are named by role, not by colour (plan KTD5), so a palette
+   change never needs a codebase-wide rename again. Values start from the
+   chosen homepage prototype (warm paper, ink, the logo's blue-green) and were
+   tuned only where needed to meet WCAG AA. Every text/background pair in use
+   was contrast-checked; ratios are in the comments below and summarised in
+   docs/design-system.md. */
 @theme {
-  /* Dark surfaces */
-  --color-deep-navy: #0b1220;
-  --color-navy-slate: #111b2e;
-
   /* Light surfaces */
-  --color-warm-white: #f7f8fa;
+  --color-surface: #f4f0e8; /* warm paper — default page/section surface */
+  --color-surface-alt: #ebe5d9; /* a step darker, for alternating bands */
+  --color-surface-raised: #fffdf9; /* cards, inputs, raised sections */
 
-  /* Text */
-  --color-soft-white: #f8fafc;
-  --color-cool-gray: #a8b3c7;
-  --color-charcoal: #172033;
-  /* Derived: secondary body text on light surfaces (not in the doc's list). */
-  --color-charcoal-muted: #55607a;
+  /* Ink on light surfaces */
+  --color-ink: #15212f; /* 14.3:1 surface, 13.0 alt, 16.0 raised */
+  --color-ink-muted: #4a5463; /* 6.7:1 surface, 6.1 alt, 7.6 raised */
 
-  /* Lines */
-  --color-line-dark: #26344d;
-  /* Derived: the light-surface equivalent of Slate (not in the doc's list). */
-  --color-line-light: #e3e7ee;
+  /* Lines on light surfaces. --color-line is decorative (dividers, card
+     edges); --color-line-strong is for form-field borders, which must reach
+     3:1 against their surroundings (WCAG 1.4.11). */
+  --color-line: #d9d1c1;
+  --color-line-strong: #7d7463; /* 4.5:1 raised, 3.7 alt */
 
-  /* Accent — teal, matching the logo. Base is a slightly darker shade in the
-     same hue for usable text/button contrast; light is ~the exact logo pixel. */
-  --color-teal: #0c9488;
-  --color-teal-light: #14b8a6;
+  /* Accent — the logo's blue-green, deepened for text and button contrast.
+     Text on light: 5.2:1 surface, 4.7 alt, 5.8 raised. Also the focus-ring
+     colour on light surfaces. */
+  --color-accent: #0a7168;
+  /* Hover/pressed state of accent fills and accent text on light. */
+  --color-accent-strong: #085e57;
+  /* Text on an accent fill (5.8:1 on accent, 7.5 on accent-strong). */
+  --color-ink-on-accent: #fffdf9;
 
-  /* Status only — never a major brand color. */
-  --color-success-green: #34d399;
+  /* Inverse (dark) surfaces, built from ink */
+  --color-surface-inverse: #15212f;
+  --color-surface-inverse-raised: #1d2b3c;
+  --color-ink-inverse: #f4f0e8; /* 14.3:1 inverse, 12.6 inverse-raised */
+  --color-ink-inverse-muted: #b5b0a6; /* 7.5:1 inverse, 6.7 inverse-raised */
+  --color-line-inverse: #2f3d4f; /* decorative only */
+  /* Accent on dark — essentially the logo's own blue-green pixel. Text/icons and
+     the focus ring on inverse surfaces: 6.5:1 inverse, 5.8 inverse-raised. */
+  --color-accent-inverse: #14b8a6;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* Supporting prototype colours, reserved for specific roles. */
+  --color-surface-deep: #0a2a43; /* deep blue band; ink-inverse 13.0:1 */
+  --color-signal: #9c5417; /* warm highlight; text 5.0:1 surface, 4.5 alt */
+
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-bricolage-grotesque), var(--font-instrument-sans), ui-sans-serif, system-ui,
+    sans-serif;
 
   /* Fluid scale spanning the doc's mobile → desktop ranges (§9). */
   --text-display: clamp(2.625rem, 1.9rem + 3.1vw, 4.5rem);
@@ -64,11 +77,7 @@
 
 @layer base {
   * {
-    border-color: var(--color-line-light);
-  }
-
-  html {
-    scroll-behavior: smooth;
+    border-color: var(--color-line);
   }
 
   /* Anchor-link targets must clear the sticky navbar, or its top few pixels
@@ -78,8 +87,8 @@
   }
 
   body {
-    background: var(--color-deep-navy);
-    color: var(--color-charcoal);
+    background: var(--color-surface-inverse);
+    color: var(--color-ink);
     font-family: var(--font-sans);
   }
 
@@ -91,15 +100,11 @@
   }
 
   ::selection {
-    background: var(--color-teal);
-    color: var(--color-soft-white);
+    background: var(--color-accent);
+    color: var(--color-ink-on-accent);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
     *,
     *::before,
     *::after {
@@ -114,7 +119,9 @@
 @layer components {
   /* Shared scroll-reveal primitive. Default state is always the complete,
      legible content; motion only ever adds a temporary starting state that
-     resolves once RevealOnScroll flips data-visible to "true". */
+     resolves once RevealOnScroll flips data-visible to "true". RevealOnScroll
+     renders no data-visible on the server and only arms "false" after JS has
+     mounted, so no-JS visitors never see the hidden start state. */
   .reveal-item {
     opacity: 1;
     transform: none;
@@ -130,79 +137,6 @@
       transition:
         opacity 0.5s ease,
         transform 0.5s ease;
-      transition-delay: var(--reveal-delay, 0ms);
-    }
-  }
-
-  /* SVG "draw-in" line. --dash-length is set per-path via inline style. */
-  .draw-line {
-    stroke-dasharray: var(--dash-length, 0);
-    stroke-dashoffset: 0;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal-group[data-visible="false"] .draw-line {
-      stroke-dashoffset: var(--dash-length, 0);
-    }
-
-    .reveal-group[data-visible="true"] .draw-line {
-      animation: draw-line-in 0.7s ease forwards;
-      animation-delay: var(--reveal-delay, 0ms);
-    }
-  }
-
-  @keyframes draw-line-in {
-    from {
-      stroke-dashoffset: var(--dash-length, 0);
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  /* Small accent dot suggesting data flow. Only shown where offset-path is
-     supported; otherwise it stays hidden rather than sitting static/misplaced. */
-  .flow-dot {
-    opacity: 0;
-  }
-
-  @supports (offset-path: path("M0 0")) {
-    @media (prefers-reduced-motion: no-preference) {
-      .reveal-group[data-visible="true"] .flow-dot {
-        opacity: 1;
-        animation: flow-dot-move 7s linear infinite;
-      }
-    }
-  }
-
-  @keyframes flow-dot-move {
-    from {
-      offset-distance: 0%;
-    }
-    to {
-      offset-distance: 100%;
-    }
-  }
-
-  /* Variant of .reveal-item with a per-node scatter transform, set via
-     --scatter-x/--scatter-y/--scatter-rot inline styles. Used by the
-     disconnected-tools-to-connected-system diagram. */
-  .reveal-item-scatter {
-    opacity: 1;
-    transform: none;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal-group[data-visible="false"] .reveal-item-scatter {
-      opacity: 0;
-      transform: translate(var(--scatter-x, 0px), var(--scatter-y, 0px))
-        rotate(var(--scatter-rot, 0deg));
-    }
-
-    .reveal-group[data-visible="true"] .reveal-item-scatter {
-      transition:
-        opacity 0.6s ease,
-        transform 0.6s ease;
       transition-delay: var(--reveal-delay, 0ms);
     }
   }
@@ -223,10 +157,178 @@
   }
 }
 
-/* Deliberately unlayered so it always wins over Tailwind's layered base
+/* The ring colour follows the surface: accent on light, accent-inverse on
+   dark (accent alone is under 3:1 on ink). Dark surfaces set --focus-ring via
+   the Section/Card tone classes and the site chrome.
+   Deliberately unlayered so it always wins over Tailwind's layered base
    styles (e.g. the UA outline reset), regardless of layer merge order. */
 :focus-visible {
-  outline: 2px solid var(--color-teal-light);
+  outline: 2px solid var(--focus-ring, var(--color-accent));
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Opening chapter (plan U5, KTD1, KTD2, KTD4). Markup in
+   src/components/story/OpeningChapter.tsx, motion in StoryMotion.tsx.
+
+   Base styles (in the component) are the FINISHED state. Everything below
+   html.motion is the scroll story's start state plus the sticky track; the
+   class is added before first paint by the script in src/app/layout.tsx, so
+   no-JS and reduced-motion visitors never get it. The media gates must match
+   MOTION_CONDITIONS in StoryMotion.tsx exactly. Unlayered on purpose, so it
+   overrides the component's utility classes. */
+
+/* CSS paper texture: shown without JS, without WebGL, and until the grain
+   canvas has drawn. Gradients only, since the CSP's img-src blocks data: URIs. */
+.opening-paper {
+  background-color: var(--color-surface);
+  background-image:
+    radial-gradient(rgb(21 33 47 / 0.05) 0.5px, transparent 1px),
+    radial-gradient(rgb(21 33 47 / 0.035) 0.5px, transparent 1px);
+  background-size:
+    5px 5px,
+    7px 7px;
+  background-position:
+    0 0,
+    2px 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+  /* A tall track holding a 100svh sticky stage; ScrollTrigger only reads
+     progress (no pin, so no height change after hydration). The negative
+     margin tucks the stage under the sticky navbar; its top padding clears it. */
+  html.motion .opening-track {
+    height: 340svh;
+    margin-top: -5rem;
+  }
+
+  html.motion .opening-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 5rem;
+  }
+
+  html.motion .opening-grid {
+    padding-block: 1.5rem;
+  }
+
+  html.motion .opening-phone {
+    max-height: calc(100svh - 7rem);
+  }
+
+  /* Start state: the problem leads, the app is empty, the mess is scattered. */
+  html.motion .opening-before {
+    display: block;
+  }
+
+  html.motion .opening-after,
+  html.motion .opening-row {
+    opacity: 0;
+  }
+
+  html.motion .opening-empty {
+    display: grid;
+  }
+
+  html.motion .opening-mess-wrap {
+    position: absolute;
+    inset: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  /* The caption stays for screen readers; the strip is now the mess itself. */
+  html.motion .opening-caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  html.motion .opening-mess {
+    display: block;
+  }
+
+  html.motion .opening-item {
+    position: absolute;
+    left: var(--dx);
+    top: var(--dy);
+    transform: rotate(var(--rot));
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) and (max-width: 767.98px) {
+  /* Phones: shorter track, fewer objects, compact copy so the stage fits 100svh. */
+  html.motion .opening-track {
+    height: 240svh;
+  }
+
+  html.motion .opening-stage {
+    justify-content: flex-start;
+  }
+
+  html.motion .opening-grid {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-block: 1rem;
+  }
+
+  html.motion .opening-display {
+    font-size: 1.875rem;
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
+  }
+
+  html.motion .opening-lede {
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+  }
+
+  /* Already read as the start-state headline; kept for screen readers. */
+  html.motion .opening-problem,
+  html.motion .opening-row-detail {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  html.motion .opening-hint {
+    display: none;
+  }
+
+  html.motion .opening-phone {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+    margin-bottom: 0;
+  }
+
+  html.motion .opening-item {
+    left: var(--mx);
+    top: var(--my);
+  }
+
+  html.motion .opening-item[data-narrow="false"] {
+    display: none;
+  }
+
+  html.motion .opening-visual {
+    zoom: 0.72;
+  }
 }

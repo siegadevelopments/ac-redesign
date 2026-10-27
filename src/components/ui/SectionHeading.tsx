@@ -18,7 +18,7 @@ export function SectionHeading({
       {eyebrow ? (
         <span
           className={`text-label font-semibold uppercase tracking-[0.12em] ${
-            onDark ? "text-teal-light" : "text-teal"
+            onDark ? "text-accent-inverse" : "text-accent"
           }`}
         >
           {eyebrow}
@@ -26,7 +26,7 @@ export function SectionHeading({
       ) : null}
       <h2
         className={`text-h2 font-bold text-balance max-w-3xl ${
-          onDark ? "text-soft-white" : "text-charcoal"
+          onDark ? "text-ink-inverse" : "text-ink"
         }`}
       >
         {title}
@@ -34,7 +34,7 @@ export function SectionHeading({
       {subhead ? (
         <p
           className={`text-body-lg max-w-xl text-pretty ${
-            onDark ? "text-cool-gray" : "text-charcoal-muted"
+            onDark ? "text-ink-inverse-muted" : "text-ink-muted"
           }`}
         >
           {subhead}

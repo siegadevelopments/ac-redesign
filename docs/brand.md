@@ -6,6 +6,16 @@
 > own page, `/for-agencies` — see "Agency Partnership Position" below and
 > `docs/conversion-strategy.md`.
 
+## Primary Action and Visual Identity (2026-10)
+
+The primary action is **Tell us your problem**: a three-field problem box at the end of the
+homepage story, reached from the header button on every page. **Book a Free Automation
+Assessment** is the deeper step offered after a send. See `docs/conversion-strategy.md`.
+
+The visual identity (everything except the logo) is a warm paper surface, ink text, a
+logo-derived teal accent, Bricolage Grotesque and Instrument Sans, and no people imagery. The
+homepage tells its story in motion, and tokens and rules live in `docs/design-system.md`.
+
 ## Brand Position
 
 Apprising Creatives helps Australian businesses eliminate repetitive work and modernize

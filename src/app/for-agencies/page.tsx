@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/ui/Container";
-import { Section } from "@/components/ui/Section";
+import { PageHero } from "@/components/ui/PageHero";
 import { ForAgencies } from "@/components/sections/ForAgencies";
 import { TechCapabilities } from "@/components/sections/TechCapabilities";
 import { Faq } from "@/components/sections/Faq";
@@ -18,21 +17,11 @@ export const metadata: Metadata = {
 export default function ForAgenciesPage() {
   return (
     <>
-      <Section tone="dark">
-        <Container className="flex flex-col gap-6">
-          <span className="text-label font-semibold uppercase tracking-[0.12em] text-teal-light">
-            For Agencies
-          </span>
-          <h1 className="max-w-3xl text-display font-extrabold text-soft-white text-balance">
-            Engineering capacity for Australian agencies.
-          </h1>
-          <p className="max-w-2xl text-body-lg text-cool-gray text-pretty">
-            Apprising Creatives works behind the scenes as an engineering partner for agencies
-            and consultancies that need additional technical delivery capacity — custom
-            software, AI integrations, and complex automation.
-          </p>
-        </Container>
-      </Section>
+      <PageHero
+        eyebrow="For Agencies"
+        title="Engineering capacity for Australian agencies."
+        lead="Apprising Creatives works behind the scenes as an engineering partner for agencies and consultancies that need additional technical delivery capacity — custom software, AI integrations, and complex automation."
+      />
 
       <ForAgencies />
 

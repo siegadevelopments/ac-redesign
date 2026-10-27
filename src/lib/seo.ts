@@ -5,7 +5,7 @@ import {
   SITE_TAGLINE,
   SITE_URL,
 } from "@/lib/constants";
-import { FAQ_ITEMS } from "@/lib/content/faq";
+import { FAQ_ITEMS, type FaqItem } from "@/lib/content/faq";
 
 /**
  * Schema is deliberately limited to facts the site can actually support.
@@ -51,11 +51,11 @@ export function buildWebSiteJsonLd() {
 }
 
 /** Mirrors the visible FAQ section — required for FAQPage to be legitimate. */
-export function buildFaqJsonLd() {
+export function buildFaqJsonLd(items: FaqItem[] = FAQ_ITEMS) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: FAQ_ITEMS.map((item) => ({
+    mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.question,
       acceptedAnswer: {
