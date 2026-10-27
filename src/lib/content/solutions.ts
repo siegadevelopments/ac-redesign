@@ -12,7 +12,7 @@ export const SOLUTION_EXAMPLES: SolutionExample[] = [
   {
     title: "Automated Quotation System",
     description:
-      "A concept for turning a manual, back-and-forth quoting process into a fast digital workflow.",
+      "A concept for turning back-and-forth quoting and proposals into a fast, tidy workflow.",
     features: [
       "Guided quote builder",
       "Automatic pricing rules",
@@ -23,18 +23,18 @@ export const SOLUTION_EXAMPLES: SolutionExample[] = [
   {
     title: "Booking & Scheduling System",
     description:
-      "A concept for centralizing bookings, availability, customer information, and notifications in one place.",
+      "A concept for bringing bookings, availability, client details and reminders into one place, so the diary stops fighting you.",
     features: [
       "Online bookings",
       "Real-time availability",
-      "Automated notifications",
+      "Automatic reminders",
       "Payment integration",
     ],
   },
   {
     title: "Internal Business Dashboard",
     description:
-      "A concept for giving owners and managers a single, real-time view of how the business is actually operating.",
+      "A concept for giving owners and managers one live view of how the business is running, instead of five spreadsheets.",
     features: [
       "Centralized reporting",
       "Role-based access",
@@ -45,7 +45,7 @@ export const SOLUTION_EXAMPLES: SolutionExample[] = [
   {
     title: "Workflow Automation",
     description:
-      "A concept for connecting the tools a business already uses so information moves between them without manual re-entry.",
+      "A concept for connecting the tools you already use, so a new client's details move from the form to the diary to the invoice without anyone retyping them.",
     features: [
       "System-to-system data sync",
       "Automated notifications",
@@ -56,7 +56,7 @@ export const SOLUTION_EXAMPLES: SolutionExample[] = [
   {
     title: "AI Business Assistant",
     description:
-      "A concept for an AI assistant that helps a team retrieve information, process documents, or triage incoming enquiries.",
+      "A concept for an AI assistant that helps your team find information, read documents or sort incoming enquiries.",
     features: [
       "Document intelligence",
       "Enquiry triage",
@@ -67,7 +67,7 @@ export const SOLUTION_EXAMPLES: SolutionExample[] = [
   {
     title: "Custom Business Platform",
     description:
-      "A concept for the system a business needs when off-the-shelf software doesn't fit how it actually operates.",
+      "A concept for the system you need when off-the-shelf software doesn't fit how your team actually works.",
     features: [
       "Built around your workflow",
       "Custom access levels",

@@ -11,7 +11,7 @@ export function Capabilities() {
       <Container className="flex flex-col gap-12">
         <SectionHeading
           eyebrow="What We Do"
-          title="From business problems to working systems."
+          title="Three ways we give your team time back."
           onDark
         />
 

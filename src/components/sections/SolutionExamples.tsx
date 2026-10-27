@@ -10,7 +10,7 @@ export function SolutionExamples() {
   return (
     <Section id="solutions" tone="dark">
       <Container className="flex flex-col gap-12">
-        <SectionHeading eyebrow="What We Can Build" title="What we can build." onDark />
+        <SectionHeading eyebrow="What We Can Build" title="What this could look like." onDark />
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {SOLUTION_EXAMPLES.map((solution) => (

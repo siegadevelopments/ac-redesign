@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/Button";
 import { CTA_HREFS, CTA_LABELS } from "@/lib/constants";
 
 export function FinalCta({
-  heading = "Let's find the work your business shouldn't be doing manually.",
-  body = "Tell us how your business works today. We'll help identify where software, automation, or AI can make a meaningful difference.",
+  heading = "Tell us what keeps eating your team's time.",
+  body = "Describe how things work today. We'll tell you honestly whether software, automation or AI would make a real difference, and when it wouldn't.",
   primaryHref = CTA_HREFS.bookDiscoveryCall,
   primaryLabel = CTA_LABELS.bookDiscoveryCall,
   primaryAnalyticsEvent = "discovery_call_clicked" as const,
