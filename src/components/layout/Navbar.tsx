@@ -19,6 +19,13 @@ export function Navbar() {
     };
   }, [isOpen]);
 
+  // Release the body scroll lock synchronously: the effect below runs after
+  // render, too late for a hash navigation that starts on this same click.
+  function closeMenu() {
+    document.body.style.overflow = "";
+    setIsOpen(false);
+  }
+
   return (
     <header
       id="top"
@@ -40,24 +47,32 @@ export function Navbar() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href={CTA_HREFS.bookDiscoveryCall} variant="primary">
-            {CTA_LABELS.bookDiscoveryCall}
+          <Button href={CTA_HREFS.tellUsProblem} variant="primary">
+            {CTA_LABELS.tellUsProblem}
           </Button>
         </div>
 
-        <button
-          type="button"
-          className="inline-flex items-center justify-center rounded-(--radius-btn) border border-line-inverse p-2 text-ink-inverse lg:hidden"
-          aria-expanded={isOpen}
-          aria-controls="mobile-nav"
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-          onClick={() => setIsOpen((open) => !open)}
-        >
-          {isOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          {/* Compact action stays visible outside the menu on phones (R28). */}
+          <div onClick={closeMenu}>
+            <Button href={CTA_HREFS.tellUsProblem} variant="primary" className="px-3! py-2!">
+              {CTA_LABELS.tellUsProblem}
+            </Button>
+          </div>
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-(--radius-btn) border border-line-inverse p-2 text-ink-inverse"
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            onClick={() => setIsOpen((open) => !open)}
+          >
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
-      <MobileNav id="mobile-nav" isOpen={isOpen} onNavigate={() => setIsOpen(false)} />
+      <MobileNav id="mobile-nav" isOpen={isOpen} onNavigate={closeMenu} />
     </header>
   );
 }

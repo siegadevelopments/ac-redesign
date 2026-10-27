@@ -23,7 +23,8 @@ function mailto(subject: string) {
 // introducing new CTA wording elsewhere; add a variant there first.
 export const CTA_HREFS = {
   bookDiscoveryCall: "/discovery-call",
-  exploreWhatWeBuild: "#solutions",
+  tellUsProblem: "/#problem",
+  exploreWhatWeBuild: "/what-we-can-build",
   viewCaseStudies: "/portfolio",
   partnerWithUs: mailto("Agency Partnership"),
   startConversation: mailto("Getting Started"),
@@ -31,6 +32,7 @@ export const CTA_HREFS = {
 
 export const CTA_LABELS = {
   bookDiscoveryCall: "Book a Free Automation Assessment",
+  tellUsProblem: "Tell us your problem",
   exploreWhatWeBuild: "See What We Can Automate",
   viewCaseStudies: "View Case Studies",
   partnerWithUs: "Partner With Us",

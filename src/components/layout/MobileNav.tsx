@@ -27,9 +27,12 @@ export function MobileNav({
             {link.label}
           </Link>
         ))}
-        <Button href={CTA_HREFS.bookDiscoveryCall} variant="primary" className="mt-3">
-          {CTA_LABELS.bookDiscoveryCall}
-        </Button>
+        {/* Click bubbles from the link, so the menu closes (and the scroll lock lifts) before the hash jump. */}
+        <div onClick={onNavigate} className="mt-3 flex flex-col">
+          <Button href={CTA_HREFS.tellUsProblem} variant="primary">
+            {CTA_LABELS.tellUsProblem}
+          </Button>
+        </div>
       </nav>
     </div>
   );
