@@ -1,10 +1,11 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { SUBMIT_BUTTON_CLASSES } from "@/components/ui/Button";
 import { ASSESSMENT_FORM_COPY } from "@/lib/content/assessment";
 import { trackEvent } from "@/lib/analytics";
+import { PROBLEM_HANDOFF_KEY } from "@/lib/content/story";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -15,6 +16,30 @@ export function AssessmentForm() {
   const [status, setStatus] = useState<Status>("idle");
   const hasStarted = useRef(false);
   const formId = useId();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Pre-fill from a problem sent on the homepage (uncontrolled inputs, no state).
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(PROBLEM_HANDOFF_KEY);
+      if (!raw) return;
+      const data: unknown = JSON.parse(raw);
+      const form = formRef.current;
+      if (form && data && typeof data === "object") {
+        const { name, email, problem } = data as Record<string, unknown>;
+        if (typeof name === "string" && typeof email === "string" && typeof problem === "string") {
+          const values = { name, email, challenge: problem };
+          for (const [field, value] of Object.entries(values)) {
+            const el = form.elements.namedItem(field);
+            if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) el.value = value;
+          }
+        }
+      }
+      sessionStorage.removeItem(PROBLEM_HANDOFF_KEY);
+    } catch {
+      // Storage blocked or malformed value: leave the form blank.
+    }
+  }, []);
 
   function handleFirstInteraction() {
     if (hasStarted.current) return;
@@ -70,6 +95,7 @@ export function AssessmentForm() {
       <h2 className="text-h4 font-bold text-ink">{ASSESSMENT_FORM_COPY.formTitle}</h2>
 
       <form
+        ref={formRef}
         onSubmit={handleSubmit}
         onFocus={handleFirstInteraction}
         className="flex flex-col gap-4"
