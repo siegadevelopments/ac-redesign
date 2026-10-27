@@ -55,8 +55,9 @@ export function Navbar() {
         <div className="flex items-center gap-2 lg:hidden">
           {/* Compact action stays visible outside the menu on phones (R28). */}
           <div onClick={closeMenu}>
-            <Button href={CTA_HREFS.tellUsProblem} variant="primary" className="px-3! py-2!">
-              {CTA_LABELS.tellUsProblem}
+            <Button href={CTA_HREFS.tellUsProblem} variant="primary" className="px-3! py-2! whitespace-nowrap">
+              <span className="sm:hidden" aria-hidden="true">Tell us</span>
+              <span className="sr-only sm:not-sr-only">{CTA_LABELS.tellUsProblem}</span>
             </Button>
           </div>
           <button
