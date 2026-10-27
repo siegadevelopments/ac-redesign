@@ -1253,6 +1253,7 @@ not a checklist to force into every paragraph.
 | `/for-agencies` | Agency partnership (moved off homepage) | Commercial investigation — "engineering partner for agencies" |
 | `/about` | Founder-led story, team, security posture, international delivery | Trust/E-E-A-T — supports §38, not a search-intent page itself |
 | `/portfolio` | Case studies (nav-labeled "Case Studies"; URL unchanged — see `docs/case-studies.md`) | Commercial investigation — "apprising creatives case studies / portfolio" |
+| `/what-we-can-build` | Capabilities, concept examples and industries (relocated from the homepage in 2026-10; see §49) | Commercial investigation — "business automation Australia", "custom business systems" |
 
 `sitemap.ts` must list all four alongside the homepage (previously only the homepage was
 listed — `/portfolio` had already shipped but was missing from the sitemap; fixed as part of
@@ -1278,3 +1279,26 @@ New questions answered, matching the original brief's target questions:
 implicitly by the Services and "What We Can Build" sections rather than as separate FAQ entries
 — adding near-duplicate FAQ questions that restate section content would violate §27's content
 quality rules more than it would help AEO.
+
+---
+
+# 49. Homepage Story Redesign (2026-10 addition)
+
+The homepage became a scroll story (`docs/landing-page.md`), so the content that used to sit on
+it as separate sections moved:
+
+- **New route `/what-we-can-build`** (`src/app/what-we-can-build/page.tsx`): the three service
+  pillars, the six concept examples (labelled Concept), the five industries being tested, and the
+  closing band. It has its own title ("What We Can Build"), description, canonical URL and an
+  entry in `sitemap.ts` (priority 0.8, monthly). Nav, footer and the "See What We Can Automate"
+  CTA point here; the old homepage anchors `/#solutions` and `/#what-we-do` forward here via
+  `LegacyHashRedirect`.
+- **Homepage FAQ is a subset.** `src/app/page.tsx` filters `FAQ_ITEMS` to four questions: "Do I
+  need custom software?", "What business processes can be automated?", "How much does business
+  automation cost in Australia?" and "How do you handle security?". The same filtered list is
+  passed to the visible `Faq` section and to `buildFaqJsonLd(items)` in `src/lib/seo.ts`, so the
+  `FAQPage` schema always matches what the page shows (§19, §20). The other questions remain in
+  `faq.ts` for reuse; the homepage no longer claims them in structured data.
+- The homepage keeps one `h1` (the opening chapter's promise headline). Chapter copy is
+  server-rendered in its finished state, so crawlers and no-JS visitors see all of it.
+- Organization, WebSite and the metadata in `src/app/layout.tsx` are unchanged.

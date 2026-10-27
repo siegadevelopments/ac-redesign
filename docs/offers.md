@@ -15,8 +15,9 @@ Entry point. Free, low-friction, no obligation.
   quote on the call itself.
 - Captured via the intake form on `/discovery-call` (see `docs/conversion-strategy.md` §Funnel
   and `docs/project-context.md`'s "Assessment Funnel" section for the technical implementation).
-- CTA label: **Book a Free Automation Assessment** (primary, sitewide). Contextual variant used
-  once on the homepage: **Find Out What You Could Automate**.
+- CTA label: **Book a Free Automation Assessment** (secondary: offered after a homepage problem
+  send, on `/discovery-call` and in inner pages' closing bands; the primary action is **Tell us
+  your problem**, see `docs/conversion-strategy.md`).
 
 ## 2. Automation Implementation
 

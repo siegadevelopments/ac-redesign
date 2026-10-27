@@ -118,11 +118,15 @@ verification register — every factual trust claim must have a row there before
 
 ## Primary Conversion Goal
 
-Primary CTA:
-Book a Free Automation Assessment
+Primary CTA (homepage and sitewide header):
+Tell us your problem — the three-field problem box (name, email, problem) at `/#problem`
 
 Secondary CTA:
-See What We Can Automate
+Book a Free Automation Assessment — offered after a problem send and on `/discovery-call`
+(the inner pages' closing band also uses it)
+
+Exploration CTA:
+See What We Can Automate — links to `/what-we-can-build`
 
 Tertiary CTA:
 View Case Studies

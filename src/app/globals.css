@@ -4,9 +4,8 @@
    change never needs a codebase-wide rename again. Values start from the
    chosen homepage prototype (warm paper, ink, the logo's blue-green) and were
    tuned only where needed to meet WCAG AA. Every text/background pair in use
-   was contrast-checked; ratios are in the comments below.
-   These supersede the colour list in docs/design-system.md until that doc is
-   updated with the redesign. */
+   was contrast-checked; ratios are in the comments below and summarised in
+   docs/design-system.md. */
 @theme {
   /* Light surfaces */
   --color-surface: #f4f0e8; /* warm paper — default page/section surface */

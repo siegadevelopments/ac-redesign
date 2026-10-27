@@ -1,208 +1,103 @@
 # Landing Page Specification
 
-> **2026-09 repositioning note.** This is a substantial revision, not a from-scratch rewrite —
-> most sections below are the same components with updated copy/content, not new components. See
-> `docs/brand.md` and `docs/target-audience.md` for why the homepage now leads with SMEs instead
-> of agencies. The "For Agencies" section (formerly §7) moved to its own page, `/for-agencies` —
-> see `docs/conversion-strategy.md`.
+> **2026-10 redesign.** The homepage is now a short scroll story in AIDA chapters, not a stack
+> of standard sections. It replaces the 2026-09 eleven-section layout (Hero, Problem,
+> Capabilities, What We Can Build, Process, Industries, Engineering Capability, Why Apprising,
+> Newsletter, FAQ, Final CTA). The content cut from the homepage was relocated, not lost: see
+> `/what-we-can-build` below. Earlier context: `docs/brand.md` and `docs/target-audience.md` for
+> why the homepage leads with SMEs; agencies live on `/for-agencies`.
 
 ## Primary Objective
 
-Generate qualified Business Automation Assessment bookings from Australian SME visitors.
+A growing Australian SME owner lands, thinks "this is something I can use to make my life
+easier", and tells Apprising their problem.
 
-The visitor should understand within the first few seconds:
-
-1. What Apprising Creatives does
-2. Who it helps
-3. What problem it solves
-4. What to do next
+Within the first few seconds the visitor should understand what Apprising Creatives does, who it
+helps, what problem it solves, and what to do next.
 
 ## CTA Hierarchy
 
 See `docs/conversion-strategy.md` for the full table. Summary:
 
-- Primary: **Book a Free Automation Assessment** → `/discovery-call`
-- Secondary: **See What We Can Automate** → `#solutions`
+- Primary: **Tell us your problem** → the problem box at `/#problem`
+- Secondary: **Book a Free Automation Assessment** → `/discovery-call` (offered after a send)
+- Exploration: **See What We Can Automate** → `/what-we-can-build`
 - Tertiary: **View Case Studies** → `/portfolio`
 
-## Landing Page Sections
+## Page Composition (`src/app/page.tsx`)
 
-### 1. Navigation
+Server components render all copy; the client pieces only add motion and interactivity. Every
+chapter is complete without JavaScript or with reduced motion (see the end-state-first rule in
+`docs/design-system.md`). A skip link before the story jumps to `#problem`.
 
-* Logo
-* What We Do
-* What We Can Build
-* How We Work
-* Case Studies
-* For Agencies
-* About
-* Book a Free Automation Assessment
+Order: Opening chapter → Pick your mess → How we work → Problem box (with the checklist
+fallback) → short FAQ → Footer. The navbar sits above, with "Tell us your problem" as its
+button on every page.
 
-### 2. Hero
+### 1. Opening chapter: the mess becomes one system (Attention)
 
-Headline:
+`OpeningChapter` + `StoryMotion` + `GrainCanvas`; copy in `src/lib/content/opening.ts`.
 
-> Your business runs on systems. We make them work smarter.
+Job: show recognisable SME mess (spreadsheets, sticky notes, receipts, texts, emails, calendar
+clashes) gathering into one concept app on a phone as the visitor scrolls, while the headline
+moves from the problem ("Your business is spread across a hundred places.") to the promise
+(the page's single `h1`: "Everything important, where you can actually find it."). Finished
+state: the problem line as supporting copy, the headline, the lede, the phone showing the
+"Today" overview, and the mess shown as "What it replaces". The phone is labelled **Concept**.
 
-Supporting copy:
+### 2. Pick your mess (Interest and Desire)
 
-> We help Australian businesses eliminate repetitive work, replace manual processes, and build
-> custom systems using automation, AI, and modern software.
+`ProblemStory` (client island); copy and concept screens in `src/lib/content/story.ts`, headache
+keys in `src/lib/content/headaches.ts`.
 
-CTA:
+Job: let the visitor pick the one headache closest to theirs (Jobs, Quotes, Invoices, Messages,
+Timesheets, Stock, or Something else). The concept app beside the list shows how that part of
+the business could work in one simple system. The pick carries into the problem box as a starter
+sentence (not shown anywhere as a client example). All app contents are labelled **Concept**
+with the note "An illustration of the idea, not a live product or real client data."
 
-Book a Free Automation Assessment
+### 3. How we work (`#how-we-work`)
 
-Secondary CTA:
+`HowWeWork`, rendered inside the island between the pick and the box.
 
-See What We Can Automate
+Job: state the honest approach. Headline "We don't start with technology.", the unchanged trust
+notes ("Not every problem needs AI.", "Not every workflow needs custom software.", "We
+recommend the simplest solution that solves the problem."), "you don't need new software at
+all" as an honest possible answer, the five steps (Discover, Diagnose, Design, Build,
+Optimise), and a link to the real case study on `/portfolio`. Any timeline shown elsewhere
+(e.g. on `/discovery-call`) must stay labelled indicative.
 
-Visual direction: unchanged — `HeroSystemVisual`, a system/workflow visualization, no robots or
-generic AI imagery (`docs/design-system.md` §18/§34).
+### 4. Problem box (`#problem`) (Action)
 
-### 3. Problem (expanded — absorbs what would otherwise be a separate "Transformation" section)
+Job: take name, email and the problem, all required, nothing else. Pre-filled from the pick
+unless the visitor has typed their own text. One plain security line sits near the box, with no
+certification implied. Beside it, a quiet fallback: "Not ready to talk yet?" with the Business
+Systems Audit Checklist signup. After a successful send: confirmation that a real person will
+read and reply, plus the offer to book the free automation assessment with details carried over.
+On failure the text stays and the contact email is shown. Without JavaScript: an email link
+instead of a form. The flow and intake fields are in `docs/conversion-strategy.md`; the route
+is in `docs/project-context.md`.
 
-Headline (unchanged, still strong):
+### 5. FAQ
 
-> Your business has grown. Your systems haven't.
+A four-question subset of `src/lib/content/faq.ts`: "Do I need custom software?", "What business
+processes can be automated?", "How much does business automation cost in Australia?" and "How
+do you handle security?". The same list feeds the `FAQPage` structured data (`docs/seo.md`).
+Answers stay visible (not collapsed).
 
-Keeps the existing two paragraphs, then adds a **"Does this sound familiar?"** recognition
-checklist:
+## Relocated content: `/what-we-can-build`
 
-* Your team copies information between systems.
-* Quotes take hours or days to prepare.
-* Bookings are spread across email, phone, spreadsheets and forms.
-* Managers wait for reports instead of seeing information in real time.
-* Employees spend valuable time doing work software should handle.
+Capabilities (three pillars: Business Automation, Custom Business Systems, AI Implementation),
+the six "What we can build" concept examples (still labelled Concept and not client case
+studies), Industries (five verticals being tested) and the closing band. Hash links
+`/#solutions` and `/#what-we-do` were repointed here; `LegacyHashRedirect` forwards old bookmarks
+to `/what-we-can-build`. The Engineering Capability grid is on `/for-agencies`; the former "Why
+Apprising" homepage section is gone, and the founder-led and security story lives on `/about`.
 
-Closes with an explicit before/after line next to the existing `ProblemConnectVisual` (which
-already visualizes scattered tools converging into one connected system — no new visual needed):
+## Navigation
 
-> Manual, disconnected tools → one connected system that does the repetitive work for you.
-
-Contains the one contextual use of **"Find Out What You Could Automate"** as inline link text
-into `/discovery-call` — see `docs/conversion-strategy.md`.
-
-### 4. Capabilities — reframed to three pillars
-
-Headline (unchanged):
-
-> From business problems to working systems.
-
-Three services, not four (the former fourth card, "Managed Application Support," is now the
-**Business Systems Care Plan** — a recurring offer documented in `docs/offers.md`, not a
-homepage capability card):
-
-* Business Automation
-* Custom Business Systems
-* AI Implementation
-
-### 5. What We Can Build (formerly "Solutions" — same component/section, renamed and re-scoped)
-
-Headline:
-
-> What we can build.
-
-Six use-case concepts, industry-neutral (supports multi-vertical testing per
-`docs/target-audience.md`):
-
-* Automated Quotation System
-* Booking & Scheduling System
-* Internal Business Dashboard
-* Workflow Automation
-* AI Business Assistant
-* Custom Business Platform
-
-Still explicitly labeled "Concept," still carries the existing disclaimer that these are not
-client case studies (`docs/case-studies.md` covers where the real one lives).
-
-### 6. Process — steps renamed, philosophy unchanged
-
-Headline (unchanged):
-
-> We don't start with technology.
-
-Steps (renamed to match the original brief; same five-step shape and philosophy as before):
-
-1. Discover
-2. Diagnose
-3. Design
-4. Build
-5. Optimise
-
-Unchanged trust notes:
-
-> Not every problem needs AI.
->
-> Not every workflow needs custom software.
->
-> We recommend the simplest solution that solves the problem.
-
-Any timeline shown elsewhere (e.g. on `/discovery-call`) must be labeled indicative — no fixed
-delivery promises.
-
-### 7. Industries (new)
-
-Headline:
-
-> Industries we're working with.
-
-Five verticals being tested (`docs/target-audience.md`, `docs/australian-market.md`):
-Healthcare & Wellness, Logistics, Tourism & Hospitality, Education, Professional Services. Kept
-deliberately light — one sentence each, no claimed deep specialization. Healthcare copy avoids
-any compliance/privacy claim not actually true (`docs/australian-market.md`).
-
-### 8. Engineering Capability (unchanged)
-
-Organized by Backend / Frontend / AI / Integration / Infrastructure, per
-`docs/design-system.md` §25. Still industry-neutral proof of technical capability, still avoids
-a meaningless logo wall.
-
-### 9. Why Apprising (trimmed, links out to `/about`)
-
-Headline (unchanged):
-
-> Technical capability without the complexity of building an internal team.
-
-Keeps the existing four-reason grid as a compact mid-page trust beat, but no longer duplicates
-the fuller founder-led/security/international story — that now lives on the dedicated `/about`
-page, linked from here ("Learn more about us").
-
-### 10. Newsletter / Lead Magnet (unchanged from the prior addition)
-
-"The Business Systems Audit Checklist" — a lower-commitment alternative to the Assessment, for
-visitors not ready to book a call. See `docs/project-context.md`'s "Newsletter / Lead Magnet"
-section.
-
-### 11. FAQ
-
-Headline (unchanged):
-
-> Common questions.
-
-Content updated per `docs/seo.md` §48 — SME/automation questions only; the two purely
-agency-specific questions moved to a `/for-agencies`-scoped FAQ list. Answers stay visible (not
-collapsed) to support `FAQPage` structured data.
-
-### 12. Final CTA
-
-Headline:
-
-> Let's find the work your business shouldn't be doing manually.
-
-CTA:
-
-Book a Free Automation Assessment
-
-Secondary: View Case Studies.
-
-## Section Order
-
-Hero (dark) → Problem (light, expanded) → Capabilities (dark, 3 pillars) → What We Can Build
-(dark) → Process (light) → Industries (dark) → Engineering Capability (light) → Why Apprising
-(white) → Newsletter (dark) → FAQ (light) → Final CTA (dark) → Footer (dark).
-
-"For Agencies" is no longer in the homepage rhythm — it's the entire content of `/for-agencies`.
+Logo, What We Can Build, How We Work (`/#how-we-work`), Case Studies, For Agencies, About, and
+the button "Tell us your problem". Footer "Contact" links to `/#problem`.
 
 ## SEO Intent
 
