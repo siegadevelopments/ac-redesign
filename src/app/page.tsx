@@ -1,39 +1,42 @@
-import { Hero } from "@/components/sections/Hero";
-import { Problem } from "@/components/sections/Problem";
-import { Capabilities } from "@/components/sections/Capabilities";
-import { SolutionExamples } from "@/components/sections/SolutionExamples";
-import { Process } from "@/components/sections/Process";
-import { Industries } from "@/components/sections/Industries";
-import { TechCapabilities } from "@/components/sections/TechCapabilities";
-import { WhyApprising } from "@/components/sections/WhyApprising";
-import { Newsletter } from "@/components/sections/Newsletter";
+import { OpeningChapter } from "@/components/story/OpeningChapter";
+import { ProblemStory } from "@/components/story/ProblemStory";
+import { HowWeWork } from "@/components/story/HowWeWork";
+import { LegacyHashRedirect } from "@/components/story/LegacyHashRedirect";
 import { Faq } from "@/components/sections/Faq";
-import { FinalCta } from "@/components/sections/FinalCta";
+import { FAQ_ITEMS } from "@/lib/content/faq";
 import { buildFaqJsonLd } from "@/lib/seo";
 
-// Section order per docs/landing-page.md's "Section Order" (SME-first,
-// revised 2026-09). "For Agencies" moved to /for-agencies — see
-// docs/brand.md's repositioning note.
+// The short FAQ kept on the homepage; the same list feeds the FAQPage
+// schema so the structured data always matches what is visible.
+const HOMEPAGE_FAQ_QUESTIONS = [
+  "Do I need custom software?",
+  "What business processes can be automated?",
+  "How much does business automation cost in Australia?",
+  "How do you handle security?",
+];
+const HOMEPAGE_FAQ = FAQ_ITEMS.filter((item) => HOMEPAGE_FAQ_QUESTIONS.includes(item.question));
+
+// Story order per the homepage story redesign plan: the mess becomes one
+// system, pick your mess, how we work, then the problem box.
 export default function Home() {
   return (
     <>
-      {/* FAQPage schema lives here, not the root layout, so it only ships
-          on the page where the matching FAQ content is actually visible. */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqJsonLd()) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqJsonLd(HOMEPAGE_FAQ)) }}
       />
-      <Hero />
-      <Problem />
-      <Capabilities />
-      <SolutionExamples />
-      <Process />
-      <Industries />
-      <TechCapabilities />
-      <WhyApprising />
-      <Newsletter />
-      <Faq />
-      <FinalCta />
+      <LegacyHashRedirect />
+      <a
+        href="#problem"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-24 focus:left-4 focus:z-50 focus:rounded-(--radius-btn) focus:bg-surface-raised focus:px-4 focus:py-3 focus:text-ink focus:shadow"
+      >
+        Skip to tell us your problem
+      </a>
+      <OpeningChapter />
+      <ProblemStory>
+        <HowWeWork />
+      </ProblemStory>
+      <Faq items={HOMEPAGE_FAQ} />
     </>
   );
 }
