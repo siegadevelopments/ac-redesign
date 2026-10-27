@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNod
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button, SUBMIT_BUTTON_CLASSES } from "@/components/ui/Button";
+import { trackEvent } from "@/lib/analytics";
 import { ConceptApp } from "@/components/story/ConceptApp";
 import { NewsletterInline } from "@/components/story/NewsletterInline";
 import { CONTACT_EMAIL, CTA_HREFS, CTA_LABELS } from "@/lib/constants";
@@ -59,6 +60,7 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
 
   function handlePick(headache: HeadacheKey) {
     setPrefill((current) => pickHeadache(current, headache));
+    trackEvent("headache_picked", { headache });
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -69,6 +71,9 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
     setError("");
 
     const form = new FormData(event.currentTarget);
+    // Analytics carries the headache key and an edited flag only, never
+    // name, email or problem text (KTD12).
+    const analytics = { headache: prefill.headache ?? "none", edited: prefill.edited };
     const payload = {
       name,
       email,
@@ -97,6 +102,7 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
           // Storage blocked (private mode, disabled site data): the
           // assessment form just starts blank, as it does today.
         }
+        trackEvent("problem_submitted", analytics);
         setStatus("success");
         return;
       }
@@ -106,10 +112,12 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
         const data = await response.json().catch(() => null);
         if (data && typeof data.error === "string") message = data.error;
       }
+      trackEvent("problem_failed", analytics);
       setError(message);
       setStatus("error");
     } catch {
       // Network failure or timeout.
+      trackEvent("problem_failed", analytics);
       setError(PROBLEM_BOX_COPY.failureMessage);
       setStatus("error");
     } finally {
@@ -232,7 +240,11 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
                   </h3>
                   <p className="text-body text-ink-muted">{PROBLEM_BOX_COPY.successBody}</p>
                   <div>
-                    <Button href={CTA_HREFS.bookDiscoveryCall}>
+                    <Button
+                      href={CTA_HREFS.bookDiscoveryCall}
+                      analyticsEvent="discovery_call_clicked"
+                      analyticsData={{ source: "problem_success" }}
+                    >
                       {CTA_LABELS.bookDiscoveryCall}
                     </Button>
                   </div>

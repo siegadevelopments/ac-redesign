@@ -15,7 +15,10 @@ export type AnalyticsEvent =
   | "discovery_call_clicked"
   | "contact_form_submitted"
   | "case_study_viewed"
-  | "partner_with_us_clicked";
+  | "partner_with_us_clicked"
+  | "headache_picked"
+  | "problem_submitted"
+  | "problem_failed";
 
 export function trackEvent(event: AnalyticsEvent, data?: Record<string, unknown>) {
   if (typeof window === "undefined" || !window.dataLayer) return;

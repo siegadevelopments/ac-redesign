@@ -25,6 +25,7 @@ export function Button({
   variant = "primary",
   onDark = false,
   analyticsEvent,
+  analyticsData,
   children,
   className = "",
 }: {
@@ -33,6 +34,8 @@ export function Button({
   onDark?: boolean;
   /** Fires a docs/conversion-strategy.md analytics event on click — see src/lib/analytics.ts. */
   analyticsEvent?: AnalyticsEvent;
+  /** Extra properties sent with `analyticsEvent` (never personal data). */
+  analyticsData?: Record<string, unknown>;
   children: ReactNode;
   className?: string;
 }) {
@@ -43,7 +46,7 @@ export function Button({
 
   const classes = `${BASE_CLASSES} ${variantClasses} ${className}`;
   const isExternalOrAnchor = href.startsWith("#") || href.startsWith("mailto:");
-  const handleClick = analyticsEvent ? () => trackEvent(analyticsEvent) : undefined;
+  const handleClick = analyticsEvent ? () => trackEvent(analyticsEvent, analyticsData) : undefined;
 
   if (isExternalOrAnchor) {
     return (
