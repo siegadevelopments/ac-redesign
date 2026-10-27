@@ -19,9 +19,8 @@ export const NEWSLETTER_COPY = {
   submitLabel: "Send Me the Checklist",
   successMessage: "Check your inbox — the checklist is on its way.",
   // Shown instead of successMessage when the subscriber was captured but
-  // the automated delivery step didn't fire — see src/app/api/subscribe's
-  // 2026-09 note on the Kit form-link bug. Stays honest rather than
-  // claiming something was sent when it wasn't.
+  // the form-link step (which triggers the checklist email) failed. Stays
+  // honest rather than claiming something was sent when it wasn't.
   delayedMessage: "We've got your email — the checklist is on its way shortly.",
   errorMessage: "Something went wrong. Please try again or email us directly.",
 } as const;

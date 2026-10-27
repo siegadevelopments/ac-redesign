@@ -4,15 +4,12 @@
 // actually be linked to that form. See docs/project-context.md "Newsletter
 // / Lead Magnet" for setup steps.
 //
-// TEMPORARY as of 2026-09: Kit confirmed POST /v4/forms/{id}/subscribers
-// 404s for this account (their bug, escalated to a product specialist).
-// Until fixed, we still capture the subscriber via the working
-// POST /v4/subscribers endpoint (so no lead is lost) but the form-link call
-// that actually triggers the checklist email fails — so the response
-// reports formLinked: false and the UI shows an honest "on its way
-// shortly" message instead of "check your inbox," which would be untrue
-// right now. Once Kit's fix lands, formLinked should reliably be true and
-// the honest-delay message stops appearing.
+// Order matters: POST /v4/forms/{id}/subscribers 404s unless the subscriber
+// already exists (confirmed by Kit support, 2026-09), so we create the
+// subscriber first. If the form-link call still fails, the lead is captured
+// but the checklist email won't fire, so the response reports
+// formLinked: false and the UI shows an honest "on its way shortly" message
+// instead of claiming it was sent.
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
