@@ -20,8 +20,13 @@ const bricolageGrotesque = Bricolage_Grotesque({
   display: "swap",
 });
 
+// Adds the motion class before first paint so the opening chapter's start
+// state never flashes. If the story script hasn't arrived within 5s (slow or
+// failed chunk), drop the class so the finished, readable state shows instead
+// of a hidden headline. Pages without the story lose nothing: only the
+// opening chapter's CSS reads the class.
 const MOTION_FLAG_SCRIPT =
-  'try{if(matchMedia("(prefers-reduced-motion: no-preference)").matches)document.documentElement.classList.add("motion")}catch(e){}';
+  'try{if(matchMedia("(prefers-reduced-motion: no-preference)").matches){var d=document.documentElement;d.classList.add("motion");setTimeout(function(){if(!window.__storyReady)d.classList.remove("motion")},5000)}}catch(e){}';
 
 const TITLE = "Business Automation & Custom Software | Apprising Creatives";
 

@@ -46,7 +46,13 @@ function offsetIn(el: HTMLElement, stage: HTMLElement) {
  * after the browser's own anchor scroll (KTD10).
  */
 function rescrollToHash() {
-  const id = decodeURIComponent(window.location.hash.slice(1));
+  let id: string;
+  try {
+    id = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    // A malformed percent-encoded hash (user-controlled) has no target to restore.
+    return;
+  }
   if (!id) return;
   document.getElementById(id)?.scrollIntoView({ block: "start" });
 }
@@ -132,6 +138,8 @@ export function StoryMotion({ className = "", children }: { className?: string; 
       const stage = stageRef.current;
       const track = stage?.parentElement;
       if (!stage || !track) return;
+      // Tells the pre-paint fallback in layout.tsx that the story script arrived.
+      (window as Window & { __storyReady?: boolean }).__storyReady = true;
 
       const mm = gsap.matchMedia();
       // The pre-paint script only adds `motion` when motion is allowed; without
