@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { useHydrated } from "@/lib/useHydrated";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
 import { Button, SUBMIT_BUTTON_CLASSES } from "@/components/ui/Button";
@@ -31,7 +32,6 @@ const FIELD_CLASSES =
 // Hides the JS-only forms when scripting is off; the email link shows instead (R30).
 const NOSCRIPT_STYLE = ".story-js-only{display:none!important}";
 
-const subscribeNoop = () => () => {};
 
 /**
  * The "pick your mess" chapter and the problem box as one client island
@@ -49,7 +49,7 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
   // False during SSR and before hydration, so the send button stays
   // disabled and an early Enter can't submit the native form (R17 keeps
   // the fields themselves usable straight away).
-  const hydrated = useSyncExternalStore(subscribeNoop, () => true, () => false);
+  const hydrated = useHydrated();
   const id = useId();
 
   const view = conceptViewFor(prefill.headache);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type RefObject } from "react";
+import { MOTION_QUERY, NARROW_QUERY } from "@/lib/motion";
 
 // Paper-grain shader behind the opening chapter (plan KTD4). Raw WebGL, one
 // fullscreen triangle. `messRef` (1 busy, 0 clean) is driven by the scroll
@@ -34,9 +35,6 @@ void main(){
   gl_FragColor=vec4(c,1.);
 }`;
 
-// Animate only where the story scrubs (same gate as html.motion in globals.css).
-const ANIMATE_QUERY = "(prefers-reduced-motion: no-preference) and (min-height: 560px)";
-const NARROW_QUERY = "(max-width: 767.98px)";
 const MAX_DPR = 1.5;
 // Frame-lag drop (R18): after a warm-up, average frame time over a window.
 const WARMUP_FRAMES = 20;
@@ -123,7 +121,7 @@ export function GrainCanvas({ messRef }: { messRef: RefObject<number> }) {
     });
     if (!gl) return; // CSS texture stays.
 
-    const animateMq = window.matchMedia(ANIMATE_QUERY);
+    const animateMq = window.matchMedia(MOTION_QUERY);
     const narrowMq = window.matchMedia(NARROW_QUERY);
     let renderer = createRenderer(gl, canvas);
     let frame = 0;

@@ -21,6 +21,10 @@
 // real visitor still shows up in the logs.
 import { findHeadache } from "@/lib/content/headaches";
 
+// Resend plus both Kit calls stay inside the client's 15s request timeout.
+const RESEND_TIMEOUT_MS = 6000;
+const KIT_TIMEOUT_MS = 4000;
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_MAX = 100;
 const PROBLEM_MIN = 10;
@@ -97,6 +101,8 @@ export async function POST(request: Request) {
   try {
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
+      // A hung connection must fail fast enough to report before the client gives up.
+      signal: AbortSignal.timeout(RESEND_TIMEOUT_MS),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${resendKey}`,
@@ -134,6 +140,7 @@ export async function POST(request: Request) {
   try {
     const subscriberResponse = await fetch("https://api.kit.com/v4/subscribers", {
       method: "POST",
+      signal: AbortSignal.timeout(KIT_TIMEOUT_MS),
       headers: kitHeaders,
       body: JSON.stringify({
         email_address: email,
@@ -152,6 +159,7 @@ export async function POST(request: Request) {
       // The subscriber must exist before this call (Kit 404s otherwise).
       const formResponse = await fetch(`https://api.kit.com/v4/forms/${formId}/subscribers`, {
         method: "POST",
+        signal: AbortSignal.timeout(KIT_TIMEOUT_MS),
         headers: kitHeaders,
         body: JSON.stringify({ email_address: email }),
       });

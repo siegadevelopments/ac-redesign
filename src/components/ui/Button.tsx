@@ -20,6 +20,9 @@ const SECONDARY_CLASSES = {
 /** Primary-button look for a native `<button type="submit">` in a form, which `Button` (a link) can't be. */
 export const SUBMIT_BUTTON_CLASSES = `${BASE_CLASSES} ${PRIMARY_CLASSES} disabled:cursor-not-allowed disabled:opacity-70`;
 
+/** Light secondary-button look for a native submit, so it never competes with a primary action. */
+export const SECONDARY_SUBMIT_BUTTON_CLASSES = `${BASE_CLASSES} ${SECONDARY_CLASSES.light} disabled:cursor-not-allowed disabled:opacity-70`;
+
 export function Button({
   href,
   variant = "primary",

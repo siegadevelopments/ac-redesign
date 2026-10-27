@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { MOTION_QUERY, NARROW_QUERY } from "@/lib/motion";
 
 // The motion module for the homepage story (plan KTD1-KTD4, KTD10). GSAP is
 // only ever imported from client components (KTD3).
@@ -21,12 +22,9 @@ const GrainCanvas = dynamic(
   { ssr: false }
 );
 
-// Must match the html.motion media gates in globals.css exactly: the CSS
-// paints the start state, this code scrubs away from it.
-const MOTION = "(prefers-reduced-motion: no-preference) and (min-height: 560px)";
 const MOTION_CONDITIONS = {
-  wide: `${MOTION} and (min-width: 768px)`,
-  narrow: `${MOTION} and (max-width: 767.98px)`,
+  wide: `${MOTION_QUERY} and (min-width: 768px)`,
+  narrow: `${MOTION_QUERY} and ${NARROW_QUERY}`,
 };
 
 /** Offset of `el` inside `stage`, from layout offsets so GSAP's own transforms never skew it. */

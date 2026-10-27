@@ -1,22 +1,19 @@
 "use client";
 
-import { useId, useState, useSyncExternalStore } from "react";
+import { useId, useState } from "react";
+import { useHydrated } from "@/lib/useHydrated";
+import { SECONDARY_SUBMIT_BUTTON_CLASSES } from "@/components/ui/Button";
 import { NEWSLETTER_COPY } from "@/lib/content/leadMagnet";
 import { NEWSLETTER_INLINE_COPY } from "@/lib/content/story";
 import { trackEvent } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
 
-const subscribeNoop = () => () => {};
 
-// Secondary-button look (Button's light secondary variant) for a native
-// submit, so this never competes with the problem box's primary button.
-const SECONDARY_SUBMIT_CLASSES =
-  "inline-flex items-center justify-center rounded-(--radius-btn) border border-line-strong bg-surface-raised px-4 py-2 text-small font-semibold text-ink transition-colors hover:border-ink disabled:cursor-not-allowed disabled:opacity-70";
 
 /**
  * The checklist signup as a quiet fallback beside the problem box (R10, F2).
- * Same /api/subscribe logic as src/components/sections/Newsletter.tsx, but
+ * Posts to /api/subscribe like the original newsletter section did, but
  * compact and visually secondary. It shares no fields with the problem box
  * and never sends a problem. The `story-js-only` class is hidden by the
  * <noscript> style in ProblemStory, since this form cannot send without JS.
@@ -26,7 +23,7 @@ export function NewsletterInline({ className = "" }: { className?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [formLinked, setFormLinked] = useState(true);
   // False during SSR and before hydration, so an early Enter can't submit.
-  const hydrated = useSyncExternalStore(subscribeNoop, () => true, () => false);
+  const hydrated = useHydrated();
   const emailId = useId();
 
   async function handleSubmit(event: React.FormEvent) {
@@ -87,7 +84,7 @@ export function NewsletterInline({ className = "" }: { className?: string }) {
             <button
               type="submit"
               disabled={!hydrated || status === "loading"}
-              className={SECONDARY_SUBMIT_CLASSES}
+              className={`${SECONDARY_SUBMIT_BUTTON_CLASSES} py-2!`}
             >
               {status === "loading" ? "Sending…" : NEWSLETTER_COPY.submitLabel}
             </button>
