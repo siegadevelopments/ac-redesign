@@ -186,6 +186,12 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
             <p className="sr-only" aria-live="polite">
               {prefill.headache ? PICK_CHAPTER_COPY.announceView(view.title) : ""}
             </p>
+            <div className="flex flex-col items-center gap-2 text-center">
+              <Button href={CTA_HREFS.tellUsProblem} variant="primary">
+                {PICK_CHAPTER_COPY.cta}
+              </Button>
+              <p className="text-small text-ink-muted">{PICK_CHAPTER_COPY.ctaNote}</p>
+            </div>
           </div>
         </Container>
       </section>
