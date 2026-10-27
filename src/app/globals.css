@@ -314,6 +314,7 @@
     flex: 1;
     min-height: 0;
     max-height: none;
+    max-width: 15rem;
     margin-bottom: 0;
   }
 

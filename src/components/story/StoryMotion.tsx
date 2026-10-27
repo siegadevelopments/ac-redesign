@@ -81,9 +81,10 @@ function buildStory(stage: HTMLElement, track: HTMLElement, grainMess: { current
   // Grain calms from busy paper to clean as the mess is put away.
   tl.fromTo(grainMess, { current: 1 }, { current: 0, duration: 1, ease: "none" }, 0);
   // Headline emphasis moves from the problem to the promise.
-  tl.to(".opening-before", { opacity: 0, y: -20, duration: 0.18 }, 0.12);
+  // The two headlines crossfade, so the copy area is never empty mid-scroll.
+  tl.to(".opening-before", { opacity: 0, y: -20, duration: 0.18 }, 0.28);
   tl.to(".opening-empty", { opacity: 0, duration: 0.1 }, 0.2);
-  tl.to(".opening-after", { opacity: 1, duration: 0.2 }, 0.62);
+  tl.to(".opening-after", { opacity: 1, duration: 0.2 }, 0.36);
 
   const step = items.length > 1 ? 0.5 / (items.length - 1) : 0;
   const revealed = new Set<string>();
