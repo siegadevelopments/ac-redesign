@@ -72,14 +72,11 @@ export async function POST(request: Request) {
   }
 
   // Linking to the form only drives Kit-side tagging/automation for this
-  // lead — not something the visitor-facing promise depends on (this funnel
-  // was always "a human reviews it," not an automated email). So a failure
-  // here is logged but non-fatal: the submission above already captured
-  // every field as a real Kit subscriber, which is what actually matters.
-  // TEMPORARY as of 2026-09: Kit confirmed POST /v4/forms/{id}/subscribers
-  // 404s for this account (their bug, escalated to a product specialist —
-  // see docs/project-context.md "Assessment Funnel"). Once fixed, this
-  // should reliably succeed and formLinked can be relied on again.
+  // lead — the visitor-facing promise is "a human reviews it," not an
+  // automated email. So a failure here is logged but non-fatal: the call
+  // above already captured every field as a real Kit subscriber. The
+  // subscriber must exist before this call (Kit 404s otherwise), which is
+  // why it comes second.
   const formResponse = await fetch(`https://api.kit.com/v4/forms/${formId}/subscribers`, {
     method: "POST",
     headers: kitHeaders,
