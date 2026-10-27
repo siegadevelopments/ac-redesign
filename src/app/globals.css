@@ -241,3 +241,168 @@
   outline-offset: 2px;
   border-radius: 2px;
 }
+
+/* ---------------------------------------------------------------------------
+   Opening chapter (plan U5, KTD1, KTD2, KTD4). Markup in
+   src/components/story/OpeningChapter.tsx, motion in StoryMotion.tsx.
+
+   Base styles (in the component) are the FINISHED state. Everything below
+   html.motion is the scroll story's start state plus the sticky track; the
+   class is added before first paint by the script in src/app/layout.tsx, so
+   no-JS and reduced-motion visitors never get it. The media gates must match
+   MOTION_CONDITIONS in StoryMotion.tsx exactly. Unlayered on purpose, so it
+   overrides the component's utility classes. */
+
+/* CSS paper texture: shown without JS, without WebGL, and until the grain
+   canvas has drawn. Gradients only, since the CSP's img-src blocks data: URIs. */
+.opening-paper {
+  background-color: var(--color-surface);
+  background-image:
+    radial-gradient(rgb(21 33 47 / 0.05) 0.5px, transparent 1px),
+    radial-gradient(rgb(21 33 47 / 0.035) 0.5px, transparent 1px);
+  background-size:
+    5px 5px,
+    7px 7px;
+  background-position:
+    0 0,
+    2px 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+  /* A tall track holding a 100svh sticky stage; ScrollTrigger only reads
+     progress (no pin, so no height change after hydration). The negative
+     margin tucks the stage under the sticky navbar; its top padding clears it. */
+  html.motion .opening-track {
+    height: 340svh;
+    margin-top: -5rem;
+  }
+
+  html.motion .opening-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 5rem;
+  }
+
+  html.motion .opening-grid {
+    padding-block: 1.5rem;
+  }
+
+  html.motion .opening-phone {
+    max-height: calc(100svh - 7rem);
+  }
+
+  /* Start state: the problem leads, the app is empty, the mess is scattered. */
+  html.motion .opening-before {
+    display: block;
+  }
+
+  html.motion .opening-after,
+  html.motion .opening-row {
+    opacity: 0;
+  }
+
+  html.motion .opening-empty {
+    display: grid;
+  }
+
+  html.motion .opening-mess-wrap {
+    position: absolute;
+    inset: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  /* The caption stays for screen readers; the strip is now the mess itself. */
+  html.motion .opening-caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  html.motion .opening-mess {
+    display: block;
+  }
+
+  html.motion .opening-item {
+    position: absolute;
+    left: var(--dx);
+    top: var(--dy);
+    transform: rotate(var(--rot));
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) and (max-width: 767.98px) {
+  /* Phones: shorter track, fewer objects, compact copy so the stage fits 100svh. */
+  html.motion .opening-track {
+    height: 240svh;
+  }
+
+  html.motion .opening-stage {
+    justify-content: flex-start;
+  }
+
+  html.motion .opening-grid {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-block: 1rem;
+  }
+
+  html.motion .opening-display {
+    font-size: 1.875rem;
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
+  }
+
+  html.motion .opening-lede {
+    font-size: var(--text-small);
+    line-height: var(--text-small--line-height);
+  }
+
+  /* Already read as the start-state headline; kept for screen readers. */
+  html.motion .opening-problem,
+  html.motion .opening-row-detail {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  html.motion .opening-hint {
+    display: none;
+  }
+
+  html.motion .opening-phone {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+    margin-bottom: 0;
+  }
+
+  html.motion .opening-item {
+    left: var(--mx);
+    top: var(--my);
+  }
+
+  html.motion .opening-item[data-narrow="false"] {
+    display: none;
+  }
+
+  html.motion .opening-visual {
+    zoom: 0.72;
+  }
+}

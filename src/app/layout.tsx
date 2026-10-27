@@ -20,6 +20,9 @@ const bricolageGrotesque = Bricolage_Grotesque({
   display: "swap",
 });
 
+const MOTION_FLAG_SCRIPT =
+  'try{if(matchMedia("(prefers-reduced-motion: no-preference)").matches)document.documentElement.classList.add("motion")}catch(e){}';
+
 const TITLE = "Business Automation & Custom Software | Apprising Creatives";
 
 export const metadata: Metadata = {
@@ -66,7 +69,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   const jsonLd = [buildOrganizationJsonLd(), buildWebSiteJsonLd()];
 
   return (
-    <html lang="en-AU" className={`${instrumentSans.variable} ${bricolageGrotesque.variable} h-full antialiased`}>
+    // suppressHydrationWarning: the pre-paint script below adds `motion` to
+    // this element's class before React hydrates. Shallow, like on <body>.
+    <html
+      lang="en-AU"
+      className={`${instrumentSans.variable} ${bricolageGrotesque.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Pre-paint motion flag (plan KTD1). Runs before first paint so the
+            homepage story's start state and track height are in place from
+            the first frame, with nothing jumping at hydration. No-JS and
+            reduced-motion visitors never get the class, so they see the
+            finished, static page. Allowed by the CSP's 'unsafe-inline'. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_FLAG_SCRIPT }} />
+      </head>
       {/* Browser extensions (ColorZilla, Grammarly, etc.) add attributes to
           <body> before React hydrates, which reports as a mismatch. This is
           shallow — it only covers this element's own attributes, so real
