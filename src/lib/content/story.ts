@@ -141,6 +141,8 @@ export const PICK_CHAPTER_COPY = {
     "Pick one. The concept app shows how that part of the business could work when it all lives in one simple system.",
   legend: "Pick the headache closest to yours",
   somethingElseDescription: "Not on the list? Tell us in your own words.",
+  cta: "Tell us about it",
+  ctaNote: "Your pick fills in the box for you. Change it however you like.",
   conceptLabel: "Concept",
   conceptNote: "An illustration of the idea, not a live product or real client data.",
   /** Read out by the live region when the concept app changes. */

@@ -78,7 +78,7 @@ export const OPENING_MESS: readonly MessItem[] = [
     width: 190,
     label: "A spreadsheet called Jobs_2026 (copy), with blank and question-marked cells",
     desktop: [6, 8],
-    narrow: [4, 36],
+    narrow: [4, 46],
     visual: {
       kind: "sheet",
       title: "Jobs_2026 (copy).xlsx",
@@ -95,7 +95,7 @@ export const OPENING_MESS: readonly MessItem[] = [
     width: 180,
     label: "Email, Re: Re: Fwd: quote. “Did this ever go out? Can't find the final one”",
     desktop: [38, 10],
-    narrow: [56, 34],
+    narrow: [52, 44],
     visual: { kind: "card", title: "Re: Re: Fwd: quote", meta: "“Did this ever go out? Can't find the final one”" },
   },
   {
