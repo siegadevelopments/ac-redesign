@@ -199,6 +199,10 @@ only reported as successful when the founder has been notified, so the order is 
    visitor, because the founder already has the message. The email also keeps every repeat send,
    which a single Kit field cannot.
 
+The route also limits each IP to 5 valid sends per 10 minutes (`src/lib/rateLimit.ts`, answered with
+429 and `Retry-After`). That limiter is in-memory per server instance, so on Vercel it only slows a
+scripted flood; the launch checklist below adds a firewall rule for a hard cap.
+
 A filled honeypot gets a success-shaped response with no email or Kit call, and is logged so a
 wrongly trapped real visitor shows up in the logs. If the Resend env vars are unset the route
 returns 503. All calls are server-side, so the CSP is unaffected. CAPTCHA and per-IP rate limiting
@@ -226,6 +230,9 @@ Env vars (see `.env.example`): `RESEND_API_KEY`, `PROBLEM_NOTIFY_TO`, `PROBLEM_N
   inbox with a working reply-to, the contact appears in Kit with both fields, and the success view
   and assessment pre-fill behave. Until this passes, the "a real person reads every message"
   claim stays UNVERIFIED in `docs/trust-and-claims.md`.
+- [ ] **Vercel firewall rate limit**: in the project's Firewall, add a rate-limit rule on
+  `POST /api/problem` (for example 10 requests per minute per IP) so a flood is stopped before it
+  reaches the route, Resend or Kit.
 - [ ] **GSAP licence**: the no-charge standard licence was checked and recorded 2026-10-27 for
   `gsap` 3.15.x; recheck on a major version bump or if the site's use changes.
 - [ ] **Analytics gap**: no analytics tool is connected, so `headache_picked`, `problem_submitted`,

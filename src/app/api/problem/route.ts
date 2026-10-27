@@ -20,6 +20,7 @@
 // response with no email or Kit call, and is logged so a wrongly trapped
 // real visitor still shows up in the logs.
 import { findHeadache } from "@/lib/content/headaches";
+import { checkRateLimit, clientKey } from "@/lib/rateLimit";
 
 // Resend plus both Kit calls stay inside the client's 15s request timeout.
 const RESEND_TIMEOUT_MS = 6000;
@@ -29,6 +30,10 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_MAX = 100;
 const PROBLEM_MIN = 10;
 const PROBLEM_MAX = 2000;
+
+// Per visitor IP; generous enough for retries after a typo.
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
 
 function asString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -71,6 +76,14 @@ export async function POST(request: Request) {
   const headache = headacheKey ? findHeadache(headacheKey) : undefined;
   if (headacheKey && !headache) {
     return Response.json({ error: "Please pick one of the listed headaches." }, { status: 400 });
+  }
+
+  const retryAfter = checkRateLimit(`problem:${clientKey(request)}`, RATE_LIMIT, RATE_WINDOW_MS);
+  if (retryAfter) {
+    return Response.json(
+      { error: "You've sent a few messages in a row. Please wait a few minutes and try again." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
   }
 
   if (honeypot) {

@@ -108,7 +108,7 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
       }
 
       let message: string = PROBLEM_BOX_COPY.failureMessage;
-      if (response.status === 400) {
+      if (response.status === 400 || response.status === 429) {
         const data = await response.json().catch(() => null);
         if (data && typeof data.error === "string") message = data.error;
       }
