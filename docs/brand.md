@@ -210,3 +210,13 @@ Supporting statement:
 Lives entirely on `/for-agencies` as of this repositioning — see `docs/conversion-strategy.md`
 for why it now runs as a separate funnel from the SME Assessment path rather than a homepage
 section.
+
+## Homepage voice and examples (2026-10)
+
+The homepage is plain-spoken and warm, in Australian spelling, and leads with the trigger of
+wasted hours rather than technology ("Your team keeps retyping the same things." / "Give your
+team their hours back."). It is broad but clear: the kicker says "Australian practices and service
+businesses", and the story's examples (diaries, intake forms, recalls, invoices, rosters) come from
+clinics and professional practices, the first audiences being tested. Say "clients" so it covers
+patients too. Never imply health-privacy compliance or certifications; the security FAQ answer is
+the wording to use.

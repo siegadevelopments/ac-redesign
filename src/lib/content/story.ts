@@ -23,12 +23,12 @@ export const CONCEPT_OVERVIEW: ConceptView = {
   title: "Today",
   subtitle: "Everything in one place",
   rows: [
-    { mark: "J", title: "Jobs for today", detail: "Crew assigned, addresses on the map" },
-    { mark: "Q", title: "Quotes waiting", detail: "Follow-up reminder set" },
+    { mark: "A", title: "Appointments today", detail: "Reminders sent, no double-bookings" },
+    { mark: "F", title: "Forms waiting", detail: "New client details, already filled in" },
+    { mark: "!", title: "Follow-ups due", detail: "Recalls and reminders go out for you" },
     { mark: "$", title: "Invoices ready", detail: "Send all with one tap" },
-    { mark: "M", title: "Messages", detail: "Customer replies, in one thread" },
-    { mark: "T", title: "Timesheets", detail: "Approved for this week" },
-    { mark: "S", title: "Stock", detail: "Low items flagged" },
+    { mark: "M", title: "Messages", detail: "Every enquiry, in one thread" },
+    { mark: "R", title: "Rosters & time", detail: "Approved for this week" },
   ],
 };
 
@@ -43,87 +43,87 @@ export type Pile = {
 // One entry per headache key except "something-else", which has no pile:
 // it leaves the box empty and shows the overview (R25).
 export const PILES: Record<Exclude<HeadacheKey, "something-else">, Pile> = {
-  jobs: {
-    mess: "Whiteboards, group texts and who's-going-where phone calls.",
-    starter: "Keeping track of jobs is a mess for us. ",
+  bookings: {
+    mess: "A paper diary, a shared calendar and reschedule texts that never match.",
+    starter: "Our bookings and reschedules take up too much of the day. ",
     view: {
-      title: "Jobs",
-      subtitle: "Booked, assigned and on the map",
+      title: "Bookings",
+      subtitle: "Booked, confirmed and reminded",
       rows: [
-        { mark: "J", title: "New booking", detail: "Lands straight on the schedule" },
-        { mark: "C", title: "Crew assigned", detail: "Everyone sees their day on their phone" },
-        { mark: "A", title: "Address and notes", detail: "Attached to the job, not a text thread" },
-        { mark: "✓", title: "Job done", detail: "Photos and sign-off saved to the job" },
+        { mark: "B", title: "New booking", detail: "Lands straight in the diary" },
+        { mark: "R", title: "Reminder sent", detail: "Clients confirm with one tap" },
+        { mark: "↻", title: "Reschedule", detail: "They pick a new time, no phone call" },
+        { mark: "✓", title: "Confirmed", detail: "Nothing double-booked" },
       ],
     },
   },
-  quotes: {
-    mess: "Quotes in a notebook, a spreadsheet and someone's inbox.",
-    starter: "Our quotes take too long and get lost between people. ",
+  intake: {
+    mess: "New client forms emailed as PDFs and retyped by hand.",
+    starter: "Getting new clients' details in and organised takes far too long. ",
     view: {
-      title: "Quotes",
-      subtitle: "From enquiry to accepted",
+      title: "Forms & intake",
+      subtitle: "Filled in before they arrive",
       rows: [
-        { mark: "E", title: "New enquiry", detail: "A draft quote starts from the website form" },
-        { mark: "Q", title: "Quote sent", detail: "The customer can accept online" },
-        { mark: "R", title: "Follow-up", detail: "A reminder goes out if there's no reply" },
-        { mark: "✓", title: "Accepted", detail: "Turns into a job without retyping" },
+        { mark: "F", title: "Form sent", detail: "Clients fill it in on their phone" },
+        { mark: "✓", title: "Details saved", detail: "Straight into the right record" },
+        { mark: "D", title: "Documents attached", detail: "Referrals and paperwork in one place" },
+        { mark: "R", title: "Ready", detail: "You open one page, not five" },
+      ],
+    },
+  },
+  followups: {
+    mess: "Recalls and chasing documents live on a sticky note and someone's memory.",
+    starter: "Follow-ups and recalls slip through because nobody owns them. ",
+    view: {
+      title: "Follow-ups",
+      subtitle: "Nothing left to remember",
+      rows: [
+        { mark: "!", title: "Due today", detail: "A short list, not a hunt" },
+        { mark: "S", title: "Reminder sent", detail: "Goes out for you, politely" },
+        { mark: "D", title: "Documents chased", detail: "Asked for again until they arrive" },
+        { mark: "✓", title: "Done", detail: "Logged against the client" },
       ],
     },
   },
   invoices: {
-    mess: "Invoices typed up at night from paper job sheets.",
-    starter: "Getting invoices out on time is a constant headache. ",
+    mess: "Invoices typed up at night from notes and a spreadsheet.",
+    starter: "Getting invoices out and chasing payment takes too much time. ",
     view: {
       title: "Invoices",
-      subtitle: "Out the door when the job is done",
+      subtitle: "Out the door when the work is done",
       rows: [
-        { mark: "$", title: "Invoice drafted", detail: "Built from the finished job" },
-        { mark: "S", title: "Sent", detail: "Straight to the customer by email" },
+        { mark: "$", title: "Invoice drafted", detail: "Built from the finished appointment or job" },
+        { mark: "S", title: "Sent", detail: "Straight to the client by email" },
         { mark: "R", title: "Overdue reminder", detail: "Sent for you, politely" },
         { mark: "A", title: "Accounts in sync", detail: "Lines up with your accounting software" },
       ],
     },
   },
   messages: {
-    mess: "Customer questions spread across texts, calls and three inboxes.",
-    starter: "Customer messages come in everywhere and things slip through. ",
+    mess: "Enquiries spread across phone, email, social and the front desk.",
+    starter: "Enquiries come in everywhere and things slip through. ",
     view: {
       title: "Messages",
-      subtitle: "Every customer, one thread",
+      subtitle: "Every client, one thread",
       rows: [
-        { mark: "M", title: "One inbox", detail: "Texts, emails and web enquiries together" },
-        { mark: "J", title: "Linked to the job", detail: "Know who's asking about what" },
+        { mark: "M", title: "One inbox", detail: "Emails, web enquiries and call notes together" },
+        { mark: "C", title: "Linked to the client", detail: "Know who's asking about what" },
         { mark: "@", title: "Assigned", detail: "Someone owns each reply" },
         { mark: "✓", title: "Answered", detail: "Nothing left sitting unread" },
       ],
     },
   },
-  timesheets: {
-    mess: "Paper timesheets chased every Friday and keyed in by hand.",
-    starter: "Collecting timesheets and getting them into payroll takes too long. ",
+  rosters: {
+    mess: "Rosters, leave and timesheets passed around by text and spreadsheet.",
+    starter: "Rosters and timesheets take too long to organise and approve. ",
     view: {
-      title: "Timesheets",
-      subtitle: "Logged on site, approved in one place",
+      title: "Rosters & time",
+      subtitle: "Planned, logged and approved in one place",
       rows: [
-        { mark: "T", title: "Clock on and off", detail: "From a phone, against the job" },
-        { mark: "R", title: "Review", detail: "Hours for the week in one list" },
-        { mark: "✓", title: "Approve", detail: "One tap per person" },
+        { mark: "R", title: "Roster set", detail: "Everyone sees their week on their phone" },
+        { mark: "S", title: "Swap or leave", detail: "Requested and approved in one tap" },
+        { mark: "T", title: "Hours logged", detail: "From a phone, no paper" },
         { mark: "P", title: "Payroll ready", detail: "Exported without retyping" },
-      ],
-    },
-  },
-  stock: {
-    mess: "Running out of parts because the count lives in someone's head.",
-    starter: "We never really know what stock we have until we run out. ",
-    view: {
-      title: "Stock",
-      subtitle: "Counts that keep themselves up to date",
-      rows: [
-        { mark: "S", title: "Used on a job", detail: "Taken off the count automatically" },
-        { mark: "!", title: "Running low", detail: "Flagged before it runs out" },
-        { mark: "O", title: "Reorder", detail: "Order drafted for your supplier" },
-        { mark: "✓", title: "Delivered", detail: "Counts updated when it arrives" },
       ],
     },
   },
@@ -151,9 +151,9 @@ export const PICK_CHAPTER_COPY = {
 
 export const PROBLEM_BOX_COPY = {
   eyebrow: "Tell us your problem",
-  title: "Describe the mess. We'll tell you what we'd do.",
+  title: "Tell us what keeps eating your team's time.",
   intro:
-    "No forms to fill in beyond these three. A real person reads every message and replies by email.",
+    "Three fields, no sales call. A real person reads every message and replies by email, and tells you honestly whether we can help.",
   nameLabel: "Name",
   emailLabel: "Email",
   problemLabel: "Your problem",

@@ -38,10 +38,10 @@ button on every page.
 
 `OpeningChapter` + `StoryMotion` + `GrainCanvas`; copy in `src/lib/content/opening.ts`.
 
-Job: show recognisable SME mess (spreadsheets, sticky notes, receipts, texts, emails, calendar
-clashes) gathering into one concept app on a phone as the visitor scrolls, while the headline
-moves from the problem ("Your business is spread across a hundred places.") to the promise
-(the page's single `h1`: "Everything important, where you can actually find it."). Finished
+Job: show recognisable practice and service-business mess (diary spreadsheets, PDF forms, sticky
+notes, texts, emails, calendar clashes) gathering into one concept app on a phone as the visitor
+scrolls, while the headline moves from the problem ("Your team keeps retyping the same
+things.") to the promise (the page's single `h1`: "Give your team their hours back."). Finished
 state: the problem line as supporting copy, the headline, the lede, the phone showing the
 "Today" overview, and the mess shown as "What it replaces". The phone is labelled **Concept**.
 
@@ -50,8 +50,8 @@ state: the problem line as supporting copy, the headline, the lede, the phone sh
 `ProblemStory` (client island); copy and concept screens in `src/lib/content/story.ts`, headache
 keys in `src/lib/content/headaches.ts`.
 
-Job: let the visitor pick the one headache closest to theirs (Jobs, Quotes, Invoices, Messages,
-Timesheets, Stock, or Something else). The concept app beside the list shows how that part of
+Job: let the visitor pick the one headache closest to theirs (Bookings, Forms & intake, Follow-ups,
+Invoices, Messages, Rosters & time, or Something else). The concept app beside the list shows how that part of
 the business could work in one simple system. The pick carries into the problem box as a starter
 sentence (not shown anywhere as a client example). All app contents are labelled **Concept**
 with the note "An illustration of the idea, not a live product or real client data."
