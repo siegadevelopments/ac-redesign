@@ -57,8 +57,8 @@ required, nothing else:
 - Email
 - Your problem (10 to 2,000 characters)
 
-Plus, not shown to visitors: the picked headache key (`jobs`, `quotes`, `invoices`, `messages`,
-`timesheets`, `stock`, `something-else`; `src/lib/content/headaches.ts`) and a hidden honeypot
+Plus, not shown to visitors: the picked headache key (`bookings`, `intake`, `followups`, `invoices`,
+`messages`, `rosters`, `something-else`; `src/lib/content/headaches.ts`) and a hidden honeypot
 field. Picking a headache in "pick your mess" writes a starter sentence into the problem field
 until the visitor edits it (any edit, including clearing, stops later picks from touching the
 text); "Something else" leaves the field empty. The technical flow is in
