@@ -1,12 +1,13 @@
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { RevealOnScroll } from "@/components/visuals/RevealOnScroll";
 import { Button } from "@/components/ui/Button";
 import { AGENCY_YOU_HANDLE, AGENCY_WE_HANDLE } from "@/lib/content/agencyComparison";
 import { CTA_HREFS, CTA_LABELS } from "@/lib/constants";
 
 function ComparisonList({ title, items }: { title: string; items: string[] }) {
   return (
-    <div className="flex flex-col gap-4 rounded-(--radius-card) border border-line-inverse bg-surface-inverse p-6 md:p-8">
+    <div className="reveal-item flex flex-col gap-4 rounded-(--radius-card) border border-line-inverse bg-surface-inverse p-6 md:p-8">
       <span className="text-label font-semibold uppercase tracking-[0.12em] text-ink-inverse-muted">
         {title}
       </span>
@@ -23,10 +24,10 @@ function ComparisonList({ title, items }: { title: string; items: string[] }) {
 
 export function ForAgencies() {
   return (
-    <Section id="for-agencies" tone="dark">
+    <Section id="for-agencies" tone="light" className="pt-0 md:pt-0 lg:pt-0">
       <Container>
         {/* Featured treatment — §24 requires this to read as more important
-            than a standard section on the same dark background. */}
+            than a standard section: one dark panel set into the paper page. */}
         <div className="overflow-hidden rounded-(--radius-lg) border border-line-inverse bg-surface-inverse-raised">
           <div className="h-1 w-full bg-accent-inverse" aria-hidden="true" />
 
@@ -45,10 +46,10 @@ export function ForAgencies() {
               </p>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
+            <RevealOnScroll className="grid gap-6 md:grid-cols-2">
               <ComparisonList title="You Handle" items={AGENCY_YOU_HANDLE} />
               <ComparisonList title="We Handle" items={AGENCY_WE_HANDLE} />
-            </div>
+            </RevealOnScroll>
 
             <div className="flex flex-col gap-6">
               <p className="text-body-lg text-ink-inverse">

@@ -120,7 +120,9 @@
 @layer components {
   /* Shared scroll-reveal primitive. Default state is always the complete,
      legible content; motion only ever adds a temporary starting state that
-     resolves once RevealOnScroll flips data-visible to "true". */
+     resolves once RevealOnScroll flips data-visible to "true". RevealOnScroll
+     renders no data-visible on the server and only arms "false" after JS has
+     mounted, so no-JS visitors never see the hidden start state. */
   .reveal-item {
     opacity: 1;
     transform: none;

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ExternalLink } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
@@ -24,22 +25,13 @@ export default function PortfolioPage() {
     <>
       <PageViewTracker event="case_study_viewed" />
 
-      <Section tone="dark">
-        <Container className="flex flex-col gap-6">
-          <span className="text-label font-semibold uppercase tracking-[0.12em] text-accent-inverse">
-            Case Studies
-          </span>
-          <h1 className="max-w-3xl text-display font-extrabold text-ink-inverse text-balance">
-            What we&apos;ve built.
-          </h1>
-          <p className="max-w-2xl text-body-lg text-ink-inverse-muted text-pretty">
-            A mix of real client engagements and internal products. Each is labeled clearly below
-            — we never present a demo or internal build as client work.
-          </p>
-        </Container>
-      </Section>
+      <PageHero
+        eyebrow="Case Studies"
+        title="What we've built."
+        lead="A mix of real client engagements and internal products. Each is labeled clearly below — we never present a demo or internal build as client work."
+      />
 
-      <Section tone="light">
+      <Section tone="light" className="pt-0 md:pt-0 lg:pt-0">
         <Container className="flex flex-col gap-12">
           <SectionHeading title="Selected work" />
 

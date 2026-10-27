@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { AssessmentForm } from "@/components/sections/AssessmentForm";
 import {
@@ -18,21 +19,13 @@ export const metadata: Metadata = {
 export default function DiscoveryCallPage() {
   return (
     <>
-      <Section tone="dark">
-        <Container className="flex flex-col gap-6">
-          <span className="text-label font-semibold uppercase tracking-[0.12em] text-accent-inverse">
-            {DISCOVERY_CALL_COPY.eyebrow}
-          </span>
-          <h1 className="max-w-3xl text-display font-extrabold text-ink-inverse text-balance">
-            {DISCOVERY_CALL_COPY.title}
-          </h1>
-          <p className="max-w-2xl text-body-lg text-ink-inverse-muted text-pretty">
-            {DISCOVERY_CALL_COPY.subhead}
-          </p>
-        </Container>
-      </Section>
+      <PageHero
+        eyebrow={DISCOVERY_CALL_COPY.eyebrow}
+        title={DISCOVERY_CALL_COPY.title}
+        lead={DISCOVERY_CALL_COPY.subhead}
+      />
 
-      <Section tone="light">
+      <Section tone="light" className="pt-0 md:pt-0 lg:pt-0">
         <Container className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col gap-8">
             <ol className="flex flex-col gap-6">

@@ -1,19 +1,20 @@
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { RevealOnScroll } from "@/components/visuals/RevealOnScroll";
 import { TECH_CATEGORIES } from "@/lib/content/techStack";
 
 export function TechCapabilities() {
   return (
-    <Section tone="light">
-      <Container className="flex flex-col gap-12">
+    <Section tone="raised">
+      <Container className="flex flex-col gap-12 md:gap-16">
         <SectionHeading eyebrow="Capabilities" title="Built with the right tools for the job." />
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+        <RevealOnScroll className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-5">
           {TECH_CATEGORIES.map((tech) => {
             const Icon = tech.icon;
             return (
-              <div key={tech.category} className="flex flex-col gap-4">
+              <div key={tech.category} className="reveal-item flex flex-col gap-4 border-t border-line pt-6">
                 <Icon
                   className="text-accent"
                   size={24}
@@ -33,7 +34,7 @@ export function TechCapabilities() {
               </div>
             );
           })}
-        </div>
+        </RevealOnScroll>
       </Container>
     </Section>
   );
