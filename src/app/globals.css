@@ -196,21 +196,19 @@
 
 @media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
   /* A tall track holding a 100svh sticky stage; ScrollTrigger only reads
-     progress (no pin, so no height change after hydration). The negative
-     margin tucks the stage under the sticky navbar; its top padding clears it. */
+     progress (no pin, so no height change after hydration). The stage sticks
+     just below the sticky navbar so scattered objects are never hidden by it. */
   html.motion .opening-track {
     height: 340svh;
-    margin-top: -5rem;
   }
 
   html.motion .opening-stage {
     position: sticky;
-    top: 0;
-    height: 100svh;
+    top: 5rem;
+    height: calc(100svh - 5rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 5rem;
   }
 
   html.motion .opening-grid {
