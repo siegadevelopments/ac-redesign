@@ -43,3 +43,6 @@ next-env.d.ts
 
 # claude code (local, per-machine permissions — not shared)
 .claude/settings.local.json
+
+# compound-engineering local artifacts (prototypes, scratch)
+.context/compound-engineering/
