@@ -24,7 +24,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     question: "What business processes can be automated?",
     homepage: true,
     answer:
-      "Anything repetitive and rule-based — quoting, booking, reporting, data entry between systems, customer notifications, and document handling are the most common starting points. The Free Automation Assessment identifies which ones apply to your business specifically.",
+      "Anything repetitive and rule-based. Booking and reminders, intake forms, quoting, invoicing, reporting, data entry between systems, client notifications and document handling are the most common starting points. The Free Automation Assessment identifies which ones apply to your business specifically.",
   },
   {
     question: "How much does business automation cost in Australia?",

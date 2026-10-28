@@ -9,7 +9,7 @@ export function Industries() {
       <Container className="flex flex-col gap-12">
         <SectionHeading
           eyebrow="Industries"
-          title="Industries we're working with."
+          title="Where we're testing our approach."
           subhead="We're testing where our approach helps most — not claiming deep specialization in all five yet."
           onDark
         />
