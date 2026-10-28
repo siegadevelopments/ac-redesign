@@ -14,11 +14,14 @@ const isDev = process.env.NODE_ENV === "development";
 // attacker to inject through it.
 // Google Analytics is only allowed when its measurement ID is configured, so
 // without one the CSP stays as strict as before (src/components/analytics).
+// GA4 sends hits to analytics.google.com (the bare host is not covered by the
+// wildcard) and falls back to www.google.com/g/collect. Google's advertising
+// audience pings (google.com/ads/ga-audiences) stay blocked on purpose.
 const gaEnabled = Boolean(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID);
 const gaScript = gaEnabled ? " https://www.googletagmanager.com" : "";
 const gaImg = gaEnabled ? " https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com" : "";
 const gaConnect = gaEnabled
-  ? " https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com"
+  ? " https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com/g/collect https://www.googletagmanager.com"
   : "";
 
 const cspHeader = `
