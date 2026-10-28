@@ -110,11 +110,11 @@ delivery mechanism (Kit custom fields + tag) is documented in `docs/project-cont
 
 ## Analytics Events
 
-Provider-agnostic (pushed to `window.dataLayer` if present — see `src/lib/analytics.ts` and
-`docs/project-context.md`'s "Analytics" section). **No analytics tool is connected yet**, so
-`trackEvent` records nothing in production. Until one is, the interim measure of success is Kit
-subscriber counts: problem sends (the problem form) compared with assessment requests (the
-assessment form).
+Sent through Google Analytics 4 (`gtag`) when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set (see
+`src/components/analytics/GoogleAnalytics.tsx` and `src/lib/analytics.ts`); with no ID nothing
+loads and `trackEvent` records nothing. In GA4, mark `problem_submitted` and
+`discovery_call_clicked` as key events. Kit subscriber counts remain the cross-check: problem sends
+compared with assessment requests.
 
 - `headache_picked` — a pick-your-mess choice. Payload: `{ headache }` (the key)
 - `problem_submitted` — a send that succeeded. Payload: `{ headache, edited }` (`headache` is

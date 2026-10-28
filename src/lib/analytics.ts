@@ -1,11 +1,12 @@
-// Provider-agnostic event tracking — see docs/conversion-strategy.md's
-// "Analytics Events" section for the full event list and why no vendor is
-// wired in yet. Pushes to window.dataLayer (GTM/GA4-compatible) if it
-// exists; no-ops otherwise, so this is safe to call before any analytics
-// container is actually installed.
+// Event tracking — see docs/conversion-strategy.md's "Analytics Events"
+// section for the full event list. Sends through gtag when Google Analytics
+// is loaded (src/components/analytics/GoogleAnalytics.tsx), otherwise pushes
+// to window.dataLayer if a tag manager made one, and no-ops if neither
+// exists, so it is always safe to call.
 declare global {
   interface Window {
-    dataLayer?: Record<string, unknown>[];
+    dataLayer?: unknown[];
+    gtag?: (command: "event", name: string, params?: Record<string, unknown>) => void;
   }
 }
 
@@ -21,6 +22,10 @@ export type AnalyticsEvent =
   | "problem_failed";
 
 export function trackEvent(event: AnalyticsEvent, data?: Record<string, unknown>) {
-  if (typeof window === "undefined" || !window.dataLayer) return;
-  window.dataLayer.push({ event, ...data });
+  if (typeof window === "undefined") return;
+  if (window.gtag) {
+    window.gtag("event", event, data);
+    return;
+  }
+  window.dataLayer?.push({ event, ...data });
 }

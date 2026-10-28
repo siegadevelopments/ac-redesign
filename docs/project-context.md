@@ -235,10 +235,11 @@ Env vars (see `.env.example`): `RESEND_API_KEY`, `PROBLEM_NOTIFY_TO`, `PROBLEM_N
   reaches the route, Resend or Kit.
 - [ ] **GSAP licence**: the no-charge standard licence was checked and recorded 2026-10-27 for
   `gsap` 3.15.x; recheck on a major version bump or if the site's use changes.
-- [ ] **Analytics gap**: no analytics tool is connected, so `headache_picked`, `problem_submitted`,
-  `problem_failed` and the other events record nothing in production. Until one is added (which
-  will also need CSP additions), compare Kit subscriber counts on the problem form against the
-  assessment form.
+- [ ] **Analytics**: create a GA4 property, copy its Measurement ID (`G-…`) into
+  `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel (Production), and redeploy. Until the ID is set nothing
+  loads and events record nothing. In GA4, mark `problem_submitted` and `discovery_call_clicked`
+  as key events. Add a privacy policy before or with this: the site has none yet, and GA sets
+  cookies and collects visitor data.
 
 ## Assessment Funnel
 
@@ -278,18 +279,13 @@ still in Kit with all its fields, just not linked to the assessment form. Verifi
 
 ## Analytics
 
-No analytics vendor is wired in — see `docs/conversion-strategy.md`'s Analytics Events section
-for the full event list and why. `src/lib/analytics.ts` exports one small helper,
-`trackEvent(name, data?)`, that pushes `{ event: name, ...data }` to `window.dataLayer` if it
-exists and no-ops otherwise (SSR-safe, zero dependency, GTM/GA4-compatible without committing to
-either specifically). Call sites: the assessment form (`assessment_started` on first field
-interaction, `assessment_completed` on success), the newsletter form (`contact_form_submitted`
-with `form: "newsletter"`), every primary CTA (`discovery_call_clicked`), `/portfolio`'s page
-view (`case_study_viewed`), the agency mailto CTA (`partner_with_us_clicked`), and the problem
-box (`headache_picked`, `problem_submitted`, `problem_failed`; payloads carry the headache key and
-an edited flag, never name, email or problem text). `discovery_call_clicked` carries an optional
-`source`, set to `problem_success` on the post-send assessment offer. Wiring an actual GTM
-container ID or GA4 property is a follow-up — see Open Questions.
+Google Analytics 4 loads only when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set
+(`src/components/analytics/GoogleAnalytics.tsx`, rendered in `src/app/layout.tsx`). With the ID set,
+`next.config.ts` adds Google's script, image and connect origins to the CSP; without it the CSP is
+unchanged and no third-party script loads. Google signals and ad personalisation are turned off.
+`src/lib/analytics.ts` exports `trackEvent(name, data?)`, which sends through `gtag` when it exists,
+falls back to `window.dataLayer` if a tag manager made one, and no-ops otherwise. See
+`docs/conversion-strategy.md`'s Analytics Events section for the event list.
 
 ## Newsletter / Lead Magnet
 
@@ -371,9 +367,8 @@ it further.
   Route", "Newsletter / Lead Magnet" and "Assessment Funnel"). The checklist PDF content, the
   custom fields and the forms' Kit-side automations still need to be created in the Kit dashboard,
   and the Resend values need setting (launch checklist under "Problem Route").
-- **Analytics vendor** — `src/lib/analytics.ts` pushes to `window.dataLayer` but no GTM
-  container / GA4 property is actually installed on the page yet, so events currently no-op in
-  production. Wire an actual container once one is chosen.
+- **Analytics property** — the code is wired for GA4 but needs the founder's Measurement ID in
+  `NEXT_PUBLIC_GA_MEASUREMENT_ID`; until then events no-op. A privacy policy is also still needed.
 - **Lifestyle Medicine Gateway case-study approval** — the case study on `/portfolio` currently
   uses only facts already published on the client's own site (no new claims added in this pass).
   Expanding it to the full Challenge/What We Built/Outcome/Testimonial structure in

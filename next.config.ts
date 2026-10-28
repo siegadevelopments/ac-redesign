@@ -12,13 +12,22 @@ const isDev = process.env.NODE_ENV === "development";
 // scripts and Tailwind's runtime style attributes (e.g. the scroll-reveal
 // diagrams' inline CSS custom properties) — there is no user input for an
 // attacker to inject through it.
+// Google Analytics is only allowed when its measurement ID is configured, so
+// without one the CSP stays as strict as before (src/components/analytics).
+const gaEnabled = Boolean(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID);
+const gaScript = gaEnabled ? " https://www.googletagmanager.com" : "";
+const gaImg = gaEnabled ? " https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com" : "";
+const gaConnect = gaEnabled
+  ? " https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com"
+  : "";
+
 const cspHeader = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""};
+  script-src 'self' 'unsafe-inline'${gaScript}${isDev ? " 'unsafe-eval'" : ""};
   style-src 'self' 'unsafe-inline';
-  img-src 'self';
+  img-src 'self'${gaImg};
   font-src 'self';
-  connect-src 'self';
+  connect-src 'self'${gaConnect};
   object-src 'none';
   base-uri 'self';
   form-action 'self';
