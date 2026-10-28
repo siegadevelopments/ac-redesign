@@ -18,23 +18,23 @@ export const metadata: Metadata = {
 const REASONS = [
   {
     icon: Target,
-    title: "Business-focused engineering",
-    description: "We care about the problem before the technology.",
+    title: "We start with your problem",
+    description: "Before any technology, we work out what is actually slowing your team down.",
   },
   {
     icon: Layers,
-    title: "End-to-end delivery",
-    description: "From discovery and architecture to deployment and support.",
+    title: "One team, start to finish",
+    description: "The same small team from the first conversation through to launch and support.",
   },
   {
     icon: TrendingUp,
-    title: "Built to evolve",
-    description: "We design systems that can grow with your business.",
+    title: "Built to grow with you",
+    description: "Systems that change as your team and your clients grow.",
   },
   {
     icon: Handshake,
-    title: "Technical partnership",
-    description: "We work with your team, not just for your ticket queue.",
+    title: "Someone on your side",
+    description: "We work with your team, not just through a ticket queue.",
   },
 ];
 
@@ -43,7 +43,7 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        title="A small, founder-led team that builds practical business systems."
+        title="A small, founder-led team that builds simple systems for busy teams."
         lead="Apprising Creatives is deliberately small: a founder handling business development, a technical co-founder, a graphics designer, and a junior developer. We're honest about that — we're not pitching ourselves as a large agency, and we don't need to be to build the kind of systems described on this site."
       />
 
@@ -52,21 +52,21 @@ export default function AboutPage() {
           <div className="md:col-span-5">
             <SectionHeading
               eyebrow="How We Work"
-              title="Founder-led discovery, engineering-first delivery."
+              title="You talk to the people who build it."
             />
           </div>
           <p className="text-body-lg text-ink-muted text-pretty md:col-span-6 md:col-start-7">
-            Every engagement starts with a founder or the technical co-founder directly, not a
-            sales layer — see the Free Automation Assessment. From there, delivery is handled by
-            the same small team end to end: discovery, architecture, build, and the ongoing
-            Business Systems Care Plan once a system is live.
+            Every engagement starts with a conversation with the founder or the technical
+            co-founder, not a sales layer. See the Free Automation Assessment. From there the same
+            small team handles everything: discovery, design, build, and ongoing support through
+            the Business Systems Care Plan once a system is live.
           </p>
         </Container>
       </Section>
 
       <Section tone="raised">
         <Container className="flex flex-col gap-12 md:gap-16">
-          <SectionHeading eyebrow="Why Apprising" title="What we actually bring to the table." />
+          <SectionHeading eyebrow="Why Apprising" title="What you get from working with us." />
           <RevealOnScroll className="grid gap-x-12 gap-y-10 sm:grid-cols-2">
             {REASONS.map((reason, index) => {
               const Icon = reason.icon;

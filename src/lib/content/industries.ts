@@ -16,7 +16,13 @@ export const INDUSTRIES: Industry[] = [
     icon: HeartPulse,
     title: "Healthcare & Wellness",
     description:
-      "Clinics and wellness providers juggling bookings, patient communication, and administrative work that pulls staff away from care.",
+      "Clinics and wellness providers losing hours to bookings, client messages and paperwork that pull staff away from care.",
+  },
+  {
+    icon: Briefcase,
+    title: "Professional Services",
+    description:
+      "Accountants, advisers and consultancies chasing documents, tracking time and billing through spreadsheets and disconnected software.",
   },
   {
     icon: Truck,
@@ -35,11 +41,5 @@ export const INDUSTRIES: Industry[] = [
     title: "Education",
     description:
       "Schools and training providers handling enrolments, scheduling, and repetitive administrative communication.",
-  },
-  {
-    icon: Briefcase,
-    title: "Professional Services",
-    description:
-      "Firms running client work, quoting, and reporting through a mix of spreadsheets and disconnected software.",
   },
 ];

@@ -11,28 +11,28 @@ export const PROCESS_STEPS: ProcessStep[] = [
   {
     number: "01",
     title: "Discover",
-    description: "We learn how your business currently works.",
+    description: "We learn how your team actually works today.",
   },
   {
     number: "02",
     title: "Diagnose",
     description:
-      "We identify bottlenecks, repetitive work, disconnected systems, and opportunities.",
+      "We find the bottlenecks, repeated work and disconnected tools.",
   },
   {
     number: "03",
     title: "Design",
-    description: "We design the right technical solution.",
+    description: "We design the simplest system that fixes them.",
   },
   {
     number: "04",
     title: "Build",
-    description: "We build and integrate the system.",
+    description: "We build it and connect it to the tools you already use.",
   },
   {
     number: "05",
     title: "Optimise",
-    description: "We continue improving it as your business evolves.",
+    description: "We keep improving it as your business changes.",
   },
 ];
 

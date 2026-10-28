@@ -1,8 +1,8 @@
 export const DISCOVERY_CALL_COPY = {
   eyebrow: "Free Business Automation Assessment",
-  title: "Let's find the work your business shouldn't be doing manually.",
+  title: "Let's find the work your team shouldn't be doing by hand.",
   subhead:
-    "A free 20-minute call to understand how your business actually operates, and whether automation, custom software, or AI is genuinely justified — not a sales pitch dressed up as a consultation.",
+    "A free 20-minute call to understand how your business really runs, and whether automation, custom software or AI is genuinely worth it. Not a sales pitch dressed up as a consultation.",
 } as const;
 
 export type AssessmentStep = {
@@ -14,28 +14,28 @@ export type AssessmentStep = {
 export const ASSESSMENT_STEPS: AssessmentStep[] = [
   {
     number: "01",
-    title: "We understand your workflow",
-    description: "How the work actually happens today, not how the org chart says it should.",
+    title: "We learn how the work happens",
+    description: "How things actually get done today, not how the org chart says they should.",
   },
   {
     number: "02",
-    title: "We identify bottlenecks",
-    description: "Where time, accuracy, or visibility are being lost.",
+    title: "We find where the time goes",
+    description: "Where hours, accuracy or visibility are being lost.",
   },
   {
     number: "03",
-    title: "We identify automation opportunities",
-    description: "What could realistically be automated, integrated, or rebuilt.",
+    title: "We spot what could be automated",
+    description: "What could realistically be automated, connected or rebuilt.",
   },
   {
     number: "04",
-    title: "We determine whether software or AI is justified",
-    description: "Sometimes the honest answer is no — see below.",
+    title: "We check whether software or AI is worth it",
+    description: "Sometimes the honest answer is no. See below.",
   },
   {
     number: "05",
     title: "We recommend the smallest practical solution",
-    description: "The simplest thing that actually solves the problem, not the biggest thing we could sell.",
+    description: "The simplest thing that solves the problem, not the biggest thing we could sell.",
   },
 ];
 
