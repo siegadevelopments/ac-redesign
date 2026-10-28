@@ -238,8 +238,7 @@ Env vars (see `.env.example`): `RESEND_API_KEY`, `PROBLEM_NOTIFY_TO`, `PROBLEM_N
 - [ ] **Analytics**: create a GA4 property, copy its Measurement ID (`G-…`) into
   `NEXT_PUBLIC_GA_MEASUREMENT_ID` in Vercel (Production), and redeploy. Until the ID is set nothing
   loads and events record nothing. In GA4, mark `problem_submitted` and `discovery_call_clicked`
-  as key events. Add a privacy policy before or with this: the site has none yet, and GA sets
-  cookies and collects visitor data.
+  as key events. The privacy policy at `/privacy` already describes GA; keep it in step.
 
 ## Assessment Funnel
 
@@ -368,7 +367,7 @@ it further.
   custom fields and the forms' Kit-side automations still need to be created in the Kit dashboard,
   and the Resend values need setting (launch checklist under "Problem Route").
 - **Analytics property** — the code is wired for GA4 but needs the founder's Measurement ID in
-  `NEXT_PUBLIC_GA_MEASUREMENT_ID`; until then events no-op. A privacy policy is also still needed.
+  `NEXT_PUBLIC_GA_MEASUREMENT_ID`; until then events no-op. The privacy policy at `/privacy` is written; the founder should read it first.
 - **Lifestyle Medicine Gateway case-study approval** — the case study on `/portfolio` currently
   uses only facts already published on the client's own site (no new claims added in this pass).
   Expanding it to the full Challenge/What We Built/Outcome/Testimonial structure in
