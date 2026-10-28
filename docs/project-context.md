@@ -230,7 +230,7 @@ Env vars (see `.env.example`): `RESEND_API_KEY`, `PROBLEM_NOTIFY_TO`, `PROBLEM_N
   inbox with a working reply-to, the contact appears in Kit with both fields, and the success view
   and assessment pre-fill behave. Until this passes, the "a real person reads every message"
   claim stays UNVERIFIED in `docs/trust-and-claims.md`.
-- [ ] **Vercel firewall rate limit**: in the project's Firewall, add a rate-limit rule on
+- [x] **Vercel firewall rate limit** (published 2026-10-29): in the project's Firewall, add a rate-limit rule on
   `POST /api/problem` (for example 10 requests per minute per IP) so a flood is stopped before it
   reaches the route, Resend or Kit.
 - [ ] **GSAP licence**: the no-charge standard licence was checked and recorded 2026-10-27 for
