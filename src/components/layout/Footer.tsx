@@ -51,7 +51,12 @@ export function Footer() {
       </Container>
 
       <Container className="border-t border-line-inverse py-6">
-        <p className="text-small text-ink-inverse-muted">© {year} Apprising Creatives</p>
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+          <p className="text-small text-ink-inverse-muted">© {year} Apprising Creatives</p>
+          <Link href="/privacy" className="text-small text-ink-inverse-muted hover:text-ink-inverse">
+            Privacy policy
+          </Link>
+        </div>
       </Container>
     </footer>
   );
