@@ -226,11 +226,11 @@ Env vars (see `.env.example`): `RESEND_API_KEY`, `PROBLEM_NOTIFY_TO`, `PROBLEM_N
 - [ ] **Kit**: create a third, separate form for problem sends and set `KIT_PROBLEM_FORM_ID`.
 - [ ] **Kit custom fields**: create `problem` and `problem_headache` with exactly those keys
   (Kit rejects unknown field keys).
-- [ ] **One live test send** through the production site: confirm the email reaches the founder's
+- [x] **One live test send** (passed 2026-10-29) through the production site: confirm the email reaches the founder's
   inbox with a working reply-to, the contact appears in Kit with both fields, and the success view
   and assessment pre-fill behave. Until this passes, the "a real person reads every message"
   claim stays UNVERIFIED in `docs/trust-and-claims.md`.
-- [ ] **Vercel firewall rate limit**: in the project's Firewall, add a rate-limit rule on
+- [x] **Vercel firewall rate limit** (published 2026-10-29): in the project's Firewall, add a rate-limit rule on
   `POST /api/problem` (for example 10 requests per minute per IP) so a flood is stopped before it
   reaches the route, Resend or Kit.
 - [ ] **GSAP licence**: the no-charge standard licence was checked and recorded 2026-10-27 for
