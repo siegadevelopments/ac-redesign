@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { SITE_TAGLINE } from "@/lib/constants";
+import { SHARE_IMAGE_HEADLINE, SHARE_IMAGE_SUBLINE } from "@/lib/constants";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -50,14 +50,26 @@ export default function OpengraphImage() {
           style={{
             display: "flex",
             marginTop: 28,
-            fontSize: 56,
+            fontSize: 66,
             fontWeight: 600,
             color: "#F4F0E8", // --color-ink-inverse
-            maxWidth: 900,
+            maxWidth: 1040,
             lineHeight: 1.15,
           }}
         >
-          {SITE_TAGLINE}
+          {SHARE_IMAGE_HEADLINE}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            marginTop: 24,
+            fontSize: 30,
+            color: "#B8C2CF", // muted inverse text
+            maxWidth: 900,
+            lineHeight: 1.3,
+          }}
+        >
+          {SHARE_IMAGE_SUBLINE}
         </div>
       </div>
     ),
