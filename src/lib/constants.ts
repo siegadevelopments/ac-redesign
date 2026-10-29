@@ -2,6 +2,15 @@ export const SITE_NAME = "Apprising Creatives";
 // Legal entity name, per docs/seo.md §23 (entity consistency).
 export const SITE_LEGAL_NAME = "Apprising Corporation";
 export const SITE_TAGLINE = "Your business runs on systems. We make them work smarter.";
+// Wording for link previews (WhatsApp, LinkedIn, iMessage, Slack). Search
+// results keep the keyword title/description above; these follow the
+// homepage voice.
+export const SHARE_TITLE = "Give your team their hours back | Apprising Creatives";
+export const SHARE_DESCRIPTION =
+  "We build simple systems that connect your bookings, forms, follow-ups and invoices, so nobody types the same thing twice.";
+export const SHARE_IMAGE_HEADLINE = "Give your team their hours back.";
+export const SHARE_IMAGE_SUBLINE = "Simple systems for Australian practices and service businesses.";
+
 export const SITE_DESCRIPTION =
   "Apprising Creatives helps Australian businesses eliminate repetitive work and modernise operations with automation, AI, and custom business systems.";
 

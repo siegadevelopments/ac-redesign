@@ -1302,3 +1302,12 @@ it as separate sections moved:
 - The homepage keeps one `h1` (the opening chapter's promise headline). Chapter copy is
   server-rendered in its finished state, so crawlers and no-JS visitors see all of it.
 - Organization, WebSite and the metadata in `src/app/layout.tsx` are unchanged.
+
+## Share previews (2026-10)
+
+Link previews (Open Graph and Twitter cards, `src/app/layout.tsx`) use the homepage-voice wording in
+`SHARE_TITLE`, `SHARE_DESCRIPTION` and the image copy in `src/app/opengraph-image.tsx`
+(`SHARE_IMAGE_HEADLINE`, `SHARE_IMAGE_SUBLINE`, all in `src/lib/constants.ts`). The `<title>` and
+meta description that search engines use keep the keyword wording (`TITLE`, `SITE_DESCRIPTION`), so
+the two are changed independently. Chat apps cache previews; re-scrape with LinkedIn's Post
+Inspector or Facebook's Sharing Debugger after a change.
