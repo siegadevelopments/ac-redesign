@@ -8,6 +8,7 @@
 //      subscriber to the assessment form so Kit's form automation fires.
 // See docs/project-context.md "Assessment Funnel" for the required custom
 // field keys and setup steps.
+import { sendAlert } from "@/lib/alert";
 import { checkRateLimit, clientKey } from "@/lib/rateLimit";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,6 +62,11 @@ export async function POST(request: Request) {
 
   if (!apiKey || !formId) {
     console.error("Assessment signup failed: KIT_API_KEY or KIT_ASSESSMENT_FORM_ID is not set.");
+    await sendAlert(
+      "assessment form not configured",
+      "The free assessment form is missing its Kit settings, so every request fails. Check the Vercel environment variables.",
+      5
+    );
     return Response.json({ error: "Signup is not configured yet." }, { status: 503 });
   }
 
@@ -91,12 +97,22 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Kit create subscriber failed:", error);
+    await sendAlert(
+      "assessment form failing",
+      "Assessment requests are NOT being saved: Kit could not be reached. Visitors see an error. Check Kit.",
+      5
+    );
     return Response.json({ error: "Could not submit the assessment." }, { status: 502 });
   }
 
   if (!subscriberResponse.ok) {
     const detail = await subscriberResponse.text();
     console.error(`Kit create subscriber failed (${subscriberResponse.status}): ${detail}`);
+    await sendAlert(
+      "assessment form failing",
+      `Assessment requests are NOT being saved: Kit returned ${subscriberResponse.status}. Visitors see an error. Check Kit and the API key.`,
+      5
+    );
     return Response.json({ error: "Could not submit the assessment." }, { status: 502 });
   }
 
@@ -124,5 +140,12 @@ export async function POST(request: Request) {
     formLinked = false;
   }
 
+  if (!formLinked) {
+    await sendAlert(
+      "assessment: Kit form link failing",
+      "An assessment request was saved, but linking it to the Kit form failed, so Kit's automation did not run.",
+      3
+    );
+  }
   return Response.json({ ok: true, formLinked });
 }

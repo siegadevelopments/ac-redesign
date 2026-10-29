@@ -418,3 +418,21 @@ before the domain went live; that comment is fixed as part of this pass.
   `@types/node` stays on the Node version we run (22). Dependabot ignores those two majors. npm
   prints "overriding peer dependency" warnings for ESLint 10 because plugins bundled in
   `eslint-config-next` still declare older ESLint peers; the rules run (checked with a probe file).
+
+## Failure alerts and uptime (2026-10)
+
+- `src/lib/alert.ts` posts a short alert to the founder's phone through ntfy when a form route
+  breaks: Resend failing or unconfigured (urgent), Kit failing on the assessment form (urgent), Kit
+  failing after a problem send or on the checklist signup (high), and a failed Kit form link
+  (default). It is best-effort, never changes a response, is limited to one alert per category per
+  10 minutes per server instance, and contains no visitor details. Without `ALERT_NTFY_URL` it does
+  nothing.
+- `GET /api/health` returns 200 when every form setting is present and 503 when one is missing
+  (it never calls Resend or Kit, and never shows values). Point an uptime monitor at it.
+- Launch checklist:
+  - [ ] Install the ntfy app, subscribe to a long random topic, set `ALERT_NTFY_URL` in Vercel
+    (Production) to `https://ntfy.sh/<topic>`, redeploy, and confirm an alert arrives.
+  - [ ] Create a free UptimeRobot (or similar) HTTP monitor on
+    `https://www.apprisingcreatives.com/api/health` with a 5-minute interval and phone or email
+    alerts, plus one on the homepage.
+
