@@ -37,14 +37,14 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "How we use it",
     body: [
-      "To read your message and reply, to prepare for an assessment call, to send the checklist or the occasional email you signed up for, and to understand which parts of the site help visitors. We do not sell your details.",
+      "To read your message and reply, to send a short confirmation email to the address you gave us when you use the problem box, to prepare for an assessment call, to send the checklist or the occasional email you signed up for, and to understand which parts of the site help visitors. We do not sell your details.",
     ],
   },
   {
     title: "Who handles it for us",
     body: [
       "We use a few services to run the site and to look after your message. They handle your information only to provide their service to us.",
-      "Vercel hosts the website. Resend delivers the email that tells us about your message. Kit stores contacts and sends our emails, including the checklist. Google Analytics measures site use.",
+      "Vercel hosts the website. Resend delivers the email that tells us about your message and the confirmation email we send back to you. Kit stores contacts and sends our emails, including the checklist. Google Analytics measures site use.",
       "Some of these providers are based outside Australia, so your information may be processed or stored in other countries, including the United States.",
     ],
   },

@@ -21,10 +21,12 @@
 // real visitor still shows up in the logs.
 import { findHeadache } from "@/lib/content/headaches";
 import { checkRateLimit, clientKey } from "@/lib/rateLimit";
+import { SITE_URL } from "@/lib/constants";
 
 // Resend plus both Kit calls stay inside the client's 15s request timeout.
 const RESEND_TIMEOUT_MS = 6000;
 const KIT_TIMEOUT_MS = 4000;
+const AUTOREPLY_TIMEOUT_MS = 4000;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_MAX = 100;
@@ -34,6 +36,44 @@ const PROBLEM_MAX = 2000;
 // Per visitor IP; generous enough for retries after a typo.
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
+
+// A short confirmation to the visitor so they know the message landed. It
+// carries no name and none of their text, so the form can't be used to send
+// chosen content to someone else's address, and it makes no reply-time
+// promise (docs/trust-and-claims.md). Best-effort: it never changes the
+// response. Set PROBLEM_AUTOREPLY=off to disable it.
+async function sendAutoReply(resendKey: string, from: string, replyTo: string, to: string) {
+  if (process.env.PROBLEM_AUTOREPLY === "off") return;
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      signal: AbortSignal.timeout(AUTOREPLY_TIMEOUT_MS),
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendKey}` },
+      body: JSON.stringify({
+        from,
+        to,
+        reply_to: replyTo,
+        subject: "We got your message",
+        text: [
+          "Hi,",
+          "",
+          "Thanks for telling us about your problem. We've got it. A real person reads every message and replies by email.",
+          "",
+          `If you'd like to go further in the meantime, you can book the free automation assessment: ${SITE_URL}/discovery-call`,
+          "",
+          "Apprising Creatives",
+          "",
+          "You're getting this because someone sent a message through apprisingcreatives.com with this address. If that wasn't you, you can ignore this email.",
+        ].join("\n"),
+      }),
+    });
+    if (!response.ok) {
+      console.error(`Auto-reply failed (${response.status}): ${await response.text()}`);
+    }
+  } catch (error) {
+    console.error("Auto-reply failed:", error);
+  }
+}
 
 function asString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -144,9 +184,11 @@ export async function POST(request: Request) {
 
   // The founder has the message from here on, so nothing below may turn
   // the response into a failure — including a thrown network error or
-  // missing Kit configuration.
+  // missing Kit configuration. The auto-reply runs alongside the Kit calls.
+  const autoReply = sendAutoReply(resendKey, notifyFrom, notifyTo, email);
   if (!kitKey || !formId) {
     console.error("Kit record skipped: KIT_API_KEY or KIT_PROBLEM_FORM_ID is not set.");
+    await autoReply;
     return Response.json({ ok: true });
   }
   const kitHeaders = {
@@ -188,5 +230,6 @@ export async function POST(request: Request) {
     console.error("Kit problem send failed:", error);
   }
 
+  await autoReply;
   return Response.json({ ok: true });
 }
