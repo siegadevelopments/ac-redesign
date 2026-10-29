@@ -203,6 +203,12 @@ The route also limits each IP to 5 valid sends per 10 minutes (`src/lib/rateLimi
 429 and `Retry-After`). That limiter is in-memory per server instance, so on Vercel it only slows a
 scripted flood; the launch checklist below adds a firewall rule for a hard cap.
 
+After the founder email succeeds, the route also sends the visitor a short confirmation email
+(subject "We got your message") from the same Resend sender, with reply-to set to
+`PROBLEM_NOTIFY_TO`. It is best-effort: a failure is logged and never changes the response. It
+carries no name and none of the visitor's text (so the form can't be used to send chosen content
+to someone else's address) and promises no reply time. Set `PROBLEM_AUTOREPLY=off` to disable it.
+
 A filled honeypot gets a success-shaped response with no email or Kit call, and is logged so a
 wrongly trapped real visitor shows up in the logs. If the Resend env vars are unset the route
 returns 503. All calls are server-side, so the CSP is unaffected. CAPTCHA and per-IP rate limiting
