@@ -1,4 +1,4 @@
-export type PortfolioKind = "client" | "internal";
+type PortfolioKind = "client" | "internal";
 
 export type PortfolioItem = {
   kind: PortfolioKind;

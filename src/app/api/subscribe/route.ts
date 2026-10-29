@@ -10,7 +10,15 @@
 // but the checklist email won't fire, so the response reports
 // formLinked: false and the UI shows an honest "on its way shortly" message
 // instead of claiming it was sent.
+import { checkRateLimit, clientKey } from "@/lib/rateLimit";
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_MAX = 254;
+
+// Per visitor IP, and an outbound timeout so a hung Kit can't hold the request.
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const KIT_TIMEOUT_MS = 8000;
 
 export async function POST(request: Request) {
   let email: unknown;
@@ -21,8 +29,16 @@ export async function POST(request: Request) {
     return Response.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  if (typeof email !== "string" || !EMAIL_PATTERN.test(email)) {
+  if (typeof email !== "string" || email.length > EMAIL_MAX || !EMAIL_PATTERN.test(email)) {
     return Response.json({ error: "Enter a valid email address." }, { status: 400 });
+  }
+
+  const retryAfter = checkRateLimit(`subscribe:${clientKey(request)}`, RATE_LIMIT, RATE_WINDOW_MS);
+  if (retryAfter) {
+    return Response.json(
+      { error: "Too many signups in a row. Please wait a few minutes and try again." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
   }
 
   const apiKey = process.env.KIT_API_KEY;
@@ -38,11 +54,18 @@ export async function POST(request: Request) {
     "X-Kit-Api-Key": apiKey,
   };
 
-  const subscriberResponse = await fetch("https://api.kit.com/v4/subscribers", {
-    method: "POST",
-    headers: kitHeaders,
-    body: JSON.stringify({ email_address: email }),
-  });
+  let subscriberResponse: Response;
+  try {
+    subscriberResponse = await fetch("https://api.kit.com/v4/subscribers", {
+      method: "POST",
+      signal: AbortSignal.timeout(KIT_TIMEOUT_MS),
+      headers: kitHeaders,
+      body: JSON.stringify({ email_address: email }),
+    });
+  } catch (error) {
+    console.error("Kit create subscriber failed:", error);
+    return Response.json({ error: "Could not complete signup." }, { status: 502 });
+  }
 
   if (!subscriberResponse.ok) {
     const detail = await subscriberResponse.text();
@@ -50,16 +73,21 @@ export async function POST(request: Request) {
     return Response.json({ error: "Could not complete signup." }, { status: 502 });
   }
 
-  const formResponse = await fetch(`https://api.kit.com/v4/forms/${formId}/subscribers`, {
-    method: "POST",
-    headers: kitHeaders,
-    body: JSON.stringify({ email_address: email }),
-  });
-
   let formLinked = true;
-  if (!formResponse.ok) {
-    const detail = await formResponse.text();
-    console.error(`Kit add-to-form failed (${formResponse.status}): ${detail}`);
+  try {
+    const formResponse = await fetch(`https://api.kit.com/v4/forms/${formId}/subscribers`, {
+      method: "POST",
+      signal: AbortSignal.timeout(KIT_TIMEOUT_MS),
+      headers: kitHeaders,
+      body: JSON.stringify({ email_address: email }),
+    });
+    if (!formResponse.ok) {
+      const detail = await formResponse.text();
+      console.error(`Kit add-to-form failed (${formResponse.status}): ${detail}`);
+      formLinked = false;
+    }
+  } catch (error) {
+    console.error("Kit add-to-form failed:", error);
     formLinked = false;
   }
 
