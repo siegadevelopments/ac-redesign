@@ -24,8 +24,9 @@ export const SITE_URL = "https://www.apprisingcreatives.com";
 // "Assessment Funnel" section.
 export const CONTACT_EMAIL = "info@apprisingcreatives.com";
 
-function mailto(subject: string) {
-  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}`;
+function mailto(subject: string, body?: string) {
+  const bodyParam = body ? `&body=${encodeURIComponent(body)}` : "";
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}${bodyParam}`;
 }
 
 // CTA hierarchy fixed sitewide per docs/conversion-strategy.md — avoid
@@ -35,7 +36,10 @@ export const CTA_HREFS = {
   tellUsProblem: "/#problem",
   exploreWhatWeBuild: "/what-we-can-build",
   viewCaseStudies: "/portfolio",
-  partnerWithUs: mailto("Agency Partnership"),
+  partnerWithUs: mailto(
+    "Agency Partnership",
+    "Agency name:\nWhat you're delivering:\nWhere you need engineering capacity:\nTiming:\n",
+  ),
   startConversation: mailto("Getting Started"),
 };
 

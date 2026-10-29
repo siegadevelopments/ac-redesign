@@ -20,7 +20,7 @@ export default function ForAgenciesPage() {
       <PageHero
         eyebrow="For Agencies"
         title="Engineering capacity for Australian agencies."
-        lead="Apprising Creatives works behind the scenes as an engineering partner for agencies and consultancies that need additional technical delivery capacity — custom software, AI integrations, and complex automation."
+        lead="Apprising Creatives works behind the scenes as an engineering partner for agencies and consultancies that need additional technical delivery capacity — custom software, AI integrations, and complex automation. We're a small team based in the Philippines, with working hours that overlap Australian business hours."
       />
 
       <ForAgencies />

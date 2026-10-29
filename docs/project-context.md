@@ -125,6 +125,11 @@ comparison card) and `TechCapabilities.tsx` (still relevant proof of technical c
 agency evaluator), adds an agency-specific FAQ (`src/lib/content/agencyFaq.ts`) and a `FinalCta`
 variant with "Partner With Us" as the primary CTA instead of the Assessment.
 
+The hero states plainly that the team is small and based in the Philippines with hours that
+overlap Australian business hours, and the agency FAQ covers location, NDA and white-label work,
+and code/IP ownership (register row in `docs/trust-and-claims.md`, founder-confirmed 2026-10-30).
+The Partner With Us `mailto:` carries a short prefilled body (`CTA_HREFS.partnerWithUs`).
+
 ### `/discovery-call`
 
 Consolidates what the original brief described as two separate things — a "Free Business
