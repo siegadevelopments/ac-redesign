@@ -5,7 +5,7 @@
 import { CONTACT_EMAIL } from "@/lib/constants";
 import type { HeadacheKey } from "@/lib/content/headaches";
 
-export type ConceptRow = {
+type ConceptRow = {
   /** One or two characters shown in the row's marker. */
   mark: string;
   title: string;
@@ -19,7 +19,7 @@ export type ConceptView = {
 };
 
 /** The all-in-one "Today" screen, shown before any pick and for "Something else". */
-export const CONCEPT_OVERVIEW: ConceptView = {
+const CONCEPT_OVERVIEW: ConceptView = {
   title: "Today",
   subtitle: "Everything in one place",
   rows: [

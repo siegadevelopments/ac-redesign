@@ -8,10 +8,21 @@
 //      subscriber to the assessment form so Kit's form automation fires.
 // See docs/project-context.md "Assessment Funnel" for the required custom
 // field keys and setup steps.
+import { checkRateLimit, clientKey } from "@/lib/rateLimit";
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function asString(value: unknown): string {
-  return typeof value === "string" ? value.trim() : "";
+// Per visitor IP, and an outbound timeout so a hung Kit can't hold the request.
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const KIT_TIMEOUT_MS = 8000;
+// Field caps: anything longer is cut, not rejected, so a real answer is never lost to a typo.
+const SHORT_MAX = 200;
+const LONG_MAX = 2000;
+const EMAIL_MAX = 254;
+
+function asString(value: unknown, max = SHORT_MAX): string {
+  return typeof value === "string" ? value.trim().slice(0, max) : "";
 }
 
 export async function POST(request: Request) {
@@ -21,16 +32,27 @@ export async function POST(request: Request) {
   } catch {
     return Response.json({ error: "Invalid request." }, { status: 400 });
   }
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return Response.json({ error: "Invalid request." }, { status: 400 });
+  }
 
   const name = asString(body.name);
   const business = asString(body.business);
-  const email = asString(body.email);
-  const challenge = asString(body.challenge);
+  const email = asString(body.email, EMAIL_MAX);
+  const challenge = asString(body.challenge, LONG_MAX);
 
   if (!name || !business || !challenge || !EMAIL_PATTERN.test(email)) {
     return Response.json(
       { error: "Please fill in your name, business, email, and biggest challenge." },
       { status: 400 }
+    );
+  }
+
+  const retryAfter = checkRateLimit(`assessment:${clientKey(request)}`, RATE_LIMIT, RATE_WINDOW_MS);
+  if (retryAfter) {
+    return Response.json(
+      { error: "You've sent a few requests in a row. Please wait a few minutes and try again." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
     );
   }
 
@@ -47,23 +69,30 @@ export async function POST(request: Request) {
     "X-Kit-Api-Key": apiKey,
   };
 
-  const subscriberResponse = await fetch("https://api.kit.com/v4/subscribers", {
-    method: "POST",
-    headers: kitHeaders,
-    body: JSON.stringify({
-      email_address: email,
-      first_name: name,
-      fields: {
-        business,
-        website: asString(body.website),
-        industry: asString(body.industry),
-        team_size: asString(body.teamSize),
-        biggest_challenge: challenge,
-        current_tools: asString(body.currentTools),
-        automate_wish: asString(body.automateWish),
-      },
-    }),
-  });
+  let subscriberResponse: Response;
+  try {
+    subscriberResponse = await fetch("https://api.kit.com/v4/subscribers", {
+      method: "POST",
+      signal: AbortSignal.timeout(KIT_TIMEOUT_MS),
+      headers: kitHeaders,
+      body: JSON.stringify({
+        email_address: email,
+        first_name: name,
+        fields: {
+          business,
+          website: asString(body.website),
+          industry: asString(body.industry),
+          team_size: asString(body.teamSize),
+          biggest_challenge: challenge,
+          current_tools: asString(body.currentTools, LONG_MAX),
+          automate_wish: asString(body.automateWish, LONG_MAX),
+        },
+      }),
+    });
+  } catch (error) {
+    console.error("Kit create subscriber failed:", error);
+    return Response.json({ error: "Could not submit the assessment." }, { status: 502 });
+  }
 
   if (!subscriberResponse.ok) {
     const detail = await subscriberResponse.text();
@@ -77,16 +106,21 @@ export async function POST(request: Request) {
   // above already captured every field as a real Kit subscriber. The
   // subscriber must exist before this call (Kit 404s otherwise), which is
   // why it comes second.
-  const formResponse = await fetch(`https://api.kit.com/v4/forms/${formId}/subscribers`, {
-    method: "POST",
-    headers: kitHeaders,
-    body: JSON.stringify({ email_address: email }),
-  });
-
   let formLinked = true;
-  if (!formResponse.ok) {
-    const detail = await formResponse.text();
-    console.error(`Kit add-to-form failed (${formResponse.status}): ${detail}`);
+  try {
+    const formResponse = await fetch(`https://api.kit.com/v4/forms/${formId}/subscribers`, {
+      method: "POST",
+      signal: AbortSignal.timeout(KIT_TIMEOUT_MS),
+      headers: kitHeaders,
+      body: JSON.stringify({ email_address: email }),
+    });
+    if (!formResponse.ok) {
+      const detail = await formResponse.text();
+      console.error(`Kit add-to-form failed (${formResponse.status}): ${detail}`);
+      formLinked = false;
+    }
+  } catch (error) {
+    console.error("Kit add-to-form failed:", error);
     formLinked = false;
   }
 

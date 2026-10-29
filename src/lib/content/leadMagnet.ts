@@ -1,15 +1,3 @@
-export const LEAD_MAGNET = {
-  title: "The Business Systems Audit Checklist",
-  description:
-    "A short, practical checklist for spotting where manual work, spreadsheets, and disconnected tools are quietly costing your team time — and where automation or integration would help most.",
-  checklistItems: [
-    "Where data gets copied by hand between tools",
-    "Which reports take longer to build than they should",
-    "Where customers wait on a manual step that could be instant",
-    "Which processes depend on one person remembering to do them",
-  ],
-} as const;
-
 export const NEWSLETTER_COPY = {
   eyebrow: "Free Resource",
   supporting:

@@ -3,7 +3,7 @@
 ## Overview
 
 This repo is the marketing website for Apprising Creatives — a Next.js site originally built as a
-single page (`/`) following the brief in `master-prompt.md`, expanded in 2026-09 into a small
+single page (`/`) following the brief in `docs/archive/master-prompt.md`, expanded in 2026-09 into a small
 multi-page site (`/`, `/portfolio`, `/for-agencies`, `/discovery-call`, `/about`) as part of an
 SME-first repositioning — see `docs/brand.md`'s repositioning note for why. In 2026-10 the
 homepage was rebuilt as a scroll story and gained `/what-we-can-build` (`docs/landing-page.md`). There is still no
@@ -294,7 +294,7 @@ falls back to `window.dataLayer` if a tag manager made one, and no-ops otherwise
 
 ## Newsletter / Lead Magnet
 
-`src/components/sections/Newsletter.tsx` (rendered between Why Apprising and FAQ, per
+`src/components/story/NewsletterInline.tsx` (rendered beside the problem box, per
 `docs/landing-page.md` §10) offers "The Business Systems Audit Checklist" as a lower-commitment
 alternative to booking a call, and frames the same signup as an ongoing newsletter. Copy lives in
 `src/lib/content/leadMagnet.ts`.
@@ -320,7 +320,7 @@ than failing silently.
 **Why two calls, in this order**: `POST /v4/forms/{id}/subscribers` returns 404 unless the
 subscriber already exists (confirmed by Kit support 2026-09 — an early version of this route
 called it first and looked like a Kit bug; it wasn't). If the form-link call fails anyway, the
-route still succeeds and returns `{ ok: true, formLinked: false }`; `Newsletter.tsx` then shows
+route still succeeds and returns `{ ok: true, formLinked: false }`; `NewsletterInline.tsx` then shows
 `NEWSLETTER_COPY.delayedMessage` ("we've got your email — the checklist is on its way shortly")
 rather than claiming the checklist was sent, since the incentive email won't fire without the
 link. Verified live 2026-09: both calls succeed and `formLinked` is `true`.
@@ -398,3 +398,17 @@ newsletter, assessment and problem forms to work; the rest of the site needs no
 environment variables. `SITE_URL` in `constants.ts` is the real, live domain
 (`https://www.apprisingcreatives.com`) — it previously carried a stale "placeholder" comment from
 before the domain went live; that comment is fixed as part of this pass.
+
+## Repository hygiene and security baseline (2026-10)
+
+- Dependencies: `npm audit --omit=dev` is clean (Next 16.4.3, which fixed the critical
+  `next/og` ImageResponse advisory). CI (`.github/workflows/ci.yml`) fails a PR on lint, build,
+  typecheck or a high-severity advisory; Dependabot (`.github/dependabot.yml`) opens weekly
+  update PRs. Run `npm audit` before any release.
+- All three form routes (`problem`, `assessment`, `subscribe`) rate-limit per IP
+  (`src/lib/rateLimit.ts`), cap field lengths, answer non-object bodies with 400, and use outbound
+  timeouts. `/api/*` responses are `Cache-Control: no-store`.
+- `public/.well-known/security.txt` gives a security contact; its `Expires` date must be renewed
+  by 2027-10-29.
+- The original redesign brief now lives at `docs/archive/master-prompt.md` for history only; it
+  predates the repositioning and must not be followed over `CLAUDE.md` and `docs/`.

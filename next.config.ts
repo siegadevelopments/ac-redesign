@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
-// No nonce here: the newsletter form (src/components/sections/Newsletter.tsx)
+// No nonce here: the newsletter form (src/components/story/NewsletterInline.tsx)
 // posts via client-side fetch to our own same-origin /api/subscribe route
 // handler rather than a native form submission or third-party script, so it
 // doesn't need one — a nonce-based CSP (which requires Proxy + forces every
@@ -59,6 +59,11 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: securityHeaders,
+      },
+      {
+        // Form endpoints return per-request results and must never be cached.
+        source: "/api/(.*)",
+        headers: [{ key: "Cache-Control", value: "no-store" }],
       },
       {
         // Brand assets change rarely; a short-lived cache still lets a
