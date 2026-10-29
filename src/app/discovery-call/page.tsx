@@ -38,7 +38,7 @@ export default function DiscoveryCallPage() {
                     {step.number}
                   </span>
                   <div className="flex flex-col gap-1 pt-1.5">
-                    <h3 className="text-h4 font-bold text-ink">{step.title}</h3>
+                    <h2 className="text-h4 font-bold text-ink">{step.title}</h2>
                     <p className="text-body text-ink-muted">{step.description}</p>
                   </div>
                 </li>
@@ -50,9 +50,9 @@ export default function DiscoveryCallPage() {
             </div>
 
             <div className="flex flex-col gap-2 border-t border-line pt-6">
-              <h3 className="text-small font-semibold uppercase tracking-[0.12em] text-ink-muted">
+              <h2 className="text-small font-semibold uppercase tracking-[0.12em] text-ink-muted">
                 If a build is justified
-              </h3>
+              </h2>
               <p className="text-body text-ink-muted text-pretty">
                 Implementation projects typically range from AUD $5,000–$15,000+ depending on
                 scope — always confirmed after the assessment, never quoted sight-unseen.
