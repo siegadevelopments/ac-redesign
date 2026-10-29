@@ -20,6 +20,7 @@
 // response with no email or Kit call, and is logged so a wrongly trapped
 // real visitor still shows up in the logs.
 import { findHeadache } from "@/lib/content/headaches";
+import { sendAlert } from "@/lib/alert";
 import { checkRateLimit, clientKey } from "@/lib/rateLimit";
 import { SITE_URL } from "@/lib/constants";
 
@@ -141,6 +142,11 @@ export async function POST(request: Request) {
     console.error(
       "Problem send failed: RESEND_API_KEY, PROBLEM_NOTIFY_TO or PROBLEM_NOTIFY_FROM is not set."
     );
+    await sendAlert(
+      "problem form not configured",
+      "The problem form is missing its Resend settings, so every send fails. Check the Vercel environment variables.",
+      5
+    );
     return Response.json({ error: "Sending is not configured yet." }, { status: 503 });
   }
 
@@ -175,10 +181,20 @@ export async function POST(request: Request) {
     if (!emailResponse.ok) {
       const detail = await emailResponse.text();
       console.error(`Resend notification failed (${emailResponse.status}): ${detail}`);
+      await sendAlert(
+        "problem email failing",
+        `Resend returned ${emailResponse.status}. Messages are NOT reaching you and visitors see an error. Check the Resend dashboard.`,
+        5
+      );
       return Response.json({ error: "Could not send your problem." }, { status: 502 });
     }
   } catch (error) {
     console.error("Resend notification failed:", error);
+    await sendAlert(
+      "problem email failing",
+      "Could not reach Resend. Messages are NOT reaching you and visitors see an error. Check the Resend dashboard.",
+      5
+    );
     return Response.json({ error: "Could not send your problem." }, { status: 502 });
   }
 
@@ -188,6 +204,11 @@ export async function POST(request: Request) {
   const autoReply = sendAutoReply(resendKey, notifyFrom, notifyTo, email);
   if (!kitKey || !formId) {
     console.error("Kit record skipped: KIT_API_KEY or KIT_PROBLEM_FORM_ID is not set.");
+    await sendAlert(
+      "problem form: Kit not configured",
+      "Messages still reach you by email, but contacts are not being saved to Kit (settings missing).",
+      4
+    );
     await autoReply;
     return Response.json({ ok: true });
   }
@@ -195,6 +216,7 @@ export async function POST(request: Request) {
     "Content-Type": "application/json",
     "X-Kit-Api-Key": kitKey,
   };
+  let kitFailed = false;
   try {
     const subscriberResponse = await fetch("https://api.kit.com/v4/subscribers", {
       method: "POST",
@@ -213,6 +235,7 @@ export async function POST(request: Request) {
     if (!subscriberResponse.ok) {
       const detail = await subscriberResponse.text();
       console.error(`Kit create subscriber failed (${subscriberResponse.status}): ${detail}`);
+      kitFailed = true;
     } else {
       // The subscriber must exist before this call (Kit 404s otherwise).
       const formResponse = await fetch(`https://api.kit.com/v4/forms/${formId}/subscribers`, {
@@ -224,10 +247,19 @@ export async function POST(request: Request) {
       if (!formResponse.ok) {
         const detail = await formResponse.text();
         console.error(`Kit add-to-form failed (${formResponse.status}): ${detail}`);
+        kitFailed = true;
       }
     }
   } catch (error) {
     console.error("Kit problem send failed:", error);
+    kitFailed = true;
+  }
+  if (kitFailed) {
+    await sendAlert(
+      "problem form: Kit failing",
+      "A message reached you by email, but saving the contact to Kit failed. Check Kit and the API key.",
+      4
+    );
   }
 
   await autoReply;

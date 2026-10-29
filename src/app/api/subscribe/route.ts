@@ -10,6 +10,7 @@
 // but the checklist email won't fire, so the response reports
 // formLinked: false and the UI shows an honest "on its way shortly" message
 // instead of claiming it was sent.
+import { sendAlert } from "@/lib/alert";
 import { checkRateLimit, clientKey } from "@/lib/rateLimit";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,6 +47,11 @@ export async function POST(request: Request) {
 
   if (!apiKey || !formId) {
     console.error("Newsletter signup failed: KIT_API_KEY or KIT_FORM_ID is not set.");
+    await sendAlert(
+      "checklist signup not configured",
+      "The checklist signup is missing its Kit settings, so every signup fails. Check the Vercel environment variables.",
+      4
+    );
     return Response.json({ error: "Signup is not configured yet." }, { status: 503 });
   }
 
@@ -64,12 +70,18 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Kit create subscriber failed:", error);
+    await sendAlert("checklist signup failing", "Checklist signups are failing: Kit could not be reached.", 4);
     return Response.json({ error: "Could not complete signup." }, { status: 502 });
   }
 
   if (!subscriberResponse.ok) {
     const detail = await subscriberResponse.text();
     console.error(`Kit create subscriber failed (${subscriberResponse.status}): ${detail}`);
+    await sendAlert(
+      "checklist signup failing",
+      `Checklist signups are failing: Kit returned ${subscriberResponse.status}. Check Kit and the API key.`,
+      4
+    );
     return Response.json({ error: "Could not complete signup." }, { status: 502 });
   }
 
@@ -91,5 +103,12 @@ export async function POST(request: Request) {
     formLinked = false;
   }
 
+  if (!formLinked) {
+    await sendAlert(
+      "checklist: Kit form link failing",
+      "A checklist signup was saved, but linking it to the Kit form failed, so the checklist email did not go out.",
+      3
+    );
+  }
   return Response.json({ ok: true, formLinked });
 }
