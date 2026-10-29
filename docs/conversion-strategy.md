@@ -10,7 +10,7 @@ Labels and destinations live in `src/lib/constants.ts` (`CTA_LABELS`, `CTA_HREFS
 | Secondary | **Book a Free Automation Assessment** | `/discovery-call` | The success view after a problem send; `/discovery-call` itself; the closing band (`FinalCta`) on inner pages |
 | Exploration | **See What We Can Automate** | `/what-we-can-build` | Anywhere a visitor wants to see what is buildable before describing a problem |
 | Tertiary | **View Case Studies** | `/portfolio` | Closing band, How We Work chapter ("See a real project we built") |
-| Agency (separate ladder) | **Partner With Us** | `mailto:` (unchanged) | `/for-agencies` only |
+| Agency (separate ladder) | **Partner With Us** | `mailto:` with a short prefilled body (agency name, what you're delivering, where you need capacity, timing) | `/for-agencies` only |
 | Fallback | **Email Us Directly** | `mailto:` (unchanged) | Footer, form error states, the no-JS problem box |
 | Low-key fallback | **Business Systems Audit Checklist** signup | Kit newsletter form | A quiet "Not ready to talk yet?" line beside the problem box |
 
