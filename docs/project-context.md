@@ -412,3 +412,9 @@ before the domain went live; that comment is fixed as part of this pass.
   by 2027-10-29.
 - The original redesign brief now lives at `docs/archive/master-prompt.md` for history only; it
   predates the repositioning and must not be followed over `CLAUDE.md` and `docs/`.
+- Tooling majors (2026-10-29): React 19.3.1, ESLint 10, TypeScript 6.0.3, `@types/node` 22. TypeScript
+  7 is deliberately held back: `typescript-eslint` refuses to run on it and Next's generated
+  `LayoutProps` type is not found under it; revisit when `typescript-eslint` supports TS 7.1+.
+  `@types/node` stays on the Node version we run (22). Dependabot ignores those two majors. npm
+  prints "overriding peer dependency" warnings for ESLint 10 because plugins bundled in
+  `eslint-config-next` still declare older ESLint peers; the rules run (checked with a probe file).
