@@ -56,4 +56,4 @@ Email **info@apprisingcreatives.com** with your agency name, what you're deliver
 - **Tools list:** copied from the site's capabilities section. Remove anything you wouldn't want to be asked about.
 - **LMG line:** keep it limited to what their own site shows until you have their written approval. Check the wording against `src/lib/content/portfolio.ts`.
 - **Pricing:** deliberately absent. `docs/offers.md` says agency pricing is negotiated directly.
-- **Export:** copy this into a Google Doc or Word and save as a one-page PDF. Add the logo from `public/logo.png`.
+- **Export:** copy this into a Google Doc or Word and save as a one-page PDF. Add the logo mark from `public/logo-mark.png` (the full `logo.png` has white text that vanishes on white).
