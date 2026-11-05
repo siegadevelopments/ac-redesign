@@ -227,6 +227,25 @@ Nothing goes in the URL.
 Env vars (see `.env.example`): `RESEND_API_KEY`, `PROBLEM_NOTIFY_TO`, `PROBLEM_NOTIFY_FROM`,
 `KIT_PROBLEM_FORM_ID`, plus the shared `KIT_API_KEY`.
 
+### Business email (Google Workspace, live 2026-11-06)
+
+Mail for `apprisingcreatives.com` runs on Google Workspace. Cloudflare Email Routing was disabled
+on 2026-11-06 and no longer forwards anything.
+
+- **Mailbox:** `ernest.s@apprisingcreatives.com`. `info@apprisingcreatives.com`
+  (`CONTACT_EMAIL`) is an alias on that mailbox, so it receives mail (a test to `info@` arrived
+  in the mailbox on 2026-11-06). Outreach is sent from `ernest.s@`, not `info@`.
+- **DNS (Cloudflare):** one root MX, `1 smtp.google.com`. One root SPF TXT,
+  `v=spf1 include:_spf.google.com ~all`. DKIM selector `google._domainkey` (2048-bit). DMARC is
+  still `v=DMARC1; p=none`: move to `p=quarantine` only after about two weeks of consistent
+  SPF, DKIM and DMARC passes.
+- **Resend is separate and must not be touched:** the `send.` subdomain (MX and SPF) and
+  `resend._domainkey` stay as they are, or the problem-box notifications break.
+- **Website:** `PROBLEM_NOTIFY_TO` (a hosting environment variable) must point at an inbox the
+  founder reads. Checked 2026-11-06 with a test send from the problem box.
+- **Lead tooling:** `~/Documents/projects/ac-leads` signs in as `ernest.s@`; its Google OAuth app
+  stays in Testing mode, so the sign-in token expires every 7 days and the script asks again.
+
 ### Launch checklist (the founder does these before the redesign goes live)
 
 - [ ] **Resend**: create an account, verify a sending domain (DNS records on that domain), create

@@ -1,6 +1,6 @@
 # Apprising Creatives: engineering capacity for agencies
 
-Created: 2026-10-30. Draft for the founder to edit. Every statement here must match `docs/trust-and-claims.md`. Do not add clients, numbers or testimonials.
+Created: 2026-10-30. Commitments confirmed by the founder 2026-11-06. Every statement here must match `docs/trust-and-claims.md`. Do not add clients, numbers or testimonials.
 
 ---
 
@@ -46,14 +46,3 @@ We maintain the platform for Lifestyle Medicine Gateway, a wellness business. Se
 ## Talk to us
 
 Email **info@apprisingcreatives.com** with your agency name, what you're delivering and when you need us. More on the site: apprisingcreatives.com/for-agencies
-
----
-
-## Notes for the founder (delete before sending)
-
-- **"Scope and price agreed up front":** this is a commitment I wrote as a sensible default. It isn't in the register or `docs/offers.md` yet. Confirm it's how you'd work, or change it.
-- **"Documentation and tested code":** this matches the existing agency FAQ wording ("written documentation", "testing, maintainability and handover quality"). Keep it only if it's how you deliver.
-- **Tools list:** copied from the site's capabilities section. Remove anything you wouldn't want to be asked about.
-- **LMG line:** keep it limited to what their own site shows until you have their written approval. Check the wording against `src/lib/content/portfolio.ts`.
-- **Pricing:** deliberately absent. `docs/offers.md` says agency pricing is negotiated directly.
-- **Export:** copy this into a Google Doc or Word and save as a one-page PDF. Add the logo mark from `public/logo-mark.png` (the full `logo.png` has white text that vanishes on white).
