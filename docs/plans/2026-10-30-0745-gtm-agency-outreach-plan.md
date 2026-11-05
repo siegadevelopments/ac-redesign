@@ -40,7 +40,7 @@ Remove the proof and setup blockers before sending anything.
 | Step | Detail | Done when |
 |---|---|---|
 | Ask LMG for approval | A short, respectful ask for written approval to be named, plus a brief real quote. Say exactly where each would appear. Don't mention or reference the contact list. | Written approval in hand, or a clear no. Until then the case study stays limited to what is on LMG's own live site (`docs/case-studies.md`). |
-| Inbox and tracking | Confirm `info@apprisingcreatives.com` receives mail and sends from a proper signature. Confirm GA4 key events `problem_submitted`, `discovery_call_clicked`, `partner_with_us_clicked` (`docs/conversion-strategy.md`). | A test message and a test event both show up. |
+| Inbox and tracking | Confirm `info@apprisingcreatives.com` receives mail and sends from a proper signature. Confirm GA4 key events `problem_submitted`, `discovery_call_clicked`, `partner_with_us_clicked` (`docs/conversion-strategy.md`). | A test message and a test event both show up. Mail side done 2026-11-06 (Google Workspace live, see `docs/project-context.md`); GA4 events still to confirm. |
 | Agency one-pager | One page covering what you take on, how handover and communication work, and honest team size and location. Answer "are you just cheap offshore developers?" directly. No invented clients or metrics. | Reviewed against `docs/trust-and-claims.md`. |
 | Check `/for-agencies` | Decide whether it needs a pilot offer or a handover-process section before outreach starts (open question below). | Decision recorded. |
 
