@@ -28,7 +28,8 @@ not on the homepage or service cards (avoid pricing everywhere). The one excepti
 which shows indicative USD ranges (about USD $3,500–$10,000+ per project and from about USD $650 a
 month for a care plan; `src/lib/content/us.ts`) because a US visitor has no Australian price
 anchor. They are rounded conversions of the AUD figures here, labelled indicative, never quotes,
-and the founder approves them before launch. If the AUD ladder changes, update both.
+and the founder approves them before launch. `/discovery-call` also shows the USD range, to visitors
+sent from `/us` (`?region=us`). If the AUD ladder changes, update both.
 
 Representative scope (from `src/lib/content/solutions.ts`, labeled "Concept" — not delivered
 work unless it becomes a named case study):

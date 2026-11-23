@@ -53,6 +53,9 @@ export const REGION_LABELS: Record<Region, string> = {
 
 export const US_PROBLEM_HREF = "/us#problem";
 
+/** The assessment page, told the visitor came from /us so it can show USD (see ProjectPricingNote). */
+export const US_ASSESSMENT_HREF = "/discovery-call?region=us";
+
 /** Where "Tell us your problem" should go: /us visitors stay on /us. */
 export function tellUsProblemHref(pathname: string): string {
   return pathname === "/us" ? US_PROBLEM_HREF : CTA_HREFS.tellUsProblem;
