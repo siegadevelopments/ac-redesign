@@ -1,8 +1,13 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { AssessmentForm } from "@/components/sections/AssessmentForm";
+import {
+  ProjectPricingFallback,
+  ProjectPricingNote,
+} from "@/components/sections/ProjectPricingNote";
 import {
   ASSESSMENT_HONESTY_NOTE,
   ASSESSMENT_STEPS,
@@ -53,11 +58,9 @@ export default function DiscoveryCallPage() {
               <h2 className="text-small font-semibold uppercase tracking-[0.12em] text-ink-muted">
                 If a build is justified
               </h2>
-              <p className="text-body text-ink-muted text-pretty">
-                Implementation projects typically range from AUD $5,000–$15,000+ depending on
-                scope — always confirmed after the assessment, never quoted sight-unseen.
-                Ongoing systems can move onto a Business Systems Care Plan once live.
-              </p>
+              <Suspense fallback={<ProjectPricingFallback />}>
+                <ProjectPricingNote />
+              </Suspense>
             </div>
           </div>
 

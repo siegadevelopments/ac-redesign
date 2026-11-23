@@ -8,7 +8,14 @@ import { Button, SUBMIT_BUTTON_CLASSES } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/analytics";
 import { ConceptApp } from "@/components/story/ConceptApp";
 import { NewsletterInline } from "@/components/story/NewsletterInline";
-import { CONTACT_EMAIL, CTA_HREFS, CTA_LABELS, US_PROBLEM_HREF, type Region } from "@/lib/constants";
+import {
+  CONTACT_EMAIL,
+  CTA_HREFS,
+  CTA_LABELS,
+  US_ASSESSMENT_HREF,
+  US_PROBLEM_HREF,
+  type Region,
+} from "@/lib/constants";
 import { HEADACHES, type HeadacheKey } from "@/lib/content/headaches";
 import {
   CONCEPT_OVERVIEW,
@@ -286,7 +293,7 @@ export function ProblemStory({
                   <p className="text-body text-ink-muted">{PROBLEM_BOX_COPY.successBody}</p>
                   <div>
                     <Button
-                      href={CTA_HREFS.bookDiscoveryCall}
+                      href={region === "us" ? US_ASSESSMENT_HREF : CTA_HREFS.bookDiscoveryCall}
                       analyticsEvent="discovery_call_clicked"
                       analyticsData={{ source: "problem_success" }}
                     >

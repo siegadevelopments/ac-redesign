@@ -160,7 +160,10 @@ near-identical pages (one explaining the call, one collecting the same lead) wou
 single small-business funnel for no benefit; see `docs/conversion-strategy.md`'s Funnel section.
 Contains the 5-step explanation of what the call covers, an explicit statement that the call can
 conclude no build is justified, and the assessment intake form. See "Assessment Funnel" below
-for the form's technical implementation.
+for the form's technical implementation. The "If a build is justified" pricing sentence
+(`ProjectPricingNote`, text in `ASSESSMENT_PRICING_TEXT`) shows AUD by default and USD when the page
+is opened with `?region=us`, which the links from `/us` and the US auto-reply email add. It reads the
+query on the client inside `Suspense`, so the page stays static and its server HTML is the AUD text.
 
 ### `/about`
 

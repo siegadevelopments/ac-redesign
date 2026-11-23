@@ -23,7 +23,7 @@
 import { findHeadache } from "@/lib/content/headaches";
 import { sendAlert } from "@/lib/alert";
 import { checkRateLimit, clientKey } from "@/lib/rateLimit";
-import { REGION_LABELS, SITE_URL, type Region } from "@/lib/constants";
+import { REGION_LABELS, SITE_URL, US_ASSESSMENT_HREF, type Region } from "@/lib/constants";
 
 // Resend plus both Kit calls stay inside the client's 15s request timeout.
 const RESEND_TIMEOUT_MS = 6000;
@@ -44,7 +44,13 @@ const RATE_WINDOW_MS = 10 * 60 * 1000;
 // chosen content to someone else's address, and it makes no reply-time
 // promise (docs/trust-and-claims.md). Best-effort: it never changes the
 // response. Set PROBLEM_AUTOREPLY=off to disable it.
-async function sendAutoReply(resendKey: string, from: string, replyTo: string, to: string) {
+async function sendAutoReply(
+  resendKey: string,
+  from: string,
+  replyTo: string,
+  to: string,
+  region: Region | undefined
+) {
   if (process.env.PROBLEM_AUTOREPLY === "off") return;
   try {
     const response = await fetch("https://api.resend.com/emails", {
@@ -61,7 +67,7 @@ async function sendAutoReply(resendKey: string, from: string, replyTo: string, t
           "",
           "Thanks for telling us about your problem. We've got it. A real person reads every message and replies by email.",
           "",
-          `If you'd like to go further in the meantime, you can book the free automation assessment: ${SITE_URL}/discovery-call`,
+          `If you'd like to go further in the meantime, you can book the free automation assessment: ${SITE_URL}${region === "us" ? US_ASSESSMENT_HREF : "/discovery-call"}`,
           "",
           "Apprising Creatives",
           "",
@@ -212,7 +218,7 @@ export async function POST(request: Request) {
   // The founder has the message from here on, so nothing below may turn
   // the response into a failure — including a thrown network error or
   // missing Kit configuration. The auto-reply runs alongside the Kit calls.
-  const autoReply = sendAutoReply(resendKey, notifyFrom, notifyTo, email);
+  const autoReply = sendAutoReply(resendKey, notifyFrom, notifyTo, email, region);
   if (!kitKey || !formId) {
     console.error("Kit record skipped: KIT_API_KEY or KIT_PROBLEM_FORM_ID is not set.");
     await sendAlert(

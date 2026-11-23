@@ -5,6 +5,17 @@ export const DISCOVERY_CALL_COPY = {
     "A free 20-minute call to understand how your business really runs, and whether automation, custom software or AI is genuinely worth it. Not a sales pitch dressed up as a consultation.",
 } as const;
 
+import { US_PRICING } from "@/lib/content/us";
+
+// Shown under "If a build is justified" on /discovery-call. The Australian
+// text is the default; visitors sent from /us (?region=us) see the USD one.
+// Both are indicative, never quotes (docs/offers.md).
+export const ASSESSMENT_PRICING_TEXT = {
+  au: "Implementation projects typically range from AUD $5,000–$15,000+ depending on scope — always confirmed after the assessment, never quoted sight-unseen. Ongoing systems can move onto a Business Systems Care Plan once live.",
+  // The figure lives in one place, us.ts (US_PRICING), which the founder approves.
+  us: `Implementation projects typically range from ${US_PRICING.projectRange} depending on scope — always confirmed after the assessment, never quoted sight-unseen. Ongoing systems can move onto a Business Systems Care Plan once live.`,
+} as const;
+
 export type AssessmentStep = {
   number: string;
   title: string;

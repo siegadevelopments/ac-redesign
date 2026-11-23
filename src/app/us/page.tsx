@@ -10,7 +10,7 @@ import { ProblemStory } from "@/components/story/ProblemStory";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { buildFaqJsonLd } from "@/lib/seo";
-import { CTA_HREFS, CTA_LABELS, US_PROBLEM_HREF } from "@/lib/constants";
+import { CTA_LABELS, US_ASSESSMENT_HREF, US_PROBLEM_HREF } from "@/lib/constants";
 import {
   US_FAQ,
   US_FAQ_ITEMS,
@@ -50,7 +50,7 @@ export default function UsPage() {
             {CTA_LABELS.tellUsProblem}
           </Button>
           <Button
-            href={CTA_HREFS.bookDiscoveryCall}
+            href={US_ASSESSMENT_HREF}
             variant="secondary"
             analyticsEvent="discovery_call_clicked"
             analyticsData={{ source: "us_hero" }}
@@ -130,7 +130,7 @@ export default function UsPage() {
         primaryHref={US_PROBLEM_HREF}
         primaryLabel={CTA_LABELS.tellUsProblem}
         primaryAnalyticsEvent={null}
-        secondaryHref={CTA_HREFS.bookDiscoveryCall}
+        secondaryHref={US_ASSESSMENT_HREF}
         secondaryLabel={CTA_LABELS.bookDiscoveryCall}
       />
     </div>

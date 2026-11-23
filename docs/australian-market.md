@@ -47,8 +47,10 @@ copy in `src/lib/content/us.ts`). The homepage stays Australia-led; do not dilut
   `/` is offered `/us`, and an Australian visitor on `/us` is offered `/`. It never redirects
   (that would risk search ranking, shared links and travellers), appears after the page loads so
   the pages stay static, and is remembered once accepted or dismissed.
-- **Not built yet:** US industry pages, a US mirror of the site, a Kit `region` field, and
-  region-aware pricing on `/discovery-call` (which still shows AUD).
+- **Assessment pricing:** links from `/us` (and the US auto-reply email) go to
+  `/discovery-call?region=us`, where the pricing sentence shows the USD range instead of AUD. Anyone
+  else, including a US visitor who arrives without the link, sees the AUD range, which is labelled AUD.
+- **Not built yet:** US industry pages, a US mirror of the site, and a Kit `region` field.
 
 ## Industries Being Tested
 
