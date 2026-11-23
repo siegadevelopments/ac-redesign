@@ -3,7 +3,7 @@ import { Globe } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { PageHero } from "@/components/ui/PageHero";
+import { OpeningChapter } from "@/components/story/OpeningChapter";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ProblemStory } from "@/components/story/ProblemStory";
@@ -15,7 +15,9 @@ import {
   US_FAQ,
   US_FAQ_ITEMS,
   US_FINAL_CTA,
-  US_HERO,
+  US_OPENING_COPY,
+  US_OPENING_MESS,
+  US_OPENING_ROWS,
   US_LOCATION,
   US_OUTCOMES,
   US_PRICING,
@@ -39,26 +41,23 @@ export default function UsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqJsonLd(US_FAQ_ITEMS)) }}
       />
-      <PageHero
-        eyebrow={US_HERO.eyebrow}
-        title={US_HERO.title}
-        lead={US_HERO.lead}
-        actions={
-          <>
-            <Button href={US_PROBLEM_HREF} variant="primary">
-              {CTA_LABELS.tellUsProblem}
-            </Button>
-            <Button
-              href={CTA_HREFS.bookDiscoveryCall}
-              variant="secondary"
-              analyticsEvent="discovery_call_clicked"
-              analyticsData={{ source: "us_hero" }}
-            >
-              {CTA_LABELS.bookDiscoveryCall}
-            </Button>
-          </>
-        }
-      />
+      <OpeningChapter copy={US_OPENING_COPY} appRows={US_OPENING_ROWS} mess={US_OPENING_MESS} />
+
+      <Section tone="light" className="py-10 md:py-12 lg:py-12">
+        <Container className="flex flex-wrap items-center gap-4">
+          <Button href={US_PROBLEM_HREF} variant="primary">
+            {CTA_LABELS.tellUsProblem}
+          </Button>
+          <Button
+            href={CTA_HREFS.bookDiscoveryCall}
+            variant="secondary"
+            analyticsEvent="discovery_call_clicked"
+            analyticsData={{ source: "us_hero" }}
+          >
+            {CTA_LABELS.bookDiscoveryCall}
+          </Button>
+        </Container>
+      </Section>
 
       <Section tone="light" className="pt-0 md:pt-0 lg:pt-0">
         <Container className="flex flex-col gap-12">

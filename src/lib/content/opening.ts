@@ -23,6 +23,9 @@ export const OPENING_COPY = {
   messCaption: "What it replaces",
 } as const;
 
+/** Shape of the opening copy, so a market can supply its own wording (see us.ts). */
+export type OpeningCopy = { [K in keyof typeof OPENING_COPY]: string };
+
 export const OPENING_APP = {
   title: "Today",
   subtitle: "Tuesday · everything in one place",

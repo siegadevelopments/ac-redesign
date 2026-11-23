@@ -12,13 +12,10 @@ export function PageHero({
   eyebrow,
   title,
   lead,
-  actions,
 }: {
   eyebrow: string;
   title: ReactNode;
   lead: ReactNode;
-  /** Optional buttons under the lead (used by /us). */
-  actions?: ReactNode;
 }) {
   return (
     <Section tone="light" className="pb-12 md:pb-16 lg:pb-20">
@@ -39,14 +36,6 @@ export function PageHero({
           >
             {lead}
           </p>
-          {actions ? (
-            <div
-              className="reveal-item flex flex-wrap items-center gap-4"
-              style={{ "--reveal-delay": "240ms" } as CSSProperties}
-            >
-              {actions}
-            </div>
-          ) : null}
         </RevealOnScroll>
       </Container>
     </Section>
