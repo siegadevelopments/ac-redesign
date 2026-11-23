@@ -97,7 +97,7 @@ Apprising" homepage section is gone, and the founder-led and security story live
 ## Navigation
 
 Logo, What We Can Build, How We Work (`/#how-we-work`), Case Studies, For Agencies, About, and
-the button "Tell us your problem". Footer "Contact" links to `/#problem`.
+the button "Tell us your problem". Footer "Contact" links to `/#problem` (or `/us#problem` on `/us`), and the footer adds a "For US businesses" link to `/us`.
 
 ## SEO Intent
 

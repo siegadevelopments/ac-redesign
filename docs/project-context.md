@@ -169,7 +169,7 @@ Implemented from `docs/seo.md`:
   statement in `docs/brand.md`), both centralised in `constants.ts` / `src/app/layout.tsx`.
 - Canonical URL via `alternates.canonical` on every route; `lang="en-AU"`.
 - Structured data: `Organization` (with `legalName: Apprising Corporation` and
-  `areaServed: Australia`), `WebSite`, and `FAQPage` mirroring the homepage's visible FAQ subset (four questions; the same list feeds
+  `areaServed: Australia and the United States`), `WebSite`, and `FAQPage` mirroring the homepage's visible FAQ subset (four questions; the same list feeds
   both, see `docs/seo.md` §49)
   (agency FAQ items are not in the sitewide `FAQPage` schema, since they're scoped to
   `/for-agencies` — see `docs/seo.md` §48). No reviews, ratings, awards, locations, employee

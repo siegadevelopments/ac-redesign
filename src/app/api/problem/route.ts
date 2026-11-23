@@ -84,7 +84,9 @@ function asString(value: unknown): string {
 // Only the two known markets count. Anything else is treated as no region,
 // never as a failure, so a tampered or stale client can't break a send.
 function asRegion(value: unknown): Region | undefined {
-  return value === "au" || value === "us" ? value : undefined;
+  return typeof value === "string" && Object.hasOwn(REGION_LABELS, value)
+    ? (value as Region)
+    : undefined;
 }
 
 export async function POST(request: Request) {
