@@ -19,7 +19,7 @@ export type ConceptView = {
 };
 
 /** The all-in-one "Today" screen, shown before any pick and for "Something else". */
-const CONCEPT_OVERVIEW: ConceptView = {
+export const CONCEPT_OVERVIEW: ConceptView = {
   title: "Today",
   subtitle: "Everything in one place",
   rows: [
@@ -129,9 +129,16 @@ export const PILES: Record<Exclude<HeadacheKey, "something-else">, Pile> = {
   },
 };
 
-export function conceptViewFor(headache: HeadacheKey | null): ConceptView {
-  if (!headache || headache === "something-else") return CONCEPT_OVERVIEW;
-  return PILES[headache].view;
+/** The piles the pick chapter shows: the Australian ones by default, or a market's own (see us.ts). */
+export type Piles = Record<Exclude<HeadacheKey, "something-else">, Pile>;
+
+export function conceptViewFor(
+  headache: HeadacheKey | null,
+  piles: Piles = PILES,
+  overview: ConceptView = CONCEPT_OVERVIEW,
+): ConceptView {
+  if (!headache || headache === "something-else") return overview;
+  return piles[headache].view;
 }
 
 export const PICK_CHAPTER_COPY = {
@@ -205,9 +212,13 @@ export type PrefillState = {
 
 export const INITIAL_PREFILL: PrefillState = { text: "", edited: false, headache: null };
 
-export function pickHeadache(state: PrefillState, headache: HeadacheKey): PrefillState {
+export function pickHeadache(
+  state: PrefillState,
+  headache: HeadacheKey,
+  piles: Piles = PILES,
+): PrefillState {
   if (state.edited) return { ...state, headache };
-  const text = headache === "something-else" ? "" : PILES[headache].starter;
+  const text = headache === "something-else" ? "" : piles[headache].starter;
   return { text, edited: false, headache };
 }
 

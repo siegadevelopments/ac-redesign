@@ -95,10 +95,12 @@ How we work → Problem box (with checklist fallback) → short FAQ.
 
 ### `/us`
 
-The US landing page (`src/app/us/page.tsx`, copy in `src/lib/content/us.ts`): a US-spelled hero,
-before-and-after outcomes, indicative USD pricing, an honest Philippines and time-zone note, a US
-FAQ (with matching FAQPage schema), the shared problem box (`<ProblemStory region="us"
-showPick={false} />`, so the pick-your-mess section is skipped) and a closing band. Header, mobile
+The US landing page (`src/app/us/page.tsx`, copy in `src/lib/content/us.ts`): the homepage's
+animated opening scene (`OpeningChapter`, with US wording: calendar, schedule, tax instead of
+diary, roster, GST), before-and-after outcomes, indicative USD pricing, an honest Philippines and time-zone note, a US
+FAQ (with matching FAQPage schema), the "pick your mess" chapter and the shared problem box
+(`<ProblemStory region="us" pick={US_PICK_CONTENT} />`, with the homepage's wording passed through a
+US-word layer in `us.ts`) and a closing band. Header, mobile
 and footer "Tell us your problem" / Contact links follow the route (`tellUsProblemHref` in
 `src/lib/constants.ts`), so on `/us` they go to `/us#problem`. It is linked from the footer, not the
 primary nav. Alternates (`en-US` / `en-AU`) are set on the page and the homepage, not the layout.

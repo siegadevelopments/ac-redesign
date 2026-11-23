@@ -20,6 +20,7 @@ import {
   US_OPENING_ROWS,
   US_LOCATION,
   US_OUTCOMES,
+  US_PICK_CONTENT,
   US_PRICING,
 } from "@/lib/content/us";
 
@@ -119,7 +120,7 @@ export default function UsPage() {
         </Container>
       </Section>
 
-      <ProblemStory region="us" showPick={false} />
+      <ProblemStory region="us" pick={US_PICK_CONTENT} />
 
       <Faq id={US_FAQ.id} eyebrow={US_FAQ.eyebrow} title={US_FAQ.title} items={US_FAQ_ITEMS} />
 

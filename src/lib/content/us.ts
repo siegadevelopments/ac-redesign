@@ -1,4 +1,5 @@
 import { FAQ_ITEMS, type FaqItem } from "@/lib/content/faq";
+import { HEADACHES } from "@/lib/content/headaches";
 import {
   OPENING_APP_ROWS,
   OPENING_COPY,
@@ -6,6 +7,8 @@ import {
   type MessItem,
   type OpeningCopy,
 } from "@/lib/content/opening";
+import { CONCEPT_OVERVIEW, PILES, type ConceptView, type Piles } from "@/lib/content/story";
+import type { PickContent } from "@/components/story/ProblemStory";
 
 /**
  * Copy for the /us landing page (docs/australian-market.md, US section).
@@ -148,3 +151,47 @@ export const US_FAQ_ITEMS: FaqItem[] = [
   },
   sharedAnswer("How do you handle security?"),
 ];
+
+// The "pick your mess" chapter is the homepage's, with US wording applied to
+// its text so the two can't drift. Order matters: longer words first.
+const US_WORDS: readonly (readonly [RegExp, string])[] = [
+  [/\borganised\b/g, "organized"],
+  [/\borganise\b/g, "organize"],
+  [/\benquiries\b/g, "inquiries"],
+  [/\bEnquiries\b/g, "Inquiries"],
+  [/\benquiry\b/g, "inquiry"],
+  [/\bEnquiry\b/g, "Inquiry"],
+  [/\bpaper diary\b/g, "paper planner"],
+  [/\bdiary\b/g, "calendar"],
+  [/\bDiary\b/g, "Calendar"],
+  [/\bRosters\b/g, "Schedules"],
+  [/\bRoster\b/g, "Schedule"],
+  [/\brosters\b/g, "schedules"],
+  [/\broster\b/g, "schedule"],
+  [/\bleave\b/g, "time off"],
+];
+
+function usify(text: string): string {
+  return US_WORDS.reduce((out, [pattern, replacement]) => out.replace(pattern, replacement), text);
+}
+
+function usifyView(view: ConceptView): ConceptView {
+  return {
+    title: usify(view.title),
+    subtitle: usify(view.subtitle),
+    rows: view.rows.map((row) => ({ ...row, title: usify(row.title), detail: usify(row.detail) })),
+  };
+}
+
+const US_PILES = Object.fromEntries(
+  Object.entries(PILES).map(([key, pile]) => [
+    key,
+    { mess: usify(pile.mess), starter: usify(pile.starter), view: usifyView(pile.view) },
+  ]),
+) as Piles;
+
+export const US_PICK_CONTENT: PickContent = {
+  piles: US_PILES,
+  overview: usifyView(CONCEPT_OVERVIEW),
+  headaches: HEADACHES.map((headache) => ({ key: headache.key, label: usify(headache.label) })),
+};
