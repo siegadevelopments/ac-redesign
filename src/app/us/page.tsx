@@ -10,7 +10,7 @@ import { ProblemStory } from "@/components/story/ProblemStory";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { buildFaqJsonLd } from "@/lib/seo";
-import { CTA_HREFS, CTA_LABELS } from "@/lib/constants";
+import { CTA_HREFS, CTA_LABELS, US_PROBLEM_HREF } from "@/lib/constants";
 import {
   US_FAQ,
   US_FAQ_ITEMS,
@@ -20,8 +20,6 @@ import {
   US_OUTCOMES,
   US_PRICING,
 } from "@/lib/content/us";
-
-const US_PROBLEM_HREF = "/us#problem";
 
 export const metadata: Metadata = {
   title: "Business Automation for US Businesses",

@@ -51,9 +51,11 @@ export const REGION_LABELS: Record<Region, string> = {
   us: "United States",
 };
 
+export const US_PROBLEM_HREF = "/us#problem";
+
 /** Where "Tell us your problem" should go: /us visitors stay on /us. */
 export function tellUsProblemHref(pathname: string): string {
-  return pathname === "/us" ? "/us#problem" : CTA_HREFS.tellUsProblem;
+  return pathname === "/us" ? US_PROBLEM_HREF : CTA_HREFS.tellUsProblem;
 }
 
 export const CTA_LABELS = {
