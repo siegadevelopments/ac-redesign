@@ -13,6 +13,12 @@ operations with automation, AI, and custom business systems. The website must po
 company as a practical technical partner for growing SMEs first, and for agencies needing
 delivery capacity second (`/for-agencies`).
 This is not a generic web design agency website.
+
+> **2026-11 US market.** The US is a second market, served by one landing page, `/us`. The
+> homepage stays Australia-led: do not dilute its hero or pitch for the US. The company is built in
+> the Philippines and serves businesses in Australia and the US; never imply a local office, address
+> or incorporation in either country. See `docs/australian-market.md` (US Market section).
+
 The company focuses on:
 
 - Business automation
@@ -44,6 +50,9 @@ Growing Australian SMEs, 10–100 employees, that have:
 - Inefficient processes
 - A need for custom internal systems
 - A need to integrate existing tools
+
+US SMEs with the same profile are served by `/us` only, which has its own copy, indicative USD
+pricing and an honest time-zone note.
 
 See `docs/target-audience.md` for the full ICP, buying triggers, and objections.
 
@@ -85,6 +94,9 @@ Avoid:
 
 ## Copywriting Rules
 
+Spelling: Australian spelling everywhere except `/us` and other US-facing copy, which uses US
+spelling. Never mix the two on one page.
+
 Prefer:
 
 - Clear language
@@ -120,6 +132,7 @@ verification register — every factual trust claim must have a row there before
 
 Primary CTA (homepage and sitewide header):
 Tell us your problem — the three-field problem box (name, email, problem) at `/#problem`
+(`/us#problem` on `/us`, where the header and footer links follow the route)
 
 Secondary CTA:
 Book a Free Automation Assessment — offered after a problem send and on `/discovery-call`
@@ -184,7 +197,7 @@ Keep the following files updated when relevant:
 - docs/case-studies.md — where case studies live, proof/approval requirements before publishing one.
 - docs/conversion-strategy.md — CTA hierarchy, funnel, assessment intake fields, analytics events.
 - docs/trust-and-claims.md — the verification register; every factual trust claim needs a row here before it ships.
-- docs/australian-market.md — geographic transparency, spelling, industries being tested, security messaging, things never to claim.
+- docs/australian-market.md — geographic transparency, spelling, the US market (`/us`: spelling, USD, time zones), industries being tested, security messaging, things never to claim.
 
 Do not allow implementation decisions to silently contradict the documentation.
 
