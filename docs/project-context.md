@@ -107,6 +107,14 @@ primary nav. Alternates (`en-US` / `en-AU`) are set on the page and the homepage
 The founder approved the USD figures and the time-zone wording on 2026-11-24
 (`docs/trust-and-claims.md`).
 
+**Region banner** (`src/components/layout/RegionBanner.tsx`, copy in `src/lib/content/region.ts`,
+data from `src/app/api/region/route.ts`): on `/` and `/us` only, a client-side banner asks
+`/api/region` which market the visitor is in (Vercel's `x-vercel-ip-country`: `US` or `AU`, anything
+else means no banner) and offers the other page. It never redirects, so the pages stay static and
+crawlers and shared links are unaffected. Accepting or dismissing is remembered in `localStorage`
+(`ac:region-banner`). In development, `?country=US` or `?country=AU` stands in for the header;
+production ignores it. Nothing about the visitor's country is stored.
+
 ### `/what-we-can-build`
 
 Relocated homepage content: Capabilities (three pillars), the six concept examples (labelled

@@ -42,8 +42,13 @@ copy in `src/lib/content/us.ts`). The homepage stays Australia-led; do not dilut
   certification. Security is described only through the existing engineering-practice line.
 - **Attribution:** problem sends carry a `region` (`au` or `us`), shown in the founder email and
   the problem analytics events.
-- **Not built yet:** US industry pages, a US mirror of the site, region auto-detection, a Kit
-  `region` field, and region-aware pricing on `/discovery-call` (which still shows AUD).
+- **Region banner:** a visitor whose country (from Vercel's `x-vercel-ip-country` header, read by
+  `/api/region`) is the other market is offered a dismissible link to that page: a US visitor on
+  `/` is offered `/us`, and an Australian visitor on `/us` is offered `/`. It never redirects
+  (that would risk search ranking, shared links and travellers), appears after the page loads so
+  the pages stay static, and is remembered once accepted or dismissed.
+- **Not built yet:** US industry pages, a US mirror of the site, a Kit `region` field, and
+  region-aware pricing on `/discovery-call` (which still shows AUD).
 
 ## Industries Being Tested
 

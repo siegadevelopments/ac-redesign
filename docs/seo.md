@@ -78,7 +78,9 @@ Use geographic context naturally.
 United States (added 2026-11), served by a single landing page, `/us`, with `en-US` hreflang
 paired to the homepage's `en-AU`, its own canonical, a sitemap entry and a matching FAQPage
 schema. `areaServed` lists Australia and the United States. No US address or office is
-declared (§17). Do not create US city or state pages; US industry pages are deferred.
+declared (§17). Do not create US city or state pages; US industry pages are deferred. Visitors are
+never redirected by country: a dismissible banner offers the other market's page instead, so
+crawlers and shared links always get the page they asked for.
 
 United Kingdom
 

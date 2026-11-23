@@ -121,6 +121,8 @@ compared with assessment requests.
   is `"none"` if no pick; `edited` says whether the visitor changed the pre-filled text; `region`
   is `"au"` on the homepage and `"us"` on `/us`)
 - `problem_failed` — a send that failed (validation, server or network). Same payload
+- `region_banner_accepted` / `region_banner_dismissed` — the offer to switch to the other market's
+  page was clicked or dismissed. Payload: `{ from, to }` (page paths)
 - `discovery_call_clicked` — any assessment CTA click. Payload: `{ source }` where set (`/us` hero
   uses `source: "us_hero"`); the
   post-send offer uses `source: "problem_success"`, which measures post-send assessment bookings
