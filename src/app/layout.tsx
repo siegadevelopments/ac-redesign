@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { RegionBanner } from "@/components/layout/RegionBanner";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo";
 import {
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <RegionBanner />
         <GoogleAnalytics />
       </body>
     </html>

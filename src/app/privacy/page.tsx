@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/privacy" },
 };
 
-const LAST_UPDATED = "29 October 2026";
+const LAST_UPDATED = "24 November 2026";
 
 // Describes what the site actually does (forms, Resend, Kit, Vercel, Google
 // Analytics). It deliberately claims no legal compliance standard — see
@@ -26,6 +26,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
       "Checklist signup: your email address.",
       "Email to us: whatever you send, and your email address.",
       "Site visits: through Google Analytics we see which pages are viewed, roughly where visitors are, what device and browser they use, and which buttons are used. We do not send your name, email or the text of your problem to analytics.",
+      "Your country: our host tells us roughly which country a request comes from. We use it only to offer you the page for your country, and we do not store it.",
     ],
   },
   {
@@ -70,7 +71,7 @@ const SECTIONS: { title: string; body: string[] }[] = [
   {
     title: "Who we are",
     body: [
-      "Apprising Creatives is a small team based in the Philippines that serves businesses internationally, including in Australia. We are not an Australian-incorporated company, and this policy does not claim compliance with any particular privacy law or certification.",
+      "Apprising Creatives is a small team based in the Philippines that serves businesses in Australia and the US. We are not an Australian-incorporated company, and this policy does not claim compliance with any particular privacy law or certification.",
     ],
   },
   {

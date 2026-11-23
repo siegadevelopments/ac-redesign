@@ -19,7 +19,9 @@ export type AnalyticsEvent =
   | "partner_with_us_clicked"
   | "headache_picked"
   | "problem_submitted"
-  | "problem_failed";
+  | "problem_failed"
+  | "region_banner_accepted"
+  | "region_banner_dismissed";
 
 export function trackEvent(event: AnalyticsEvent, data?: Record<string, unknown>) {
   if (typeof window === "undefined") return;
