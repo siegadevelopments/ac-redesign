@@ -8,7 +8,7 @@ import { Button, SUBMIT_BUTTON_CLASSES } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/analytics";
 import { ConceptApp } from "@/components/story/ConceptApp";
 import { NewsletterInline } from "@/components/story/NewsletterInline";
-import { CONTACT_EMAIL, CTA_HREFS, CTA_LABELS } from "@/lib/constants";
+import { CONTACT_EMAIL, CTA_HREFS, CTA_LABELS, type Region } from "@/lib/constants";
 import { HEADACHES, type HeadacheKey } from "@/lib/content/headaches";
 import {
   INITIAL_PREFILL,
@@ -38,7 +38,17 @@ const NOSCRIPT_STYLE = ".story-js-only{display:none!important}";
  * (KTD8). `children` is the server-rendered how-we-work chapter, placed
  * between the pick and the box. The box section carries `id="problem"`.
  */
-export function ProblemStory({ children }: { children?: ReactNode }) {
+export function ProblemStory({
+  children,
+  region = "au",
+  showPick = true,
+}: {
+  children?: ReactNode;
+  /** Market this box sits on; tags the send and its analytics events. */
+  region?: Region;
+  /** False skips the whole pick-your-mess section (used on /us). */
+  showPick?: boolean;
+}) {
   const [prefill, setPrefill] = useState(INITIAL_PREFILL);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -73,12 +83,17 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
     const form = new FormData(event.currentTarget);
     // Analytics carries the headache key and an edited flag only, never
     // name, email or problem text (KTD12).
-    const analytics = { headache: prefill.headache ?? "none", edited: prefill.edited };
+    const analytics = {
+      headache: prefill.headache ?? "none",
+      edited: prefill.edited,
+      region,
+    };
     const payload = {
       name,
       email,
       problem: prefill.text,
       headache: prefill.headache ?? undefined,
+      region,
       company_website: form.get("company_website") ?? "",
     };
 
@@ -127,74 +142,76 @@ export function ProblemStory({ children }: { children?: ReactNode }) {
 
   return (
     <>
-      <section
-        id="pick-your-mess"
-        aria-labelledby={`${id}-pick-title`}
-        className="bg-surface py-16 text-ink md:py-24 lg:py-32"
-      >
-        <Container className="grid gap-12 lg:grid-cols-2 lg:items-start">
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-4">
-              <span className="text-label font-semibold uppercase tracking-[0.12em] text-accent">
-                {PICK_CHAPTER_COPY.eyebrow}
-              </span>
-              <h2
-                id={`${id}-pick-title`}
-                className="font-display text-h2 font-bold text-balance text-ink"
-              >
-                {PICK_CHAPTER_COPY.title}
-              </h2>
-              <p className="max-w-xl text-body-lg text-pretty text-ink-muted">
-                {PICK_CHAPTER_COPY.intro}
-              </p>
-            </div>
-
-            <fieldset className="flex flex-col gap-3">
-              <legend className="mb-3 text-small font-medium text-ink">
-                {PICK_CHAPTER_COPY.legend}
-              </legend>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {HEADACHES.map((headache) => {
-                  const description =
-                    headache.key === "something-else"
-                      ? PICK_CHAPTER_COPY.somethingElseDescription
-                      : PILES[headache.key].mess;
-                  return (
-                    <label
-                      key={headache.key}
-                      className="flex cursor-pointer flex-col gap-1 rounded-(--radius-card) border border-line bg-surface-raised p-4 transition-colors hover:border-line-strong has-checked:border-accent has-checked:bg-accent/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent"
-                    >
-                      <input
-                        type="radio"
-                        name="headache"
-                        value={headache.key}
-                        checked={prefill.headache === headache.key}
-                        onChange={() => handlePick(headache.key)}
-                        className="sr-only"
-                      />
-                      <span className="text-body font-semibold text-ink">{headache.label}</span>
-                      <span className="text-small text-ink-muted">{description}</span>
-                    </label>
-                  );
-                })}
+      {showPick ? (
+        <section
+          id="pick-your-mess"
+          aria-labelledby={`${id}-pick-title`}
+          className="bg-surface py-16 text-ink md:py-24 lg:py-32"
+        >
+          <Container className="grid gap-12 lg:grid-cols-2 lg:items-start">
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-4">
+                <span className="text-label font-semibold uppercase tracking-[0.12em] text-accent">
+                  {PICK_CHAPTER_COPY.eyebrow}
+                </span>
+                <h2
+                  id={`${id}-pick-title`}
+                  className="font-display text-h2 font-bold text-balance text-ink"
+                >
+                  {PICK_CHAPTER_COPY.title}
+                </h2>
+                <p className="max-w-xl text-body-lg text-pretty text-ink-muted">
+                  {PICK_CHAPTER_COPY.intro}
+                </p>
               </div>
-            </fieldset>
-          </div>
 
-          <div className="flex flex-col gap-4 lg:sticky lg:top-24">
-            <ConceptApp view={view} />
-            <p className="sr-only" aria-live="polite">
-              {prefill.headache ? PICK_CHAPTER_COPY.announceView(view.title) : ""}
-            </p>
-            <div className="flex flex-col items-center gap-2 text-center">
-              <Button href={CTA_HREFS.tellUsProblem} variant="primary">
-                {PICK_CHAPTER_COPY.cta}
-              </Button>
-              <p className="text-small text-ink-muted">{PICK_CHAPTER_COPY.ctaNote}</p>
+              <fieldset className="flex flex-col gap-3">
+                <legend className="mb-3 text-small font-medium text-ink">
+                  {PICK_CHAPTER_COPY.legend}
+                </legend>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {HEADACHES.map((headache) => {
+                    const description =
+                      headache.key === "something-else"
+                        ? PICK_CHAPTER_COPY.somethingElseDescription
+                        : PILES[headache.key].mess;
+                    return (
+                      <label
+                        key={headache.key}
+                        className="flex cursor-pointer flex-col gap-1 rounded-(--radius-card) border border-line bg-surface-raised p-4 transition-colors hover:border-line-strong has-checked:border-accent has-checked:bg-accent/10 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-accent"
+                      >
+                        <input
+                          type="radio"
+                          name="headache"
+                          value={headache.key}
+                          checked={prefill.headache === headache.key}
+                          onChange={() => handlePick(headache.key)}
+                          className="sr-only"
+                        />
+                        <span className="text-body font-semibold text-ink">{headache.label}</span>
+                        <span className="text-small text-ink-muted">{description}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
             </div>
-          </div>
-        </Container>
-      </section>
+
+            <div className="flex flex-col gap-4 lg:sticky lg:top-24">
+              <ConceptApp view={view} />
+              <p className="sr-only" aria-live="polite">
+                {prefill.headache ? PICK_CHAPTER_COPY.announceView(view.title) : ""}
+              </p>
+              <div className="flex flex-col items-center gap-2 text-center">
+                <Button href={CTA_HREFS.tellUsProblem} variant="primary">
+                  {PICK_CHAPTER_COPY.cta}
+                </Button>
+                <p className="text-small text-ink-muted">{PICK_CHAPTER_COPY.ctaNote}</p>
+              </div>
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       {children}
 

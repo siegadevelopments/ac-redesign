@@ -13,7 +13,8 @@
 //      only, because the founder already has the message.
 //
 // Request JSON: name, email, problem, headache (optional, a key from
-// src/lib/content/headaches.ts) and the honeypot `company_website`. The
+// src/lib/content/headaches.ts), region (optional, "au" or "us", written into
+// the founder email only; Kit is untouched) and the honeypot `company_website`. The
 // client renders that field visually hidden with autocomplete="off",
 // tabindex="-1" and aria-hidden="true", so browsers don't autofill it and
 // real visitors never see it. A filled honeypot gets a success-shaped
@@ -22,7 +23,7 @@
 import { findHeadache } from "@/lib/content/headaches";
 import { sendAlert } from "@/lib/alert";
 import { checkRateLimit, clientKey } from "@/lib/rateLimit";
-import { SITE_URL } from "@/lib/constants";
+import { REGION_LABELS, SITE_URL, type Region } from "@/lib/constants";
 
 // Resend plus both Kit calls stay inside the client's 15s request timeout.
 const RESEND_TIMEOUT_MS = 6000;
@@ -80,6 +81,12 @@ function asString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+// Only the two known markets count. Anything else is treated as no region,
+// never as a failure, so a tampered or stale client can't break a send.
+function asRegion(value: unknown): Region | undefined {
+  return value === "au" || value === "us" ? value : undefined;
+}
+
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
   try {
@@ -96,6 +103,7 @@ export async function POST(request: Request) {
   const problem = asString(body.problem);
   const headacheKey = asString(body.headache);
   const honeypot = asString(body.company_website);
+  const region = asRegion(body.region);
 
   if (!name || name.length > NAME_MAX) {
     return Response.json(
@@ -155,6 +163,7 @@ export async function POST(request: Request) {
     `Name: ${name}`,
     `Email: ${email}`,
     `Headache: ${headacheLabel}`,
+    ...(region ? [`Region: ${REGION_LABELS[region]}`] : []),
     "",
     "Problem:",
     problem,
