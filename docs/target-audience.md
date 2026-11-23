@@ -4,6 +4,10 @@
 > — see `docs/brand.md`'s repositioning note). Agencies remain a real, documented secondary
 > profile, now served by `/for-agencies` rather than the homepage.
 
+> **2026-11 US note.** US SMEs with the same profile are a second market, served by one landing
+> page (`/us`); the homepage and everything below stay Australia-led. See
+> `docs/australian-market.md`, US Market.
+
 ## 1. Primary Ideal Customer Profile
 
 ### Definition

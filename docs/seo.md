@@ -75,6 +75,11 @@ Use geographic context naturally.
 
 ## Secondary Market
 
+United States (added 2026-11), served by a single landing page, `/us`, with `en-US` hreflang
+paired to the homepage's `en-AU`, its own canonical, a sitemap entry and a matching FAQPage
+schema. `areaServed` lists Australia and the United States. No US address or office is
+declared (§17). Do not create US city or state pages; US industry pages are deferred.
+
 United Kingdom
 
 UK-focused content can be introduced later if there is a strategic reason to target the market.

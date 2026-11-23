@@ -82,8 +82,8 @@ notes:
 
 ## Routing
 
-Six routes: `/` (the story homepage), `/what-we-can-build`, `/portfolio`, `/for-agencies`,
-`/discovery-call`, `/about`. Nav items (`src/lib/content/nav.ts`) mix the one remaining homepage
+Seven routes: `/` (the story homepage), `/what-we-can-build`, `/portfolio`, `/for-agencies`,
+`/discovery-call`, `/about`, `/us`. Nav items (`src/lib/content/nav.ts`) mix the one remaining homepage
 anchor (written as an absolute path, `/#how-we-work`, so it resolves from other routes too) with
 real routes. Navbar/MobileNav/Footer render on every route and use `next/link` throughout.
 Homepage anchors: `#problem` (the problem box, also the header button's target and the
@@ -92,6 +92,18 @@ exist on the homepage; `LegacyHashRedirect` forwards old bookmarks to `/what-we-
 
 Homepage order (`src/app/page.tsx`, `docs/landing-page.md`): Opening chapter → Pick your mess →
 How we work → Problem box (with checklist fallback) → short FAQ.
+
+### `/us`
+
+The US landing page (`src/app/us/page.tsx`, copy in `src/lib/content/us.ts`): a US-spelled hero,
+before-and-after outcomes, indicative USD pricing, an honest Philippines and time-zone note, a US
+FAQ (with matching FAQPage schema), the shared problem box (`<ProblemStory region="us"
+showPick={false} />`, so the pick-your-mess section is skipped) and a closing band. Header, mobile
+and footer "Tell us your problem" / Contact links follow the route (`tellUsProblemHref` in
+`src/lib/constants.ts`), so on `/us` they go to `/us#problem`. It is linked from the footer, not the
+primary nav. Alternates (`en-US` / `en-AU`) are set on the page and the homepage, not the layout.
+Launch needs the founder to approve the USD figures and the time-zone wording
+(`docs/trust-and-claims.md`).
 
 ### `/what-we-can-build`
 
@@ -190,7 +202,8 @@ remains a one-file change in `constants.ts`.
 ## Problem Route
 
 The homepage problem box (`src/components/story/ProblemStory.tsx`) posts JSON to
-`src/app/api/problem/route.ts`: `name`, `email`, `problem`, an optional `headache` key (must be
+`src/app/api/problem/route.ts`: `name`, `email`, `problem`, an optional `region` (`"au"` or `"us"`; anything else is ignored; it
+appears as a `Region:` line in the founder email and is not sent to Kit), an optional `headache` key (must be
 one in `src/lib/content/headaches.ts`) and a hidden honeypot `company_website`. The server
 validates name (up to 100 characters), email, and problem (10 to 2,000 characters). A send is
 only reported as successful when the founder has been notified, so the order is fixed:

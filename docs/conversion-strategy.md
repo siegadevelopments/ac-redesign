@@ -117,10 +117,12 @@ loads and `trackEvent` records nothing. In GA4, mark `problem_submitted` and
 compared with assessment requests.
 
 - `headache_picked` — a pick-your-mess choice. Payload: `{ headache }` (the key)
-- `problem_submitted` — a send that succeeded. Payload: `{ headache, edited }` (`headache` is
-  `"none"` if no pick; `edited` says whether the visitor changed the pre-filled text)
+- `problem_submitted` — a send that succeeded. Payload: `{ headache, edited, region }` (`headache`
+  is `"none"` if no pick; `edited` says whether the visitor changed the pre-filled text; `region`
+  is `"au"` on the homepage and `"us"` on `/us`)
 - `problem_failed` — a send that failed (validation, server or network). Same payload
-- `discovery_call_clicked` — any assessment CTA click. Payload: `{ source }` where set; the
+- `discovery_call_clicked` — any assessment CTA click. Payload: `{ source }` where set (`/us` hero
+  uses `source: "us_hero"`); the
   post-send offer uses `source: "problem_success"`, which measures post-send assessment bookings
 - `assessment_started` — first interaction with the `/discovery-call` form
 - `assessment_completed` — successful submission
