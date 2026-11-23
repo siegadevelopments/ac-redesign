@@ -8,6 +8,7 @@ import {
   OPENING_COPY,
   OPENING_MESS,
   type MessItem,
+  type OpeningCopy,
 } from "@/lib/content/opening";
 
 // Opening chapter, "paper chaos to app" (plan U5, R2).
@@ -107,7 +108,20 @@ function messItemStyle(item: MessItem, index: number): CSSProperties {
   } as CSSProperties;
 }
 
-export function OpeningChapter() {
+/**
+ * Wording and objects default to the Australian homepage's; /us passes its own
+ * so the scene reads naturally in the US (src/lib/content/us.ts). The scatter
+ * positions and the app's behaviour never change, only the words.
+ */
+export function OpeningChapter({
+  copy = OPENING_COPY,
+  appRows = OPENING_APP_ROWS,
+  mess = OPENING_MESS,
+}: {
+  copy?: OpeningCopy;
+  appRows?: typeof OPENING_APP_ROWS;
+  mess?: readonly MessItem[];
+}) {
   return (
     <section
       aria-labelledby="opening-heading"
@@ -121,34 +135,34 @@ export function OpeningChapter() {
                 always in the accessibility tree). */}
             <div aria-hidden="true" className="opening-before hidden [grid-area:1/1]">
               <p className="mb-4 text-label font-semibold uppercase tracking-[0.12em] text-accent">
-                {OPENING_COPY.kicker}
+                {copy.kicker}
               </p>
               <p className="opening-display mb-5 font-display text-display font-extrabold tracking-[-0.03em] text-balance">
-                {OPENING_COPY.problem}
+                {copy.problem}
               </p>
               <p className="opening-lede max-w-lg text-body-lg text-ink-muted text-pretty">
-                {OPENING_COPY.problemLede}
+                {copy.problemLede}
               </p>
               <p className="opening-hint mt-7 text-small font-semibold text-ink-muted">
-                {OPENING_COPY.scrollHint} <span aria-hidden="true">↓</span>
+                {copy.scrollHint} <span aria-hidden="true">↓</span>
               </p>
             </div>
 
             <div className="opening-after [grid-area:1/1]">
               <p className="mb-4 text-label font-semibold uppercase tracking-[0.12em] text-accent">
-                {OPENING_COPY.kicker}
+                {copy.kicker}
               </p>
               <p className="opening-problem mb-3 text-body-lg font-semibold text-ink-muted text-pretty">
-                {OPENING_COPY.problem}
+                {copy.problem}
               </p>
               <h1
                 id="opening-heading"
                 className="opening-display mb-5 text-display font-extrabold tracking-[-0.03em] text-balance"
               >
-                {OPENING_COPY.headline}
+                {copy.headline}
               </h1>
               <p className="opening-lede max-w-lg text-body-lg text-ink-muted text-pretty">
-                {OPENING_COPY.lede}
+                {copy.lede}
               </p>
             </div>
           </div>
@@ -170,7 +184,7 @@ export function OpeningChapter() {
               </div>
               <p className="mb-3 text-[12px] text-ink-muted">{OPENING_APP.subtitle}</p>
               <ul className="flex flex-col gap-[7px]">
-                {OPENING_APP_ROWS.map((row) => (
+                {appRows.map((row) => (
                   <li
                     key={row.key}
                     data-row={row.key}
@@ -200,10 +214,10 @@ export function OpeningChapter() {
             id="opening-mess-caption"
             className="opening-caption mb-4 text-label font-semibold uppercase tracking-[0.12em] text-ink-muted"
           >
-            {OPENING_COPY.messCaption}
+            {copy.messCaption}
           </p>
           <ul aria-labelledby="opening-mess-caption" className="opening-mess flex flex-wrap items-start gap-3">
-            {OPENING_MESS.map((item, index) => (
+            {mess.map((item, index) => (
               <li
                 key={item.id}
                 data-to={item.to}

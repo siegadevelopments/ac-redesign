@@ -1,4 +1,11 @@
 import { FAQ_ITEMS, type FaqItem } from "@/lib/content/faq";
+import {
+  OPENING_APP_ROWS,
+  OPENING_COPY,
+  OPENING_MESS,
+  type MessItem,
+  type OpeningCopy,
+} from "@/lib/content/opening";
 
 /**
  * Copy for the /us landing page (docs/australian-market.md, US section).
@@ -6,11 +13,54 @@ import { FAQ_ITEMS, type FaqItem } from "@/lib/content/faq";
  * certification: the outcomes are typical starting points, not claims.
  */
 
-export const US_HERO = {
-  eyebrow: "For US businesses",
-  title: "Stop retyping the same work. Get your team's hours back.",
-  lead: "We build simple systems that connect your bookings, forms, follow-ups and invoices, so nobody types the same thing twice. Tell us what's eating your team's time and we'll say honestly whether we can help.",
-} as const;
+// The opening scene is the homepage's, with US wording: "calendar" for "diary",
+// "schedule" for "roster", and "tax" for "GST" on the paper invoice. Positions
+// and behaviour are shared (src/components/story/OpeningChapter.tsx).
+export const US_OPENING_COPY: OpeningCopy = {
+  ...OPENING_COPY,
+  kicker: "For US service businesses",
+  problemLede:
+    "Calendars, spreadsheets, inboxes, forms that arrive as PDFs, three apps that don't talk to each other. Every hour spent copying between them is an hour not spent with your clients.",
+};
+
+export const US_OPENING_ROWS: typeof OPENING_APP_ROWS = OPENING_APP_ROWS.map((row) => {
+  if (row.key === "bookings") return { ...row, detail: "Calendar, reminders and reschedules in one view" };
+  if (row.key === "rosters") return { ...row, title: "Schedules & time" };
+  return row;
+});
+
+const US_MESS_OVERRIDES: Record<string, MessItem> = Object.fromEntries(
+  OPENING_MESS.flatMap((item): [string, MessItem][] => {
+    if (item.id === "diary-sheet" && item.visual.kind === "sheet") {
+      return [[item.id, {
+        ...item,
+        label: "A spreadsheet called Calendar_2026 (copy), with two people at 9:00 and a question-marked cell",
+        visual: { ...item.visual, title: "Calendar_2026 (copy).xlsx" },
+      }]];
+    }
+    if (item.id === "receipt" && item.visual.kind === "receipt") {
+      return [[item.id, {
+        ...item,
+        visual: {
+          kind: "receipt",
+          lines: item.visual.lines.map((line) => (line.startsWith("GST") ? "Tax ............ 18.00" : line)),
+        },
+      }]];
+    }
+    if (item.id === "roster-note") {
+      return [[item.id, {
+        ...item,
+        label: "Sticky note: “Who's covering Sat? Schedule not sent”",
+        visual: { kind: "sticky", tone: "yellow", text: "Who's covering Sat? Schedule not sent" },
+      }]];
+    }
+    return [];
+  }),
+);
+
+export const US_OPENING_MESS: readonly MessItem[] = OPENING_MESS.map(
+  (item) => US_MESS_OVERRIDES[item.id] ?? item,
+);
 
 export const US_OUTCOMES = {
   eyebrow: "Typical starting points",
