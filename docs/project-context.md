@@ -102,7 +102,7 @@ showPick={false} />`, so the pick-your-mess section is skipped) and a closing ba
 and footer "Tell us your problem" / Contact links follow the route (`tellUsProblemHref` in
 `src/lib/constants.ts`), so on `/us` they go to `/us#problem`. It is linked from the footer, not the
 primary nav. Alternates (`en-US` / `en-AU`) are set on the page and the homepage, not the layout.
-Launch needs the founder to approve the USD figures and the time-zone wording
+The founder approved the USD figures and the time-zone wording on 2026-11-24
 (`docs/trust-and-claims.md`).
 
 ### `/what-we-can-build`
