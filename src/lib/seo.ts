@@ -23,10 +23,10 @@ export function buildOrganizationJsonLd() {
     url: SITE_URL,
     description: SITE_DESCRIPTION,
     slogan: SITE_TAGLINE,
-    areaServed: {
-      "@type": "Country",
-      name: "Australia",
-    },
+    areaServed: [
+      { "@type": "Country", name: "Australia" },
+      { "@type": "Country", name: "United States" },
+    ],
     knowsAbout: [
       "Business automation",
       "Custom business systems",

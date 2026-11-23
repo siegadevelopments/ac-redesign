@@ -9,7 +9,7 @@ avoided-by-omission — implying local incorporation through silence is still mi
 
 Approved framing (footer + About page):
 
-> Built in the Philippines. Serving businesses internationally, including Australia.
+> Built in the Philippines. Serving businesses in Australia and the US.
 
 Do not:
 
@@ -27,6 +27,23 @@ operations-leader as the buyer. See `docs/target-audience.md` for the full ICP.
 
 Secondary (unchanged, moved off the homepage to `/for-agencies`): Australian digital, AI,
 automation, and software agencies needing engineering capacity.
+
+## US Market (added 2026-11)
+
+The US is a second market, served by one landing page, `/us` (`src/app/us/page.tsx`,
+copy in `src/lib/content/us.ts`). The homepage stays Australia-led; do not dilute its hero.
+
+- **Spelling:** US spelling on `/us` (wrapped in `lang="en-US"`); Australian spelling everywhere else.
+- **Pricing:** indicative USD ranges, rounded from the AUD ladder in `docs/offers.md`, shown only
+  on `/us` and always labelled indicative. The founder approves the figures before launch.
+- **Time zones:** the Philippines overlaps US business hours far less than Australian ones. `/us`
+  says so plainly and promises no named hours or live support (`docs/trust-and-claims.md`).
+- **Claims:** no US office, address or incorporation statement; no SOC 2, HIPAA or other
+  certification. Security is described only through the existing engineering-practice line.
+- **Attribution:** problem sends carry a `region` (`au` or `us`), shown in the founder email and
+  the problem analytics events.
+- **Not built yet:** US industry pages, a US mirror of the site, region auto-detection, a Kit
+  `region` field, and region-aware pricing on `/discovery-call` (which still shows AUD).
 
 ## Industries Being Tested
 
@@ -90,7 +107,7 @@ only, not code.
 
 ## Things Apprising Must NOT Claim (cross-reference `docs/trust-and-claims.md`)
 
-- Australian incorporation or a local office/address
+- Australian incorporation or a local office/address (and no US office, address or incorporation either)
 - Any compliance certification not actually held
 - An uptime/SLA figure not actually contracted
 - Client counts, ratings, or awards that don't exist

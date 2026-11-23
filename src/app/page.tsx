@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { OpeningChapter } from "@/components/story/OpeningChapter";
 import { ProblemStory } from "@/components/story/ProblemStory";
 import { HowWeWork } from "@/components/story/HowWeWork";
@@ -5,6 +6,15 @@ import { LegacyHashRedirect } from "@/components/story/LegacyHashRedirect";
 import { Faq } from "@/components/sections/Faq";
 import { HOMEPAGE_FAQ_ITEMS } from "@/lib/content/faq";
 import { buildFaqJsonLd } from "@/lib/seo";
+
+// The en-AU / en-US pairing lives here, not in the layout, so it only reaches
+// the homepage and /us (alternates are not merged across layout and page).
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+    languages: { "en-AU": "/", "en-US": "/us" },
+  },
+};
 
 // Story order per the homepage story redesign plan: the mess becomes one
 // system, pick your mess, how we work, then the problem box.

@@ -186,7 +186,10 @@ Cybersecurity remains an important supporting capability, not a primary commerci
 State plainly, not just avoid-by-omission — see `docs/australian-market.md` for exact copy and
 placement:
 
-> Built in the Philippines. Serving businesses internationally, including Australia.
+> Built in the Philippines. Serving businesses in Australia and the US.
+
+The homepage remains Australia-led. The US is served by its own page, `/us`, rather than by
+softening the homepage hero (see `docs/australian-market.md`, US Market).
 
 ## Do Not Invent
 

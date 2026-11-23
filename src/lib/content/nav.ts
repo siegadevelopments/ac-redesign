@@ -13,7 +13,7 @@ export const FOOTER_NAV_LINKS = [
   { label: "Case Studies", href: "/portfolio" },
   { label: "For Agencies", href: "/for-agencies" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/#problem" },
+  { label: "For US businesses", href: "/us" },
 ] as const;
 
 export const FOOTER_CAPABILITY_LINKS = [

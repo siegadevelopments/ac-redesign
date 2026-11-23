@@ -16,7 +16,7 @@ export function FinalCta({
   body?: string;
   primaryHref?: string;
   primaryLabel?: string;
-  primaryAnalyticsEvent?: "discovery_call_clicked" | "partner_with_us_clicked";
+  primaryAnalyticsEvent?: "discovery_call_clicked" | "partner_with_us_clicked" | null;
   secondaryHref?: string;
   secondaryLabel?: string;
 }) {
@@ -26,7 +26,7 @@ export function FinalCta({
         <h2 className="max-w-3xl text-h2 font-bold text-ink-inverse text-balance">{heading}</h2>
         <p className="max-w-xl text-body-lg text-ink-inverse-muted text-pretty">{body}</p>
         <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-          <Button href={primaryHref} variant="primary" analyticsEvent={primaryAnalyticsEvent}>
+          <Button href={primaryHref} variant="primary" analyticsEvent={primaryAnalyticsEvent ?? undefined}>
             {primaryLabel}
           </Button>
           <Button href={secondaryHref} variant="secondary" onDark>

@@ -43,6 +43,21 @@ export const CTA_HREFS = {
   startConversation: mailto("Getting Started"),
 };
 
+/** Markets the site speaks to. The homepage is "au"; the /us landing page is "us". */
+export type Region = "au" | "us";
+
+export const REGION_LABELS: Record<Region, string> = {
+  au: "Australia",
+  us: "United States",
+};
+
+export const US_PROBLEM_HREF = "/us#problem";
+
+/** Where "Tell us your problem" should go: /us visitors stay on /us. */
+export function tellUsProblemHref(pathname: string): string {
+  return pathname === "/us" ? US_PROBLEM_HREF : CTA_HREFS.tellUsProblem;
+}
+
 export const CTA_LABELS = {
   bookDiscoveryCall: "Book a Free Automation Assessment",
   tellUsProblem: "Tell us your problem",

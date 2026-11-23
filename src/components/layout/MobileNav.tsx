@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { NAV_LINKS } from "@/lib/content/nav";
-import { CTA_HREFS, CTA_LABELS } from "@/lib/constants";
+import { CTA_LABELS, tellUsProblemHref } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 
 export function MobileNav({
@@ -14,6 +15,7 @@ export function MobileNav({
   isOpen: boolean;
   onNavigate: () => void;
 }) {
+  const problemHref = tellUsProblemHref(usePathname());
   return (
     <div id={id} hidden={!isOpen} className="border-t border-line-inverse bg-surface-inverse [--focus-ring:var(--color-accent-inverse)] lg:hidden">
       <nav aria-label="Mobile" className="flex flex-col gap-1 px-6 py-4">
@@ -29,7 +31,7 @@ export function MobileNav({
         ))}
         {/* Click bubbles from the link, so the menu closes (and the scroll lock lifts) before the hash jump. */}
         <div onClick={onNavigate} className="mt-3 flex flex-col">
-          <Button href={CTA_HREFS.tellUsProblem} variant="primary">
+          <Button href={problemHref} variant="primary">
             {CTA_LABELS.tellUsProblem}
           </Button>
         </div>
