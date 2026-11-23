@@ -60,7 +60,7 @@ export const US_PRICING = {
 export const US_LOCATION = {
   title: "Built in the Philippines, working with US teams.",
   body: [
-    "We're a small team based in the Philippines, and we're not a US-incorporated company. Most of our working day falls outside US business hours.",
+    "We're a small team based in the Philippines, with no US office. Most of our working day falls outside US business hours.",
     "So we work through written updates and short recorded walkthroughs, and we agree call times with you up front rather than promising live support.",
   ],
 } as const;
