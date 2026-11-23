@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
 import { Container } from "@/components/ui/Container";
+import { FooterContactLink } from "@/components/layout/FooterContactLink";
 import { FOOTER_NAV_LINKS, FOOTER_CAPABILITY_LINKS } from "@/lib/content/nav";
 
 export function Footer() {
@@ -15,7 +16,7 @@ export function Footer() {
             Your business runs on systems. We make them work smarter.
           </p>
           <p className="max-w-xs text-small text-ink-inverse-muted">
-            Built in the Philippines. Serving businesses internationally, including Australia.
+            Built in the Philippines. Serving businesses in Australia and the US.
           </p>
         </div>
 
@@ -32,6 +33,7 @@ export function Footer() {
               {link.label}
             </Link>
           ))}
+          <FooterContactLink className="text-small text-ink-inverse-muted hover:text-ink-inverse" />
         </nav>
 
         <div className="flex flex-col gap-2">

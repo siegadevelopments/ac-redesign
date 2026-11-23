@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { NAV_LINKS } from "@/lib/content/nav";
-import { CTA_HREFS, CTA_LABELS } from "@/lib/constants";
+import { CTA_LABELS, tellUsProblemHref } from "@/lib/constants";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const problemHref = tellUsProblemHref(usePathname());
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -47,7 +49,7 @@ export function Navbar() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href={CTA_HREFS.tellUsProblem} variant="primary">
+          <Button href={problemHref} variant="primary">
             {CTA_LABELS.tellUsProblem}
           </Button>
         </div>
@@ -55,7 +57,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 lg:hidden">
           {/* Compact action stays visible outside the menu on phones (R28). */}
           <div onClick={closeMenu}>
-            <Button href={CTA_HREFS.tellUsProblem} variant="primary" className="px-3! py-2! whitespace-nowrap">
+            <Button href={problemHref} variant="primary" className="px-3! py-2! whitespace-nowrap">
               <span className="sm:hidden" aria-hidden="true">Tell us</span>
               <span className="sr-only sm:not-sr-only">{CTA_LABELS.tellUsProblem}</span>
             </Button>

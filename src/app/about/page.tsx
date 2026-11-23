@@ -11,7 +11,7 @@ import { FinalCta } from "@/components/sections/FinalCta";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "A small, founder-led team building business automation, custom systems, and AI implementation for Australian businesses — built internationally, serving Australia.",
+    "A small, founder-led team building business automation, custom systems, and AI implementation for Australian businesses — built internationally, serving Australia and the US.",
   alternates: { canonical: "/about" },
 };
 
@@ -97,10 +97,10 @@ export default function AboutPage() {
         <Container className="grid gap-12 md:grid-cols-2 md:gap-16">
           <div className="flex flex-col gap-3">
             <Globe className="text-accent" size={24} strokeWidth={1.5} aria-hidden="true" />
-            <h3 className="text-h4 font-bold text-ink">Built internationally, serving Australia</h3>
+            <h3 className="text-h4 font-bold text-ink">Built internationally, serving Australia and the US</h3>
             <p className="text-body text-ink-muted text-pretty">
               Apprising Creatives is built in the Philippines and serves businesses
-              internationally, including Australia. We&apos;re not an Australian-incorporated
+              in Australia and the US. We&apos;re not an Australian-incorporated
               company — we&apos;re transparent about that, and it&apos;s part of how we can offer
               engineering capacity without the overhead of a large local team.
             </p>
