@@ -8,9 +8,10 @@ import { Button, SUBMIT_BUTTON_CLASSES } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/analytics";
 import { ConceptApp } from "@/components/story/ConceptApp";
 import { NewsletterInline } from "@/components/story/NewsletterInline";
-import { CONTACT_EMAIL, CTA_HREFS, CTA_LABELS, type Region } from "@/lib/constants";
+import { CONTACT_EMAIL, CTA_HREFS, CTA_LABELS, US_PROBLEM_HREF, type Region } from "@/lib/constants";
 import { HEADACHES, type HeadacheKey } from "@/lib/content/headaches";
 import {
+  CONCEPT_OVERVIEW,
   INITIAL_PREFILL,
   PICK_CHAPTER_COPY,
   PILES,
@@ -19,6 +20,8 @@ import {
   conceptViewFor,
   editProblem,
   pickHeadache,
+  type ConceptView,
+  type Piles,
   type ProblemHandoff,
 } from "@/lib/content/story";
 
@@ -38,16 +41,32 @@ const NOSCRIPT_STYLE = ".story-js-only{display:none!important}";
  * (KTD8). `children` is the server-rendered how-we-work chapter, placed
  * between the pick and the box. The box section carries `id="problem"`.
  */
+/** What the pick chapter shows; defaults to the Australian homepage's wording. */
+export type PickContent = {
+  piles: Piles;
+  overview: ConceptView;
+  headaches: readonly { key: HeadacheKey; label: string }[];
+};
+
+const AU_PICK_CONTENT: PickContent = {
+  piles: PILES,
+  overview: CONCEPT_OVERVIEW,
+  headaches: HEADACHES,
+};
+
 export function ProblemStory({
   children,
   region = "au",
   showPick = true,
+  pick = AU_PICK_CONTENT,
 }: {
   children?: ReactNode;
   /** Market this box sits on; tags the send and its analytics events. */
   region?: Region;
-  /** False skips the whole pick-your-mess section (used on /us). */
+  /** False skips the whole pick-your-mess section. */
   showPick?: boolean;
+  /** Pick-chapter wording for this market (see us.ts). */
+  pick?: PickContent;
 }) {
   const [prefill, setPrefill] = useState(INITIAL_PREFILL);
   const [name, setName] = useState("");
@@ -62,14 +81,14 @@ export function ProblemStory({
   const hydrated = useHydrated();
   const id = useId();
 
-  const view = conceptViewFor(prefill.headache);
+  const view = conceptViewFor(prefill.headache, pick.piles, pick.overview);
 
   useEffect(() => {
     if (status === "success") successHeading.current?.focus();
   }, [status]);
 
   function handlePick(headache: HeadacheKey) {
-    setPrefill((current) => pickHeadache(current, headache));
+    setPrefill((current) => pickHeadache(current, headache, pick.piles));
     trackEvent("headache_picked", { headache });
   }
 
@@ -170,11 +189,11 @@ export function ProblemStory({
                   {PICK_CHAPTER_COPY.legend}
                 </legend>
                 <div className="grid gap-3 sm:grid-cols-2">
-                  {HEADACHES.map((headache) => {
+                  {pick.headaches.map((headache) => {
                     const description =
                       headache.key === "something-else"
                         ? PICK_CHAPTER_COPY.somethingElseDescription
-                        : PILES[headache.key].mess;
+                        : pick.piles[headache.key].mess;
                     return (
                       <label
                         key={headache.key}
@@ -203,7 +222,10 @@ export function ProblemStory({
                 {prefill.headache ? PICK_CHAPTER_COPY.announceView(view.title) : ""}
               </p>
               <div className="flex flex-col items-center gap-2 text-center">
-                <Button href={CTA_HREFS.tellUsProblem} variant="primary">
+                <Button
+                  href={region === "us" ? US_PROBLEM_HREF : CTA_HREFS.tellUsProblem}
+                  variant="primary"
+                >
                   {PICK_CHAPTER_COPY.cta}
                 </Button>
                 <p className="text-small text-ink-muted">{PICK_CHAPTER_COPY.ctaNote}</p>
